@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MapContainer from './components/MapContainer';
+import Registration from './components/auth/Registration';
+import Login from './components/auth/Login';
+import Nav from './containers/Nav'
+import CleanContainer from './containers/CleanContainer'
+import ReportContainer from './containers/ReportContainer'
+import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+    render() {
+        return (
+          <div>
+
+          <Router>
+              <Nav />
+              <Switch>
+
+                <Route path="/clean" component={CleanContainer}/>
+                <Route path="/report" component={ReportContainer}/>
+                <Route path="/register" component={Registration}/>
+                <Route path="/login" component={Login}/>
+
+              </Switch>
+
+          </Router>
+          </div>
+
+
+        )
+  }
 }
 
-export default App;
+export default App
