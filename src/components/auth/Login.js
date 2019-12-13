@@ -34,15 +34,15 @@ export default class Login extends Component {
             password: this.state.password
           }
         })
-
-
       })
       .then(response => {
-        console.log("response!!")
-      return response.json();
+        return response.json();
     })
-      .then(userObj => {
-      console.log(userObj);
+      .then(user => {
+        console.log(user)
+        localStorage.setItem('token', user.jwt)
+        localStorage.setItem('currentUser_id', user.id)
+
     });
   }
 
