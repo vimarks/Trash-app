@@ -12,7 +12,6 @@ export default function Map(props) {
     zoom: 10
   })
 
-
   return(
   <div>
     <ReactMapGL
@@ -23,14 +22,14 @@ export default function Map(props) {
           setViewport(viewport)
         }}
     >
-      {props.userTrash.length > 0 && props.userTrash.map(loc => (
+      {props.trashLocations.length > 0 && props.trashLocations.map(loc => (
         <Marker
           key={loc.id}
           latitude={loc.latitude}
           longitude={loc.longitude}
         >
           <button className = 'trash-button' onClick={() => props.markerKeyHolder(loc.id)}>
-            <img alt='trashcan' height='25px' src='/trash_can.png'/>
+            <img alt='trashcan' height='20px' src='/trash_can.png'/>
           </button>
         </Marker>
       ))}

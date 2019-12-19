@@ -20,7 +20,6 @@ export default class Registration extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('daddy')
 
       fetch('http://localhost:3001/users', {
         method: 'POST',
