@@ -2,7 +2,6 @@ import React from 'react';
 import { Jumbotron, Button } from 'reactstrap';
 
 const CleanerCard = (props) => {
-  console.log(props)
   return (
     <div>
       <Jumbotron >

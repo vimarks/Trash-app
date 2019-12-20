@@ -42,7 +42,7 @@ class MapContainer extends React.Component {
   }
 
   confirmClean = id => {
-    
+
     fetch('http://localhost:3001/trashes/' + id, {
       method: 'PATCH',
       headers: {
@@ -57,16 +57,38 @@ class MapContainer extends React.Component {
     })
     .then(response => {return response.json()})
     .then(data => {this.setState({
-      trash: data.allTrash
+      trash: data.allTrash,
+      userTrash: data.userTrash
     })
-    })
+  })
 
 
   }
 
+  patchBounty = (newBounty) => {
+    let id = this.state.trash.filter(trash => trash.location_id === this.state.markerKey)[0].id
+
+    fetch('http://localhost:3001/trashes/patchBounty/' + id, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        bounty: newBounty
+      })
+    })
+    .then(response => {return response.json()})
+    .then(data => {this.setState({
+      trash: data.allTrash
+      })
+    })
+  }
+
   markerKeyHolder = id => {
-    !this.state.markerKey
-      ? this.setState({
+    !this.state.markerKey ?
+    this.setState({
         markerKey: id
         })
       : this.setState({
@@ -151,6 +173,7 @@ class MapContainer extends React.Component {
               bounty={trash.bounty}
               cleaned={trash.cleaned}
               reporter_id={trash.reporter_id}
+              patchBounty={this.patchBounty}
               />
             ))}
 

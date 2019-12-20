@@ -11,7 +11,8 @@ class CleanerMapContainer extends React.Component {
     this.state = {
       trashLocations: [],
       trash: [],
-      markerKey: null
+      markerKey: null,
+      locVerify: false
     }
   }
 
@@ -55,8 +56,8 @@ class CleanerMapContainer extends React.Component {
 
 
   markerKeyHolder = id => {
-    !this.state.markerKey
-      ? this.setState({
+    !this.state.markerKey ?
+       this.setState({
         markerKey: id
         })
       : this.setState({
@@ -65,8 +66,27 @@ class CleanerMapContainer extends React.Component {
   }
 
   compareLocation = () => {
+    let cleanerLocation = this.state.trashLocations.filter
+    (trLoc => trLoc.id === this.state.markerKey)
 
+      let a = cleanerLocation[0].latitude
+      let b = this.props.coords.latitude
+    let latDiff = Math.abs(a - b)
+
+      let x = cleanerLocation[0].longitude
+      let y = this.props.coords.longitude
+    let lonDiff = Math.abs(x - y)
+
+    if(latDiff < .00019 && lonDiff < .00019){
+      console.log(true)
+      // this.setState({
+      //   locVerify: true //set back to false when markerKey : null
+      // })
+    } else {
+      console.log(false)
+    }
   }
+
 
     render() {
 

@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Jumbotron, Button } from 'reactstrap';
 
 const TrashCard = (props) => {
+  const [newBounty, setBounty] = useState(0)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    props.patchBounty(newBounty)
+
+  }
+
+
+
   return (
     <div>
       <Jumbotron >
@@ -13,7 +23,18 @@ const TrashCard = (props) => {
           {props.cleaned === "clean"?
           <Button onClick={() => props.confirmClean(props.id)} color="primary">
             confirm trash pickup
-          </Button>: <Button> Lower Bounty </Button>
+          </Button>:
+
+          <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="reset bounty"
+            value={newBounty}
+            onChange={e => setBounty(e.target.value)}
+
+          />
+          <input type="submit" value="New Bounty" />
+          </form>
          }
 
 
