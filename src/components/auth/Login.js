@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-export default class Login extends Component {
+class Login extends Component {
 
   constructor(props) {
     super(props)
@@ -20,7 +21,7 @@ export default class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('daddy')
+
 
       fetch('http://localhost:3001/login', {
         method: 'POST',
@@ -34,16 +35,19 @@ export default class Login extends Component {
             password: this.state.password
           }
         })
-
-
       })
       .then(response => {
-        console.log("response!!")
-      return response.json();
+        return response.json();
     })
-      .then(userObj => {
-      console.log(userObj);
+      .then(user => {
+
+        localStorage.setItem('token', user.jwt)
+        localStorage.setItem('currentUser_id', user.id)
+        this.props.setAuth()
+        this.props.history.push('/report')
     });
+
+
   }
 
   render() {
@@ -74,3 +78,5 @@ export default class Login extends Component {
     )
   }
 }
+
+export default withRouter (Login)
