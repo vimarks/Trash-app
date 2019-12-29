@@ -1,47 +1,44 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class Registration extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      username: '',
-      password: ''
-    }
+      username: "",
+      password: ""
+    };
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({
-      [event.target.name] : event.target.value
-    })
-  }
-
-
-  handleSubmit = (event) => {
-    event.preventDefault()
-
-      fetch('http://localhost:3001/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          "Accept": 'application/json'
-        },
-        body: JSON.stringify({ user: {
-            username: this.state.username,
-            password: this.state.password
-          }
-          })
-
-      })
-      .then(response => {
-      return response.json();
-    })
-      .then(userObj => {
-        console.log("Here is the response!")
-      console.log(userObj);
+      [event.target.name]: event.target.value
     });
-  }
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    fetch("http://localhost:3001/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          username: this.state.username,
+          password: this.state.password
+        }
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(userObj => {
+        this.props.history.push("/login");
+      });
+  };
 
   render() {
     return (
@@ -68,6 +65,6 @@ export default class Registration extends Component {
           <button type="submit"> Register </button>
         </form>
       </div>
-    )
+    );
   }
 }

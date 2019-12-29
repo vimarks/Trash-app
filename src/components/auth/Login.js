@@ -1,54 +1,48 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 class Login extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      username: '',
-      password: ''
-    }
+      username: "",
+      password: ""
+    };
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({
-      [event.target.name] : event.target.value
-    })
-  }
+      [event.target.name]: event.target.value
+    });
+  };
 
+  handleSubmit = event => {
+    event.preventDefault();
 
-  handleSubmit = (event) => {
-    event.preventDefault()
-
-
-      fetch('http://localhost:3001/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          "Accept": 'application/json'
-        },
-        body: JSON.stringify({ user:
-          {
-            username: this.state.username,
-            password: this.state.password
-          }
-        })
+    fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          username: this.state.username,
+          password: this.state.password
+        }
       })
+    })
       .then(response => {
         return response.json();
-    })
+      })
       .then(user => {
-
-        localStorage.setItem('token', user.jwt)
-        localStorage.setItem('currentUser_id', user.id)
-        this.props.setAuth()
-        this.props.history.push('/report')
-    });
-
-
-  }
+        localStorage.setItem("token", user.jwt);
+        localStorage.setItem("currentUser_id", user.id);
+        this.props.setAuth();
+        this.props.history.push("/report");
+      });
+  };
 
   render() {
     return (
@@ -75,8 +69,8 @@ class Login extends Component {
           <button type="submit"> Login </button>
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default withRouter (Login)
+export default withRouter(Login);
