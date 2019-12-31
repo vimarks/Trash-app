@@ -6,7 +6,7 @@ export default function Map(props) {
   const [viewport, setViewport] = useState({
     latitude: 30.2772641,
     longitude: -97.74286459999999,
-    width: "100vw",
+    width: "60vw",
     height: "75vh",
     zoom: 10
   });

@@ -106,6 +106,7 @@ class MapContainer extends React.Component {
   };
 
   saveLocation = () => {
+    console.log(this.props);
     fetch("http://localhost:3001/locations", {
       method: "POST",
       headers: {
@@ -184,31 +185,35 @@ class MapContainer extends React.Component {
                 patchBounty={this.patchBounty}
               />
             ))}
+        <div className="text-center">
+          <form className="text-center" onSubmit={this.handleTrashSubmit}>
+            <button onClick={this.saveLocation}>
+              <h3>Snap-Shot Location</h3>
+            </button>
+            <input
+              type="text"
+              name="bounty"
+              placeholder="bounty"
+              value={this.state.bounty}
+              onChange={this.handleChange}
+              required
+            />
 
-        <button onClick={this.saveLocation}>
-          <h3> Mark Location </h3>
-        </button>
-        <form onSubmit={this.handleTrashSubmit}>
-          <input
-            type="text"
-            name="bounty"
-            placeholder="bounty"
-            value={this.state.bounty}
-            onChange={this.handleChange}
-            required
-          />
+            <input
+              type="text"
+              name="description"
+              placeholder="description"
+              value={this.state.description}
+              onChange={this.handleChange}
+              required
+            />
 
-          <input
-            type="text"
-            name="description"
-            placeholder="description"
-            value={this.state.description}
-            onChange={this.handleChange}
-            required
-          />
-
-          <button type="submit"> Report Trash </button>
-        </form>
+            <button type="submit">
+              {" "}
+              <h3>Report Trash </h3>
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

@@ -1,10 +1,10 @@
 import React from "react";
 import { geolocated } from "react-geolocated";
-import CleanerMapContainer from "./CleanerMapContainer";
 import MapContainer from "./MapContainer";
 
 class Geolocator extends React.Component {
   render() {
+    console.log(this.props.coords);
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
     ) : !this.props.isGeolocationEnabled ? (
@@ -12,7 +12,6 @@ class Geolocator extends React.Component {
     ) : this.props.coords ? (
       <div>
         <MapContainer coords={this.props.coords} />
-        <CleanerMapContainer coords={this.props.coords} />
       </div>
     ) : (
       <div>Getting the location data&hellip; </div>

@@ -32,7 +32,7 @@ const TrashCard = props => {
                 value={newBounty}
                 onChange={e => setBounty(e.target.value)}
               />
-              <input type="submit" value="New Bounty" />
+              <input type="submit" value="Change Bounty" />
             </form>
           )}
         </p>

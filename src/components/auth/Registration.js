@@ -1,4 +1,13 @@
 import React, { Component } from "react";
+import {
+  Form,
+  Input,
+  Container,
+  Col,
+  Label,
+  FormGroup,
+  Button
+} from "reactstrap";
 
 export default class Registration extends Component {
   constructor(props) {
@@ -42,28 +51,46 @@ export default class Registration extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={this.state.username}
-            onChange={this.handleChange}
-            required
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handleChange}
-            required
-          />
-
-          <button type="submit"> Register </button>
-        </form>
+      <div className="bg">
+        <Container className="App">
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <h2>Register</h2>
+          <Form onSubmit={this.handleSubmit} className="form">
+            <Col>
+              <FormGroup>
+                <Label>Username</Label>
+                <Input
+                  type="username"
+                  name="username"
+                  id="username"
+                  placeholder="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                  required
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="examplePassword">Password</Label>
+                <Input
+                  type="password"
+                  name="password"
+                  id="examplePassword"
+                  placeholder="********"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  required
+                />
+              </FormGroup>
+            </Col>
+            <Button type="submit"> Submit </Button>
+          </Form>
+        </Container>
       </div>
     );
   }

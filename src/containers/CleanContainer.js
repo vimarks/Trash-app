@@ -1,13 +1,12 @@
 import React from "react";
 import "../App.css";
-import CleanerMapContainer from "../components/CleanerMapContainer";
-import Nav from "./Nav";
+import CleanerGeolocator from "../components/CleanerGeolocator";
 
 class CleanContainer extends React.Component {
   render() {
     return (
       <div>
-        <CleanerMapContainer />
+        <CleanerGeolocator />
       </div>
     );
   }
