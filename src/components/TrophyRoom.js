@@ -1,18 +1,19 @@
 import React from "react";
-import { Jumbotron, Button } from "reactstrap";
+import Trophy from "./Trophy";
+import "./auth/style.css";
 
-class Wallet extends React.Component {
+class TrophyRoom extends React.Component {
   token = localStorage.getItem("token");
 
   constructor() {
     super();
     this.state = {
-      userWallet: []
+      userTrophies: []
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/wallets/getUserWallet", {
+    fetch("http://localhost:3001/trashes/getTrophies", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -28,31 +29,25 @@ class Wallet extends React.Component {
       })
       .then(data => {
         this.setState({
-          userWallet: data.wallet[0]
+          userTrophies: data.userTrophies
         });
       });
   }
   render() {
     return (
-      <div className="bg1">
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <Jumbotron classname>
-          <h2>
-            {this.state.userWallet.balance}
-            <small> kP$</small>
-          </h2>
-
-          <p className="lead"></p>
-          <hr className="my-2" />
-        </Jumbotron>
+      <div>
+        {this.state.userTrophies.length > 0 &&
+          this.state.userTrophies.map(trash => (
+            <Trophy
+              id={trash.id}
+              description={trash.description}
+              bounty={trash.bounty}
+              date={trash.updated_at}
+            />
+          ))}
       </div>
     );
   }
 }
 
-export default Wallet;
+export default TrophyRoom;

@@ -1,22 +1,15 @@
-import React from 'react';
-import '../App.css'
-import CleanerMapContainer from '../components/CleanerMapContainer'
-import Nav from './Nav'
-
-
-
-
+import React from "react";
+import "../App.css";
+import CleanerGeolocator from "../components/CleanerGeolocator";
 
 class CleanContainer extends React.Component {
-    render() {
-        return(
-          <div>
-          <CleanerMapContainer/>
-          </div>
-
-
-        )
+  render() {
+    return (
+      <div>
+        <CleanerGeolocator />
+      </div>
+    );
   }
 }
 
-export default CleanContainer
+export default CleanContainer;

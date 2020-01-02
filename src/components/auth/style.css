@@ -4,7 +4,36 @@
   border-radius: 5px;
   transition: 0.3s ease;
 }
+.trophy-img {
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+}
 
 .trash-button:hover {
-  background-color: #D1DFE8;
+  background-color: #d1dfe8;
+}
+
+.login-form {
+  justify-content: space-around;
+}
+
+body,
+html {
+  height: 50%;
+  margin: 0;
+}
+.bg {
+  background-image: url("https://images.unsplash.com/photo-1528190336454-13cd56b45b5a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.bg1 {
+  background-image: url("https://cdn.pixabay.com/photo/2017/10/31/21/26/brick-2906556_960_720.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
