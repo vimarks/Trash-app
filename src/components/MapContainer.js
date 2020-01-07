@@ -12,7 +12,7 @@ class MapContainer extends React.Component {
       description: "",
       bounty: null,
       trash: [],
-      userTrash: [],
+      userTrashCoords: [],
       markerKey: null
     };
   }
@@ -22,7 +22,7 @@ class MapContainer extends React.Component {
   }
 
   initialRFetch = () => {
-    fetch("http://localhost:3001/trashes/getUserTrash", {
+    fetch("http://localhost:3001/trashes/getUserTrashCoords", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -37,9 +37,9 @@ class MapContainer extends React.Component {
         return response.json();
       })
       .then(data => {
-        if (data.userTrash.length > 0) {
+        if (data.userTrashCoords.length > 0) {
           this.setState({
-            userTrash: data.userTrash,
+            userTrashCoords: data.userTrashCoords,
             trash: data.trash
           });
         }
@@ -64,7 +64,7 @@ class MapContainer extends React.Component {
       .then(data => {
         this.setState({
           trash: data.allTrash,
-          userTrash: data.userTrash
+          userTrashCoords: data.userTrashCoords
         });
       });
   };
@@ -106,7 +106,6 @@ class MapContainer extends React.Component {
   };
 
   saveLocation = () => {
-    console.log(this.props);
     fetch("http://localhost:3001/locations", {
       method: "POST",
       headers: {
@@ -159,7 +158,7 @@ class MapContainer extends React.Component {
       .then(data => {
         this.setState({
           trash: data.trash,
-          userTrash: data.userTrash
+          userTrashCoords: data.userTrashCoords
         });
       });
   };
@@ -167,7 +166,7 @@ class MapContainer extends React.Component {
     return (
       <div>
         <Map
-          userTrash={this.state.userTrash}
+          userTrashCoords={this.state.userTrashCoords}
           markerKeyHolder={this.markerKeyHolder}
         />
 

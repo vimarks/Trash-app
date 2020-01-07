@@ -6,10 +6,12 @@ export default function Map(props) {
   const [viewport, setViewport] = useState({
     latitude: 30.2772641,
     longitude: -97.74286459999999,
-    width: "60vw",
+    width: "100vw",
     height: "75vh",
     zoom: 10
   });
+
+  console.log(props.userTrashCoords);
 
   return (
     <div>
@@ -21,8 +23,8 @@ export default function Map(props) {
           setViewport(viewport);
         }}
       >
-        {props.userTrash.length > 0 &&
-          props.userTrash.map(loc => (
+        {props.userTrashCoords.length > 0 &&
+          props.userTrashCoords.map(loc => (
             <Marker
               key={loc.id}
               latitude={loc.latitude}
