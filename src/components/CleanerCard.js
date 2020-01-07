@@ -5,7 +5,7 @@ const CleanerCard = props => {
   return (
     <div>
       <Jumbotron>
-        <h1 className="display-3">${props.bounty}</h1>
+        <h1 className="display-3">{props.bounty} kP$</h1>
         <p className="lead">{props.description}</p>
         <hr className="my-2" />
 
