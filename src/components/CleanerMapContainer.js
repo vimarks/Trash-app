@@ -63,12 +63,14 @@ class CleanerMapContainer extends React.Component {
   };
 
   markerKeyHolder = id => {
-    !this.state.markerKey
+    this.state.markerKey !== id
       ? this.setState({
-          markerKey: id
+          markerKey: id,
+          locVerify: false
         })
       : this.setState({
-          markerKey: null
+          markerKey: null,
+          locVerify: false
         });
   };
 
@@ -86,12 +88,14 @@ class CleanerMapContainer extends React.Component {
     let lonDiff = Math.abs(x - y);
 
     if (latDiff < 0.00019 && lonDiff < 0.00019) {
-      console.log(true);
-      // this.setState({
-      //   locVerify: true //set back to false when markerKey : null
-      // })
+      this.setState({
+        locVerify: true
+      });
+      console.log(this.state.locVerify);
     } else {
-      console.log(false);
+      this.setState({
+        locVerify: false
+      });
     }
   };
 
@@ -114,6 +118,7 @@ class CleanerMapContainer extends React.Component {
                 bounty={trash.bounty}
                 cleaned={trash.cleaned}
                 reporter_id={trash.reporter_id}
+                locVerify={this.state.locVerify}
               />
             ))}
 

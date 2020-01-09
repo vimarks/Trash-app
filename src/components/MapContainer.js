@@ -96,7 +96,7 @@ class MapContainer extends React.Component {
   };
 
   markerKeyHolder = id => {
-    !this.state.markerKey
+    this.state.markerKey !== id
       ? this.setState({
           markerKey: id
         })
@@ -136,6 +136,7 @@ class MapContainer extends React.Component {
 
   handleTrashSubmit = event => {
     event.preventDefault();
+    this.saveLocation();
     fetch("http://localhost:3001/trashes", {
       method: "POST",
       headers: {

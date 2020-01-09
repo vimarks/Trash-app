@@ -53,12 +53,10 @@ export default class Registration extends Component {
     return (
       <div className="bg">
         <Container className="App">
+          <h1>Trash-App</h1>
           <br></br>
           <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <h2>Register</h2>
+
           <Form onSubmit={this.handleSubmit} className="form">
             <Col>
               <FormGroup>
@@ -88,7 +86,7 @@ export default class Registration extends Component {
                 />
               </FormGroup>
             </Col>
-            <Button type="submit"> Submit </Button>
+            <Button type="submit"> Register </Button>
           </Form>
         </Container>
       </div>

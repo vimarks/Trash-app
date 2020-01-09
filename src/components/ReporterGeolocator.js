@@ -4,7 +4,6 @@ import MapContainer from "./MapContainer";
 
 class Geolocator extends React.Component {
   render() {
-    console.log(this.props.coords);
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
     ) : !this.props.isGeolocationEnabled ? (

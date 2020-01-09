@@ -10,12 +10,14 @@ const CleanerCard = props => {
         <hr className="my-2" />
 
         <p className="lead">
-          {props.cleaned === "dirty" ? (
+          {props.cleaned === "dirty" && props.locVerify ? (
             <Button onClick={() => props.cleanTrash(props.id)} color="primary">
               Clean!
             </Button>
-          ) : (
+          ) : props.cleaned === "clean" ? (
             "Awaiting Confirmation"
+          ) : (
+            "Incorrect Location "
           )}
         </p>
       </Jumbotron>
