@@ -11,8 +11,6 @@ export default function Map(props) {
     zoom: 10
   });
 
-  console.log(props.userTrashCoords);
-
   return (
     <div>
       <ReactMapGL

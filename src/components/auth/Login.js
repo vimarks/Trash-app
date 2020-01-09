@@ -9,6 +9,7 @@ import {
   FormGroup,
   Button
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 class Login extends Component {
@@ -59,12 +60,10 @@ class Login extends Component {
     return (
       <div className="bg">
         <Container className="App">
+          <h1>Trash-App</h1>
           <br></br>
           <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <h2>Log in</h2>
+
           <Form onSubmit={this.handleSubmit} className="form">
             <Col>
               <FormGroup>
@@ -94,7 +93,10 @@ class Login extends Component {
                 />
               </FormGroup>
             </Col>
-            <Button type="submit"> Submit </Button>
+            <Button type="submit"> Login </Button>
+            <Link to="/register">
+              <Button>Register</Button>
+            </Link>
           </Form>
         </Container>
       </div>
