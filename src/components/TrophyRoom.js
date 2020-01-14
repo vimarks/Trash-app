@@ -35,7 +35,7 @@ class TrophyRoom extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div class="row trophyRoom">
         {this.state.userTrophies.length > 0 &&
           this.state.userTrophies.map(trash => (
             <Trophy

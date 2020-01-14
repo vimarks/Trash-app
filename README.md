@@ -1,68 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Trash-App
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [General info](#general-info)
+- [Technologies](#technologies)
+- [Examples of Use](#examples-of-use)
+- [Credits](#credits)
 
-### `yarn start`
+---
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## General info
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Trash-App is A web app that crowd-sources city cleanup by incentivizing reporting and cleaning of trash through a user generated, free-market economy.
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies
 
-### `yarn build`
+The backend is powered by rails, using postgreSQL for data storage and JWT authentication. Requires the following [Ruby Gems](https://rubygems.org/):
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [bcrypt](https://rubygems.org/gems/bcrypt)
+- [pg](https://rubygems.org/gems/postgresql)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The frontend is written in React, interacting with [Geolocation API](https://w3c.github.io/geolocation-api/) through the react-geolocated component in order to aquire user location. Plotting location is via Mapbox GL JS. Requires the following [Packages](https://www.npmjs.com/package/json-query):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [react-geoloacted](https://www.npmjs.com/package/react-geolocated)
+- [react-map-gl](https://www.npmjs.com/package/react-map-gl)
 
-### `yarn eject`
+## Examples of Use
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Examples of use:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![](/images/game_start.gif)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![](/images/login_play.gif)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![](/images/endNscores.gif)
 
-## Learn More
+## Credits
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+**Vincent Marks** [LinkedIn](https://www.linkedin.com/in/vincent-marks-061115195/) // [Github](https://github.com/vimarks)

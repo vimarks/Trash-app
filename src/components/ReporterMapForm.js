@@ -1,8 +1,9 @@
 import React from "react";
 import Map from "./Map";
+import { Button } from "reactstrap";
 import TrashCard from "./TrashCard";
 
-class MapContainer extends React.Component {
+class ReporterMapForm extends React.Component {
   token = localStorage.getItem("token");
 
   constructor() {
@@ -13,7 +14,8 @@ class MapContainer extends React.Component {
       bounty: null,
       trash: [],
       userTrashCoords: [],
-      markerKey: null
+      markerKey: null,
+      newBounty: 0
     };
   }
 
@@ -70,8 +72,11 @@ class MapContainer extends React.Component {
   };
 
   patchBounty = newBounty => {
+    console.log(this.state.trash);
+    console.log(this.state.markerKey);
+
     let id = this.state.trash.filter(
-      trash => trash.location_id === this.state.markerKey
+      trash => trash.location_id === this.state.markerKey.id
     )[0].id;
 
     fetch("http://localhost:3001/trashes/patchBounty/" + id, {
@@ -163,15 +168,51 @@ class MapContainer extends React.Component {
         });
       });
   };
+  handleSubmit = e => {
+    e.preventDefault();
+    this.patchBounty(this.state.newBounty);
+  };
+
   render() {
     return (
-      <div>
+      <div className="text-center">
+        <div>
+          {this.state.markerKey &&
+            this.state.trash
+              .filter(tr => tr.location_id === this.state.markerKey.id)
+              .map(tr =>
+                tr.cleaned === "clean" ? (
+                  <Button
+                    onClick={() => this.confirmClean(tr.id)}
+                    color="primary"
+                  >
+                    confirm trash pickup
+                  </Button>
+                ) : (
+                  <form onSubmit={this.handleSubmit}>
+                    <input
+                      type="text"
+                      placeholder="reset bounty"
+                      value={this.state.newBounty}
+                      onChange={e =>
+                        this.setState({
+                          newBounty: e.target.value
+                        })
+                      }
+                    />
+                    <input type="submit" value="Change Bounty" />
+                  </form>
+                )
+              )}
+        </div>
+
         <Map
           userTrashCoords={this.state.userTrashCoords}
           markerKeyHolder={this.markerKeyHolder}
+          trash={this.state.trash}
         />
 
-        {this.state.trash.length &&
+        {this.state.trash.length > 0 &&
           this.state.trash
             .filter(trash => trash.location_id === this.state.markerKey)
             .map(trash => (
@@ -186,10 +227,11 @@ class MapContainer extends React.Component {
               />
             ))}
         <div className="text-center">
-          <form className="text-center" onSubmit={this.handleTrashSubmit}>
-            <button onClick={this.saveLocation}>
-              <h3>Snap-Shot Location</h3>
-            </button>
+          <form
+            className="text-center bottomForm"
+            onSubmit={this.handleTrashSubmit}
+          >
+            <button onClick={this.saveLocation}>SnapShot Location</button>
             <input
               type="text"
               name="bounty"
@@ -208,10 +250,7 @@ class MapContainer extends React.Component {
               required
             />
 
-            <button type="submit">
-              {" "}
-              <h3>Report Trash </h3>
-            </button>
+            <button type="submit"> Report Trash</button>
           </form>
         </div>
       </div>
@@ -219,4 +258,4 @@ class MapContainer extends React.Component {
   }
 }
 
-export default MapContainer;
+export default ReporterMapForm;

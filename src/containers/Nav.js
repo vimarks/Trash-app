@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import "../components/auth/style.css";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
@@ -44,31 +44,34 @@ class Nav extends React.Component {
   };
 
   render() {
-    const navStyle = {
-      color: "black"
-    };
     return (
       <nav>
-        <br></br>
-        <br></br>
         <ul className="nav-links">
-          <Link style={navStyle} to="/report">
+          <li className="logo">
+            <h1>
+              trash<span>app</span>
+            </h1>
+          </li>
+          <Link to="/report">
             <li>Report</li>
           </Link>
-          <Link style={navStyle} to="/clean">
+
+          <Link to="/clean">
             <li>Clean</li>
           </Link>
-          <Link style={navStyle} to="/wallet">
+          <Link to="/wallet">
             <li>Wallet</li>
           </Link>
-          <Link style={navStyle} to="/trophy">
-            <li>Trophy-Room</li>
+          <Link to="/trophy">
+            <li>Trophy Room</li>
           </Link>
-          <Link onClick={this.logout} style={navStyle} to="/login">
+          <Link onClick={this.logout} to="/login">
             <li>Logout</li>
           </Link>
-          <li style={navStyle}>
-            <h3>Welcome {localStorage.getItem("currentUser_username")}!</h3>
+          <li>
+            <h3>
+              Welcome <em>{localStorage.getItem("currentUser_username")}</em>!
+            </h3>
             {this.state.userWallet.balance} kP$
           </li>
         </ul>

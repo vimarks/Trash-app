@@ -53,7 +53,9 @@ export default class Registration extends Component {
     return (
       <div className="bg">
         <Container className="App">
-          <h1>Trash-App</h1>
+          <h1 className="logo">
+            trash <span>app</span>
+          </h1>
           <br></br>
           <br></br>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { geolocated } from "react-geolocated";
-import MapContainer from "./MapContainer";
+import ReporterMapForm from "./ReporterMapForm";
 
 class Geolocator extends React.Component {
   render() {
@@ -10,7 +10,7 @@ class Geolocator extends React.Component {
       <div>Geolocation is not enabled</div>
     ) : this.props.coords ? (
       <div>
-        <MapContainer coords={this.props.coords} />
+        <ReporterMapForm coords={this.props.coords} />
       </div>
     ) : (
       <div>Getting the location data&hellip; </div>

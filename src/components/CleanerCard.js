@@ -5,10 +5,7 @@ const CleanerCard = props => {
   return (
     <div>
       <Jumbotron>
-        <h1 className="display-3">{props.bounty} kP$</h1>
-        <p className="lead">{props.description}</p>
         <hr className="my-2" />
-
         <p className="lead">
           {props.cleaned === "dirty" && props.locVerify ? (
             <Button onClick={() => props.cleanTrash(props.id)} color="primary">
@@ -17,7 +14,7 @@ const CleanerCard = props => {
           ) : props.cleaned === "clean" ? (
             "Awaiting Confirmation"
           ) : (
-            "Incorrect Location "
+            "Compare Current Location "
           )}
         </p>
       </Jumbotron>
