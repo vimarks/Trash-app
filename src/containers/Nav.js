@@ -14,25 +14,27 @@ class Nav extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/wallets/getUserWallet", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        user_id: localStorage.getItem("currentUser_id")
+    if (this.token) {
+      fetch("http://localhost:3001/wallets/getUserWallet", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          user_id: localStorage.getItem("currentUser_id")
+        })
       })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({
-          userWallet: data.wallet[0]
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.setState({
+            userWallet: data.wallet[0]
+          });
         });
-      });
+    }
   }
 
   logout = () => {
@@ -72,7 +74,7 @@ class Nav extends React.Component {
             <h3>
               Welcome <em>{localStorage.getItem("currentUser_username")}</em>!
             </h3>
-            {this.state.userWallet.balance} kP$
+            {this.state.userWallet && this.state.userWallet.balance} kP$
           </li>
         </ul>
       </nav>

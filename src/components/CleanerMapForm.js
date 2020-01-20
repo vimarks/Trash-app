@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "reactstrap";
 import CleanerMap from "./CleanerMap";
-import CleanerCard from "./CleanerCard";
 
 class CleanerMapForm extends React.Component {
   token = localStorage.getItem("token");
@@ -12,7 +11,8 @@ class CleanerMapForm extends React.Component {
       trashLocations: [],
       trash: [],
       markerKey: null,
-      locVerify: false
+      locVerify: null,
+      attempts: 0
     };
   }
 
@@ -68,11 +68,13 @@ class CleanerMapForm extends React.Component {
       this.state.markerKey !== loc.id
         ? this.setState({
             markerKey: loc.id,
-            locVerify: false
+            locVerify: false,
+            attempts: 0
           })
         : this.setState({
             markerKey: null,
-            locVerify: false
+            locVerify: false,
+            attempts: 0
           });
     }
   };
@@ -96,7 +98,8 @@ class CleanerMapForm extends React.Component {
       });
     } else {
       this.setState({
-        locVerify: false
+        locVerify: false,
+        attempts: this.state.attempts + 1
       });
     }
   };
@@ -112,21 +115,33 @@ class CleanerMapForm extends React.Component {
           locVerify={this.state.locVerify}
           compareLocation={this.compareLocation}
         />
-        {this.state.trash
-          .filter(tr => tr.location_id === this.state.markerKey)
-          .map(tr =>
-            tr.cleaned === "dirty" && this.state.locVerify ? (
-              <Button onClick={() => this.cleanTrash(tr.id)} color="primary">
-                Clean it!
-              </Button>
-            ) : tr.cleaned === "clean" ? (
-              <h2>Awaiting Confirmation</h2>
-            ) : (
-              <Button onClick={this.compareLocation} className="verify">
-                Verify Location
-              </Button>
-            )
-          )}
+        <div>
+          {this.state.trash
+            .filter(tr => tr.location_id === this.state.markerKey)
+            .map(tr =>
+              tr.cleaned === "dirty" &&
+              this.state.locVerify === false &&
+              this.state.attempts % 2 === 0 ? (
+                <Button className="verify" onClick={this.compareLocation}>
+                  Verify Location
+                </Button>
+              ) : tr.cleaned === "dirty" && this.state.locVerify === true ? (
+                <Button
+                  className="verify"
+                  onClick={() => this.cleanTrash(tr.id)}
+                  color="primary"
+                >
+                  Clean it!
+                </Button>
+              ) : tr.cleaned === "dirty" &&
+                this.state.locVerify === false &&
+                this.state.attempts % 2 !== 0 ? (
+                <h2 className="verify"> Incorrect Location </h2>
+              ) : (
+                <h2 className="verify"> Awaiting Confirmation </h2>
+              )
+            )}
+        </div>
       </div>
     );
   }

@@ -48,11 +48,13 @@ class Login extends Component {
         return response.json();
       })
       .then(user => {
-        localStorage.setItem("token", user.jwt);
-        localStorage.setItem("currentUser_id", user.id);
-        localStorage.setItem("currentUser_username", user.username);
-        this.props.setAuth();
-        this.props.history.push("/report");
+        if (!user.message) {
+          localStorage.setItem("token", user.jwt);
+          localStorage.setItem("currentUser_id", user.id);
+          localStorage.setItem("currentUser_username", user.username);
+          this.props.auth();
+          this.props.history.push("/report");
+        }
       });
   };
 
@@ -65,8 +67,8 @@ class Login extends Component {
               trash<span>app</span>
             </h1>
           </div>
-          <div class="row justify-content-center login">
-            <div class="col-sm-10 col-md-6 col-xl-4">
+          <div className="row justify-content-center login">
+            <div className="col-sm-10 col-md-6 col-xl-4">
               <Form onSubmit={this.handleSubmit} className="form">
                 <Col>
                   <FormGroup>

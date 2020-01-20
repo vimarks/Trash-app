@@ -17,6 +17,7 @@ body {
 .bottomForm button {
   padding-bottom: 0;
 }
+
 .bottomForm button:hover {
   background-color: black;
   color: white;
@@ -78,6 +79,11 @@ button.btn.btn-secondary {
   color: black;
 }
 button.verify {
+  margin: 20px auto;
+  width: 30%;
+  display: block;
+}
+h2.verify {
   margin: 20px auto;
   width: 30%;
   display: block;

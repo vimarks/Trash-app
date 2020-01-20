@@ -1,7 +1,5 @@
 import React from "react";
 import Map from "./Map";
-import { Button } from "reactstrap";
-import TrashCard from "./TrashCard";
 
 class ReporterMapForm extends React.Component {
   token = localStorage.getItem("token");
@@ -72,9 +70,6 @@ class ReporterMapForm extends React.Component {
   };
 
   patchBounty = newBounty => {
-    console.log(this.state.trash);
-    console.log(this.state.markerKey);
-
     let id = this.state.trash.filter(
       trash => trash.location_id === this.state.markerKey.id
     )[0].id;
@@ -175,19 +170,19 @@ class ReporterMapForm extends React.Component {
 
   render() {
     return (
-      <div className="text-center">
-        <div>
+      <div>
+        <div className="text-center bottomForm">
           {this.state.markerKey &&
             this.state.trash
               .filter(tr => tr.location_id === this.state.markerKey.id)
               .map(tr =>
                 tr.cleaned === "clean" ? (
-                  <Button
+                  <button
                     onClick={() => this.confirmClean(tr.id)}
                     color="primary"
                   >
                     confirm trash pickup
-                  </Button>
+                  </button>
                 ) : (
                   <form onSubmit={this.handleSubmit}>
                     <input
@@ -212,20 +207,6 @@ class ReporterMapForm extends React.Component {
           trash={this.state.trash}
         />
 
-        {this.state.trash.length > 0 &&
-          this.state.trash
-            .filter(trash => trash.location_id === this.state.markerKey)
-            .map(trash => (
-              <TrashCard
-                id={trash.id}
-                confirmClean={this.confirmClean}
-                description={trash.description}
-                bounty={trash.bounty}
-                cleaned={trash.cleaned}
-                reporter_id={trash.reporter_id}
-                patchBounty={this.patchBounty}
-              />
-            ))}
         <div className="text-center">
           <form
             className="text-center bottomForm"

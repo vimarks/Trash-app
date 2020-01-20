@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "reactstrap";
+
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import "./auth/style.css";
 
@@ -18,7 +18,7 @@ export default function Map(props) {
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/vimarks/ck5deh3np08ky1joiws1tc0yu"
+        mapStyle="mapbox://styles/vimarks/ck5edmyhu0vv81jo6qxc2bjh3"
         onViewportChange={viewport => {
           setViewport(viewport);
         }}
