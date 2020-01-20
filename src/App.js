@@ -19,6 +19,7 @@ class App extends React.Component {
   }
   componentDidMount() {
     this.auth();
+    console.log("cdm hit");
   }
 
   setAuth = () => {
@@ -28,6 +29,7 @@ class App extends React.Component {
   };
 
   auth = () => {
+    console.log("auth hit");
     if (
       localStorage.getItem("token") &&
       localStorage.getItem("currentUser_id")
@@ -45,7 +47,7 @@ class App extends React.Component {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/register" component={Registration} />
             <Route exact path="/login">
-              <Login setAuth={this.setAuth} />
+              <Login setAuth={this.setAuth} auth={this.auth} />
             </Route>
             <PrivateRoute
               setAuth={this.setAuth}

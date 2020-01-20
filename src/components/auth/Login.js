@@ -48,11 +48,13 @@ class Login extends Component {
         return response.json();
       })
       .then(user => {
-        localStorage.setItem("token", user.jwt);
-        localStorage.setItem("currentUser_id", user.id);
-        localStorage.setItem("currentUser_username", user.username);
-        this.props.setAuth();
-        this.props.history.push("/report");
+        if (!user.message) {
+          localStorage.setItem("token", user.jwt);
+          localStorage.setItem("currentUser_id", user.id);
+          localStorage.setItem("currentUser_username", user.username);
+          this.props.auth();
+          this.props.history.push("/report");
+        }
       });
   };
 
@@ -60,44 +62,49 @@ class Login extends Component {
     return (
       <div className="bg">
         <Container className="App">
-          <h1>Trash-App</h1>
-          <br></br>
-          <br></br>
-
-          <Form onSubmit={this.handleSubmit} className="form">
-            <Col>
-              <FormGroup>
-                <Label>Username</Label>
-                <Input
-                  type="username"
-                  name="username"
-                  id="username"
-                  placeholder="username"
-                  value={this.state.username}
-                  onChange={this.handleChange}
-                  required
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="examplePassword"
-                  placeholder="********"
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                  required
-                />
-              </FormGroup>
-            </Col>
-            <Button type="submit"> Login </Button>
-            <Link to="/register">
-              <Button>Register</Button>
-            </Link>
-          </Form>
+          <div className="logo">
+            <h1>
+              trash<span>app</span>
+            </h1>
+          </div>
+          <div className="row justify-content-center login">
+            <div className="col-sm-10 col-md-6 col-xl-4">
+              <Form onSubmit={this.handleSubmit} className="form">
+                <Col>
+                  <FormGroup>
+                    <Label>Username</Label>
+                    <Input
+                      type="username"
+                      name="username"
+                      id="username"
+                      placeholder="username"
+                      value={this.state.username}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Label for="examplePassword">Password</Label>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="examplePassword"
+                      placeholder="********"
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </FormGroup>
+                </Col>
+                <Button type="submit">Login</Button>
+                <Link to="/register">
+                  <Button>Register</Button>
+                </Link>
+              </Form>
+            </div>
+          </div>
         </Container>
       </div>
     );

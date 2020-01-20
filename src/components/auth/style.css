@@ -1,3 +1,24 @@
+// General //
+
+// Login Page //
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+nav a {
+  color: black;
+}
+
+.nav-links {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+
 .trash-button {
   background-color: transparent;
   border: none;
@@ -18,11 +39,6 @@
   justify-content: space-around;
 }
 
-body,
-html {
-  height: 50%;
-  margin: 0;
-}
 .bg {
   background-image: url("https://images.unsplash.com/photo-1528190336454-13cd56b45b5a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80");
   height: 100vh;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
   Form,
   Input,
@@ -53,41 +54,48 @@ export default class Registration extends Component {
     return (
       <div className="bg">
         <Container className="App">
-          <h1>Trash-App</h1>
-          <br></br>
-          <br></br>
-
-          <Form onSubmit={this.handleSubmit} className="form">
-            <Col>
-              <FormGroup>
-                <Label>Username</Label>
-                <Input
-                  type="username"
-                  name="username"
-                  id="username"
-                  placeholder="username"
-                  value={this.state.username}
-                  onChange={this.handleChange}
-                  required
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="examplePassword"
-                  placeholder="********"
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                  required
-                />
-              </FormGroup>
-            </Col>
-            <Button type="submit"> Register </Button>
-          </Form>
+          <div className="logo">
+            <h1>
+              trash<span>app</span>
+            </h1>
+          </div>
+          <div className="row justify-content-center login">
+            <div className="col-sm-10 col-md-6 col-xl-4">
+              <Form onSubmit={this.handleSubmit} className="form">
+                <Col>
+                  <FormGroup>
+                    <Label>Username</Label>
+                    <Input
+                      type="username"
+                      name="username"
+                      id="username"
+                      placeholder="username"
+                      value={this.state.username}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Label for="examplePassword">Password</Label>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="examplePassword"
+                      placeholder="********"
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </FormGroup>
+                </Col>
+                <Button className="verify" type="submit">
+                  Register
+                </Button>
+              </Form>
+            </div>
+          </div>
         </Container>
       </div>
     );

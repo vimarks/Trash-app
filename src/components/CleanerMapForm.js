@@ -1,8 +1,8 @@
 import React from "react";
+import { Button } from "reactstrap";
 import CleanerMap from "./CleanerMap";
-import CleanerCard from "./CleanerCard";
 
-class CleanerMapContainer extends React.Component {
+class CleanerMapForm extends React.Component {
   token = localStorage.getItem("token");
 
   constructor() {
@@ -11,7 +11,8 @@ class CleanerMapContainer extends React.Component {
       trashLocations: [],
       trash: [],
       markerKey: null,
-      locVerify: false
+      locVerify: null,
+      attempts: 0
     };
   }
 
@@ -62,16 +63,20 @@ class CleanerMapContainer extends React.Component {
       });
   };
 
-  markerKeyHolder = id => {
-    this.state.markerKey !== id
-      ? this.setState({
-          markerKey: id,
-          locVerify: false
-        })
-      : this.setState({
-          markerKey: null,
-          locVerify: false
-        });
+  markerKeyHolder = loc => {
+    if (loc) {
+      this.state.markerKey !== loc.id
+        ? this.setState({
+            markerKey: loc.id,
+            locVerify: false,
+            attempts: 0
+          })
+        : this.setState({
+            markerKey: null,
+            locVerify: false,
+            attempts: 0
+          });
+    }
   };
 
   compareLocation = () => {
@@ -91,10 +96,10 @@ class CleanerMapContainer extends React.Component {
       this.setState({
         locVerify: true
       });
-      console.log(this.state.locVerify);
     } else {
       this.setState({
-        locVerify: false
+        locVerify: false,
+        attempts: this.state.attempts + 1
       });
     }
   };
@@ -105,29 +110,41 @@ class CleanerMapContainer extends React.Component {
         <CleanerMap
           trashLocations={this.state.trashLocations}
           markerKeyHolder={this.markerKeyHolder}
+          trash={this.state.trash}
+          cleanTrash={this.cleanTrash}
+          locVerify={this.state.locVerify}
+          compareLocation={this.compareLocation}
         />
-
-        {this.state.trash.length > 0 &&
-          this.state.trash
-            .filter(trash => trash.location_id === this.state.markerKey)
-            .map(trash => (
-              <CleanerCard
-                cleanTrash={this.cleanTrash}
-                id={trash.id}
-                description={trash.description}
-                bounty={trash.bounty}
-                cleaned={trash.cleaned}
-                reporter_id={trash.reporter_id}
-                locVerify={this.state.locVerify}
-              />
-            ))}
-
-        <button onClick={this.compareLocation}>
-          <h3> Compare Location </h3>
-        </button>
+        <div>
+          {this.state.trash
+            .filter(tr => tr.location_id === this.state.markerKey)
+            .map(tr =>
+              tr.cleaned === "dirty" &&
+              this.state.locVerify === false &&
+              this.state.attempts % 2 === 0 ? (
+                <Button className="verify" onClick={this.compareLocation}>
+                  Verify Location
+                </Button>
+              ) : tr.cleaned === "dirty" && this.state.locVerify === true ? (
+                <Button
+                  className="verify"
+                  onClick={() => this.cleanTrash(tr.id)}
+                  color="primary"
+                >
+                  Clean it!
+                </Button>
+              ) : tr.cleaned === "dirty" &&
+                this.state.locVerify === false &&
+                this.state.attempts % 2 !== 0 ? (
+                <h2 className="verify"> Incorrect Location </h2>
+              ) : (
+                <h2 className="verify"> Awaiting Confirmation </h2>
+              )
+            )}
+        </div>
       </div>
     );
   }
 }
 
-export default CleanerMapContainer;
+export default CleanerMapForm;

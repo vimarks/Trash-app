@@ -1,20 +1,95 @@
-.App {
+body {
+  font-family: "Source Sans Pro", sans-serif !important;
+}
+.trophyRoom ul {
+  list-style: none;
+}
+.bottomForm input,
+.bottomForm button {
+  width: 15%;
+  margin: 40px 5% 10px 5%;
+  border: 1px solid black;
+  font-size: 1.2em;
+}
+.bottomForm input {
+  padding-left: 5px;
+}
+.bottomForm button {
+  padding-bottom: 0;
+}
+
+.bottomForm button:hover {
+  background-color: black;
+  color: white;
+  transition-duration: 0.3s;
+}
+.nav-links {
+  margin-top: 20px;
+}
+.nav-links li {
+  font-size: 1em;
+  padding: 0 10px;
+  width: 100%;
+}
+.nav-links .logo h1 {
+  font-size: 2.5em;
+  padding-top: 0;
+}
+ul.nav-links {
+  padding-left: 0;
+}
+.nav-links a {
+  width: 100%;
   text-align: center;
 }
+.nav-links a:hover {
+  color: black;
+  text-decoration: underline;
+}
+.nav-links h3 {
+  font-size: 1em;
+  padding-top: 0;
+}
+.logo {
+  font-family: "Source Sans Pro", sans-serif;
+  width: 100%;
+  text-align: center;
+}
+.logo h1 {
+  font-size: 5em;
+  margin-bottom: 0.25em;
+  font-weight: 800;
+  padding-top: 60px;
+}
+.form input {
+  border: 2px solid black;
+}
+.logo span {
+  font-size: 50%;
+}
+.login button.btn.btn-secondary {
+  float: left;
+  width: 30%;
+  margin: 10%;
+}
+button.btn.btn-secondary {
+  border: 2px solid black;
+  background-color: white;
 
-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 10vh;
-  background-image: url("https://images.unsplash.com/photo-1528190336454-13cd56b45b5a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80");
   color: black;
 }
-
-.nav-links {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  list-style: none;
+button.verify {
+  margin: 20px auto;
+  width: 30%;
+  display: block;
+}
+h2.verify {
+  margin: 20px auto;
+  width: 30%;
+  display: block;
+}
+button.btn.btn-secondary:hover {
+  color: white;
+  background-color: black;
+  transition-duration: 0.3s;
 }

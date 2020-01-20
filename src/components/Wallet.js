@@ -1,5 +1,5 @@
 import React from "react";
-import { Jumbotron, Button } from "reactstrap";
+import { Jumbotron } from "reactstrap";
 
 class Wallet extends React.Component {
   token = localStorage.getItem("token");
