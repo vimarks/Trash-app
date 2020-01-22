@@ -4,7 +4,7 @@
 
 - [General info](#general-info)
 - [Technologies](#technologies)
-- [Examples of Use](#examples-of-use)
+- [Example of Use](#example-of-use)
 - [Credits](#credits)
 
 ---
@@ -27,15 +27,11 @@ The frontend is written in React, interacting with [Geolocation API](https://w3c
 - [react-geoloacted](https://www.npmjs.com/package/react-geolocated)
 - [react-map-gl](https://www.npmjs.com/package/react-map-gl)
 
-## Examples of Use
+## Example of Use
 
-Examples of use:
+Example of use:
 
-![](/images/game_start.gif)
-
-![](/images/login_play.gif)
-
-![](/images/endNscores.gif)
+- [Demo](https://www.youtube.com/watch?v=OyyNuxiHoUk&t=9s)
 
 ## Credits
 
