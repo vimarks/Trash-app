@@ -1,4 +1,4 @@
-# Trash-App
+# Trash-app
 
 ## Table of contents
 
@@ -11,7 +11,7 @@
 
 ## General info
 
-Trash-App is A web app that crowd-sources city cleanup by incentivizing reporting and cleaning of trash through a user generated, free-market economy.
+Trash-app is A web app that crowd-sources city cleanup by incentivizing reporting and cleaning of trash through a user generated, free-market economy.
 
 ---
 
