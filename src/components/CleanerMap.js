@@ -23,8 +23,8 @@ export default function Map(props) {
           setViewport(viewport);
         }}
       >
-        {props.trashLocations.length > 0 &&
-          props.trashLocations.map(loc => (
+        {props.dirtyTrashLocations &&
+          props.dirtyTrashLocations.map(loc => (
             <Marker
               key={loc.id}
               latitude={loc.latitude}
@@ -35,10 +35,29 @@ export default function Map(props) {
                 onClick={e => {
                   e.preventDefault();
                   setSelectedLocation(loc);
-                  props.markerKeyHolder(loc);
+                  props.markerKeyHolder(loc.id);
                 }}
               >
                 <img alt="trashcan" height="20px" src="/trash_can.png" />
+              </button>
+            </Marker>
+          ))}
+        {props.cleanTrashLocations &&
+          props.cleanTrashLocations.map(loc => (
+            <Marker
+              key={loc.id}
+              latitude={loc.latitude}
+              longitude={loc.longitude}
+            >
+              <button
+                className="trash-button"
+                onClick={e => {
+                  e.preventDefault();
+                  setSelectedLocation(loc);
+                  props.markerKeyHolder(loc.id);
+                }}
+              >
+                <img alt="trashcan" height="26px" src="/2107157.png" />
               </button>
             </Marker>
           ))}

@@ -11,7 +11,8 @@ class ReporterMapForm extends React.Component {
       description: "",
       bounty: null,
       trash: [],
-      userTrashCoords: [],
+      dirtyUserTrashCoords: [],
+      cleanUserTrashCoords: [],
       markerKey: null,
       newBounty: 0
     };
@@ -37,12 +38,11 @@ class ReporterMapForm extends React.Component {
         return response.json();
       })
       .then(data => {
-        if (data.userTrashCoords.length > 0) {
-          this.setState({
-            userTrashCoords: data.userTrashCoords,
-            trash: data.trash
-          });
-        }
+        this.setState({
+          dirtyUserTrashCoords: data.dirtyUserTrashCoords,
+          cleanUserTrashCoords: data.cleanUserTrashCoords,
+          trash: data.trash
+        });
       });
   };
 
@@ -64,14 +64,15 @@ class ReporterMapForm extends React.Component {
       .then(data => {
         this.setState({
           trash: data.allTrash,
-          userTrashCoords: data.userTrashCoords
+          dirtyUserTrashCoords: data.dirtyUserTrashCoords,
+          cleanUserTrashCoords: data.cleanUserTrashCoords
         });
       });
   };
 
   patchBounty = newBounty => {
     let id = this.state.trash.filter(
-      trash => trash.location_id === this.state.markerKey.id
+      trash => trash.location_id === this.state.markerKey
     )[0].id;
 
     fetch("http://localhost:3001/trashes/patchBounty/" + id, {
@@ -96,6 +97,7 @@ class ReporterMapForm extends React.Component {
   };
 
   markerKeyHolder = id => {
+    console.log(this.state.markerKey);
     this.state.markerKey !== id
       ? this.setState({
           markerKey: id
@@ -159,7 +161,8 @@ class ReporterMapForm extends React.Component {
       .then(data => {
         this.setState({
           trash: data.trash,
-          userTrashCoords: data.userTrashCoords
+          dirtyUserTrashCoords: data.dirtyUserTrashCoords,
+          cleanUserTrashCoords: data.cleanUserTrashCoords
         });
       });
   };
@@ -172,9 +175,10 @@ class ReporterMapForm extends React.Component {
     return (
       <div>
         <div className="text-center bottomForm">
+          {console.log(this.state.trash)}
           {this.state.markerKey &&
             this.state.trash
-              .filter(tr => tr.location_id === this.state.markerKey.id)
+              .filter(tr => tr.location_id === this.state.markerKey)
               .map(tr =>
                 tr.cleaned === "clean" ? (
                   <button
@@ -202,7 +206,8 @@ class ReporterMapForm extends React.Component {
         </div>
 
         <Map
-          userTrashCoords={this.state.userTrashCoords}
+          dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
+          cleanUserTrashCoords={this.state.cleanUserTrashCoords}
           markerKeyHolder={this.markerKeyHolder}
           trash={this.state.trash}
         />
