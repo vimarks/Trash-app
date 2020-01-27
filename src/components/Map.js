@@ -11,7 +11,7 @@ export default function Map(props) {
     zoom: 10
   });
   const [selectedLocation, setSelectedLocation] = useState(null);
-  console.log(selectedLocation);
+
   return (
     <div>
       <ReactMapGL
@@ -22,8 +22,8 @@ export default function Map(props) {
           setViewport(viewport);
         }}
       >
-        {props.userTrashCoords.length > 0 &&
-          props.userTrashCoords.map(loc => (
+        {props.dirtyUserTrashCoords &&
+          props.dirtyUserTrashCoords.map(loc => (
             <Marker
               key={loc.id}
               latitude={loc.latitude}
@@ -34,10 +34,29 @@ export default function Map(props) {
                 onClick={e => {
                   e.preventDefault();
                   setSelectedLocation(loc);
-                  props.markerKeyHolder(loc);
+                  props.markerKeyHolder(loc.id);
                 }}
               >
                 <img alt="trashcan" height="25px" src="/trash_can.png" />
+              </button>
+            </Marker>
+          ))}
+        {props.cleanUserTrashCoords &&
+          props.cleanUserTrashCoords.map(loc => (
+            <Marker
+              key={loc.id}
+              latitude={loc.latitude}
+              longitude={loc.longitude}
+            >
+              <button
+                className="trash-button"
+                onClick={e => {
+                  e.preventDefault();
+                  setSelectedLocation(loc);
+                  props.markerKeyHolder(loc.id);
+                }}
+              >
+                <img alt="trashcan" height="26px" src="/2107157.png" />
               </button>
             </Marker>
           ))}

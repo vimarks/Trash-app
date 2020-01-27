@@ -9,6 +9,8 @@ class CleanerMapForm extends React.Component {
     super();
     this.state = {
       trashLocations: [],
+      dirtyTrashLocations: [],
+      cleanTrashLocations: [],
       trash: [],
       markerKey: null,
       locVerify: null,
@@ -35,6 +37,8 @@ class CleanerMapForm extends React.Component {
       .then(data => {
         this.setState({
           trashLocations: data.trashLocations,
+          dirtyTrashLocations: data.dirtyTrashLocations,
+          cleanTrashLocations: data.cleanTrashLocations,
           trash: data.trash,
           id: this.state.markerKey
         });
@@ -42,6 +46,7 @@ class CleanerMapForm extends React.Component {
   };
 
   cleanTrash = id => {
+    console.log(id);
     fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
@@ -57,17 +62,21 @@ class CleanerMapForm extends React.Component {
         return response.json();
       })
       .then(data => {
+        console.log(data.allTrash);
         this.setState({
-          trash: data.allTrash
+          trash: data.allTrash,
+          dirtyTrashLocations: data.dirtyTrashLocations,
+          cleanTrashLocations: data.cleanTrashLocations
         });
       });
   };
 
-  markerKeyHolder = loc => {
-    if (loc) {
-      this.state.markerKey !== loc.id
+  markerKeyHolder = id => {
+    console.log(this.state.markerKey);
+    if (id) {
+      this.state.markerKey !== id
         ? this.setState({
-            markerKey: loc.id,
+            markerKey: id,
             locVerify: false,
             attempts: 0
           })
@@ -80,7 +89,7 @@ class CleanerMapForm extends React.Component {
   };
 
   compareLocation = () => {
-    let cleanerLocation = this.state.trashLocations.filter(
+    let cleanerLocation = this.state.dirtyTrashLocations.filter(
       trLoc => trLoc.id === this.state.markerKey
     );
 
@@ -109,6 +118,8 @@ class CleanerMapForm extends React.Component {
       <div>
         <CleanerMap
           trashLocations={this.state.trashLocations}
+          dirtyTrashLocations={this.state.dirtyTrashLocations}
+          cleanTrashLocations={this.state.cleanTrashLocations}
           markerKeyHolder={this.markerKeyHolder}
           trash={this.state.trash}
           cleanTrash={this.cleanTrash}
