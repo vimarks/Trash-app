@@ -36,7 +36,6 @@ class CleanerMapForm extends React.Component {
       })
       .then(data => {
         this.setState({
-          trashLocations: data.trashLocations,
           dirtyTrashLocations: data.dirtyTrashLocations,
           cleanTrashLocations: data.cleanTrashLocations,
           trash: data.trash,
@@ -62,7 +61,6 @@ class CleanerMapForm extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log(data.allTrash);
         this.setState({
           trash: data.allTrash,
           dirtyTrashLocations: data.dirtyTrashLocations,
@@ -72,7 +70,6 @@ class CleanerMapForm extends React.Component {
   };
 
   markerKeyHolder = id => {
-    console.log(this.state.markerKey);
     if (id) {
       this.state.markerKey !== id
         ? this.setState({
@@ -117,7 +114,6 @@ class CleanerMapForm extends React.Component {
     return (
       <div>
         <CleanerMap
-          trashLocations={this.state.trashLocations}
           dirtyTrashLocations={this.state.dirtyTrashLocations}
           cleanTrashLocations={this.state.cleanTrashLocations}
           markerKeyHolder={this.markerKeyHolder}
