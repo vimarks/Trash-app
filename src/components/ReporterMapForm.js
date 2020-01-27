@@ -97,7 +97,6 @@ class ReporterMapForm extends React.Component {
   };
 
   markerKeyHolder = id => {
-    console.log(this.state.markerKey);
     this.state.markerKey !== id
       ? this.setState({
           markerKey: id
