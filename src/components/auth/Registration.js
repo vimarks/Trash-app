@@ -29,7 +29,7 @@ export default class Registration extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    fetch("http://trash-app-back.herokuapp.com/users", {
+    fetch("https://trash-app-back.herokuapp.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
