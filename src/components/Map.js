@@ -1,74 +1,142 @@
-import React, { useState } from "react";
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import React, { Component } from "react";
+import { render } from "react-dom";
+import MapGL, { Marker, Popup } from "react-map-gl";
 import "./auth/style.css";
 
-export default function Map(props) {
-  const [viewport, setViewport] = useState({
-    latitude: 30.2772641,
-    longitude: -97.74286459999999,
-    width: "100vw",
-    height: "75vh",
-    zoom: 10
-  });
-  const [selectedLocation, setSelectedLocation] = useState(null);
+const TOKEN =
+  "pk.eyJ1IjoidmltYXJrcyIsImEiOiJjazN5d2F0bjMwMnBwM2xtenVpZnJwOWs5In0.XMP3lHS4L14pf2FKCiV_3g"; // Set your mapbox token here
 
-  return (
-    <div>
-      <ReactMapGL
+const navStyle = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  padding: "10px"
+};
+
+export default class Map extends Component {
+  token = localStorage.getItem("token");
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewport: {
+        latitude: 30.2772641,
+        longitude: -97.74286459999999,
+        zoom: 10,
+        bearing: 0,
+        pitch: 0
+      },
+
+      selectedLocation: null
+    };
+  }
+  setSelectedLocation = loc => {
+    this.setState({
+      selectedLocation: loc
+    });
+  };
+
+  _updateViewport = viewport => {
+    this.setState({ viewport });
+  };
+
+  _onMarkerDragEnd = event => {
+    console.log(this.state.selectedLocation);
+    if (this.state.selectedLocation) {
+      let id = this.state.selectedLocation.id;
+      fetch("https://trash-app-back.herokuapp.com/locations/" + id, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          latitude: event.lngLat[1],
+          longitude: event.lngLat[0],
+          reporter_id: localStorage.getItem("currentUser_id")
+        })
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          console.log(data.locations);
+          this.props.setDirtyUserCoords(data.dirtyUserTrashCoords);
+        });
+    }
+  };
+
+  render() {
+    console.log(this.state.selectedLocation);
+    const { viewport } = this.state;
+
+    return (
+      <MapGL
         {...viewport}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        width="100vw"
+        height="75vh"
         mapStyle="mapbox://styles/vimarks/ck5dbg0mo05rh1joioksl2b41"
-        onViewportChange={viewport => {
-          setViewport(viewport);
-        }}
+        onViewportChange={this._updateViewport}
+        mapboxApiAccessToken={TOKEN}
       >
-        {props.dirtyUserTrashCoords &&
-          props.dirtyUserTrashCoords.map(loc => (
+        {this.props.dirtyUserTrashCoords &&
+          this.props.dirtyUserTrashCoords.map(loc => (
             <Marker
               key={loc.id}
-              latitude={loc.latitude}
               longitude={loc.longitude}
+              latitude={loc.latitude}
+              offsetTop={-20}
+              offsetLeft={-10}
+              draggable
+              onDragEnd={this._onMarkerDragEnd}
             >
               <button
                 className="trash-button"
                 onClick={e => {
                   e.preventDefault();
-                  setSelectedLocation(loc);
-                  props.markerKeyHolder(loc.id);
+                  this.setSelectedLocation(loc);
+                  this.props.markerKeyHolder(loc.id);
                 }}
               >
-                <img alt="trashcan" height="25px" src="/trash_can.png" />
+                <img alt="trashcan" height="20px" src="/trash_can.png" />
               </button>
             </Marker>
           ))}
-        {props.cleanUserTrashCoords &&
-          props.cleanUserTrashCoords.map(loc => (
+        {this.props.cleanUserTrashCoords &&
+          this.props.cleanUserTrashCoords.map(loc => (
             <Marker
               key={loc.id}
-              latitude={loc.latitude}
               longitude={loc.longitude}
+              latitude={loc.latitude}
+              offsetTop={-20}
+              offsetLeft={-10}
+              draggable
+              onDragEnd={this._onMarkerDragEnd}
+              setMarker
             >
               <button
                 className="trash-button"
                 onClick={e => {
                   e.preventDefault();
-                  setSelectedLocation(loc);
-                  props.markerKeyHolder(loc.id);
+                  this.setSelectedLocation(loc);
+                  this.props.markerKeyHolder(loc.id);
                 }}
               >
                 <img alt="trashcan" height="26px" src="/2107157.png" />
               </button>
             </Marker>
           ))}
-        {selectedLocation &&
-          props.trash
-            .filter(tr => tr.location_id === selectedLocation.id)
+        {this.state.selectedLocation &&
+          this.props.trash
+            .filter(tr => tr.location_id === this.state.selectedLocation.id)
             .map(tr => (
               <Popup
-                latitude={selectedLocation.latitude}
-                longitude={selectedLocation.longitude}
+                latitude={this.state.selectedLocation.latitude}
+                longitude={this.state.selectedLocation.longitude}
                 onClose={() => {
-                  setSelectedLocation(null);
+                  this.setState({
+                    selectedLocation: null
+                  });
                 }}
               >
                 <div>
@@ -78,7 +146,11 @@ export default function Map(props) {
                 </div>
               </Popup>
             ))}
-      </ReactMapGL>
-    </div>
-  );
+      </MapGL>
+    );
+  }
+}
+
+export function renderToDom(container) {
+  render(<Map />, container);
 }

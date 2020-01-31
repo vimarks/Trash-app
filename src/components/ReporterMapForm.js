@@ -169,6 +169,11 @@ class ReporterMapForm extends React.Component {
     e.preventDefault();
     this.patchBounty(this.state.newBounty);
   };
+  setDirtyUserCoords = locations => {
+    this.setState({
+      dirtyUserTrashCoords: locations
+    });
+  };
 
   render() {
     return (
@@ -203,13 +208,15 @@ class ReporterMapForm extends React.Component {
                 )
               )}
         </div>
-
-        <Map
-          dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
-          cleanUserTrashCoords={this.state.cleanUserTrashCoords}
-          markerKeyHolder={this.markerKeyHolder}
-          trash={this.state.trash}
-        />
+        <div id="map">
+          <Map
+            setDirtyUserCoords={this.setDirtyUserCoords}
+            dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
+            cleanUserTrashCoords={this.state.cleanUserTrashCoords}
+            markerKeyHolder={this.markerKeyHolder}
+            trash={this.state.trash}
+          />
+        </div>
 
         <div className="text-center">
           <form
