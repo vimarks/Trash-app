@@ -67,7 +67,6 @@ export default class Map extends Component {
   };
 
   render() {
-    console.log(this.state.selectedLocation);
     const { viewport } = this.state;
 
     return (

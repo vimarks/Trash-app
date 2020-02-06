@@ -1,5 +1,6 @@
 import React from "react";
 import Map from "./Map";
+import "./auth/style.css";
 
 class ReporterMapForm extends React.Component {
   token = localStorage.getItem("token");
@@ -14,7 +15,8 @@ class ReporterMapForm extends React.Component {
       dirtyUserTrashCoords: [],
       cleanUserTrashCoords: [],
       markerKey: null,
-      newBounty: 0
+      newBounty: 0,
+      userBalance: null
     };
   }
 
@@ -41,7 +43,8 @@ class ReporterMapForm extends React.Component {
         this.setState({
           dirtyUserTrashCoords: data.dirtyUserTrashCoords,
           cleanUserTrashCoords: data.cleanUserTrashCoords,
-          trash: data.trash
+          trash: data.trash,
+          userBalance: data.userBalance
         });
       });
   };
@@ -137,33 +140,37 @@ class ReporterMapForm extends React.Component {
 
   handleTrashSubmit = event => {
     event.preventDefault();
-    this.saveLocation();
-    fetch("https://trash-app-back.herokuapp.com/trashes", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        location_id: this.state.location_id,
-        bounty: this.state.bounty,
-        cleaned: "dirty",
-        description: this.state.description,
-        cleaner_id: null,
-        reporter_id: localStorage.getItem("currentUser_id")
+    console.log(this.state.userBalance);
+    console.log(this.state.bounty);
+    if (this.state.userBalance > this.state.bounty) {
+      this.saveLocation();
+      fetch("https://trash-app-back.herokuapp.com/trashes", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          location_id: this.state.location_id,
+          bounty: this.state.bounty,
+          cleaned: "dirty",
+          description: this.state.description,
+          cleaner_id: null,
+          reporter_id: localStorage.getItem("currentUser_id")
+        })
       })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({
-          trash: data.trash,
-          dirtyUserTrashCoords: data.dirtyUserTrashCoords,
-          cleanUserTrashCoords: data.cleanUserTrashCoords
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.setState({
+            trash: data.trash,
+            dirtyUserTrashCoords: data.dirtyUserTrashCoords,
+            cleanUserTrashCoords: data.cleanUserTrashCoords
+          });
         });
-      });
+    }
   };
   handleSubmit = e => {
     e.preventDefault();
@@ -179,7 +186,6 @@ class ReporterMapForm extends React.Component {
     return (
       <div>
         <div className="text-center bottomForm">
-          {console.log(this.state.trash)}
           {this.state.markerKey &&
             this.state.trash
               .filter(tr => tr.location_id === this.state.markerKey)
