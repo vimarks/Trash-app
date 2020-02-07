@@ -7,7 +7,7 @@ export default function TrophyRoom() {
 
   useEffect(() => {
     let token = localStorage.getItem("token");
-    fetch("http://localhost:3001/trashes/getTrophies", {
+    fetch("https://trash-app-back.herokuapp.com/trashes/getTrophies", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

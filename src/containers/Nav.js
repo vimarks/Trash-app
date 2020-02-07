@@ -15,7 +15,7 @@ class Nav extends React.Component {
 
   componentDidMount() {
     if (this.token) {
-      fetch("http://localhost:3001/wallets/getUserWallet", {
+      fetch("https://trash-app-back.herokuapp.com/wallets/getUserWallet", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.token}`,

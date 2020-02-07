@@ -31,7 +31,7 @@ class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    fetch("http://localhost:3001/login", {
+    fetch("https://trash-app-back.herokuapp.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

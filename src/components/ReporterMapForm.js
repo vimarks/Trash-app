@@ -1,5 +1,6 @@
 import React from "react";
 import Map from "./Map";
+import "./auth/style.css";
 
 class ReporterMapForm extends React.Component {
   token = localStorage.getItem("token");
@@ -14,7 +15,8 @@ class ReporterMapForm extends React.Component {
       dirtyUserTrashCoords: [],
       cleanUserTrashCoords: [],
       markerKey: null,
-      newBounty: 0
+      newBounty: 0,
+      userBalance: null
     };
   }
 
@@ -23,7 +25,7 @@ class ReporterMapForm extends React.Component {
   }
 
   initialRFetch = () => {
-    fetch("http://localhost:3001/trashes/getUserTrashCoords", {
+    fetch("https://trash-app-back.herokuapp.com/trashes/getUserTrashCoords", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -41,13 +43,14 @@ class ReporterMapForm extends React.Component {
         this.setState({
           dirtyUserTrashCoords: data.dirtyUserTrashCoords,
           cleanUserTrashCoords: data.cleanUserTrashCoords,
-          trash: data.trash
+          trash: data.trash,
+          userBalance: data.userBalance
         });
       });
   };
 
   confirmClean = id => {
-    fetch("http://localhost:3001/trashes/" + id, {
+    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -75,7 +78,7 @@ class ReporterMapForm extends React.Component {
       trash => trash.location_id === this.state.markerKey
     )[0].id;
 
-    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
+    fetch("https://trash-app-back.herokuapp.com/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -107,7 +110,7 @@ class ReporterMapForm extends React.Component {
   };
 
   saveLocation = () => {
-    fetch("http://localhost:3001/locations", {
+    fetch("https://trash-app-back.herokuapp.com/locations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -137,44 +140,52 @@ class ReporterMapForm extends React.Component {
 
   handleTrashSubmit = event => {
     event.preventDefault();
-    this.saveLocation();
-    fetch("http://localhost:3001/trashes", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        location_id: this.state.location_id,
-        bounty: this.state.bounty,
-        cleaned: "dirty",
-        description: this.state.description,
-        cleaner_id: null,
-        reporter_id: localStorage.getItem("currentUser_id")
+    console.log(this.state.userBalance);
+    console.log(this.state.bounty);
+    if (this.state.userBalance > this.state.bounty) {
+      this.saveLocation();
+      fetch("https://trash-app-back.herokuapp.com/trashes", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          location_id: this.state.location_id,
+          bounty: this.state.bounty,
+          cleaned: "dirty",
+          description: this.state.description,
+          cleaner_id: null,
+          reporter_id: localStorage.getItem("currentUser_id")
+        })
       })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({
-          trash: data.trash,
-          dirtyUserTrashCoords: data.dirtyUserTrashCoords,
-          cleanUserTrashCoords: data.cleanUserTrashCoords
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.setState({
+            trash: data.trash,
+            dirtyUserTrashCoords: data.dirtyUserTrashCoords,
+            cleanUserTrashCoords: data.cleanUserTrashCoords
+          });
         });
-      });
+    }
   };
   handleSubmit = e => {
     e.preventDefault();
     this.patchBounty(this.state.newBounty);
+  };
+  setDirtyUserCoords = locations => {
+    this.setState({
+      dirtyUserTrashCoords: locations
+    });
   };
 
   render() {
     return (
       <div>
         <div className="text-center bottomForm">
-          {console.log(this.state.trash)}
           {this.state.markerKey &&
             this.state.trash
               .filter(tr => tr.location_id === this.state.markerKey)
@@ -203,13 +214,15 @@ class ReporterMapForm extends React.Component {
                 )
               )}
         </div>
-
-        <Map
-          dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
-          cleanUserTrashCoords={this.state.cleanUserTrashCoords}
-          markerKeyHolder={this.markerKeyHolder}
-          trash={this.state.trash}
-        />
+        <div id="map">
+          <Map
+            setDirtyUserCoords={this.setDirtyUserCoords}
+            dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
+            cleanUserTrashCoords={this.state.cleanUserTrashCoords}
+            markerKeyHolder={this.markerKeyHolder}
+            trash={this.state.trash}
+          />
+        </div>
 
         <div className="text-center">
           <form
