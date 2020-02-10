@@ -39,7 +39,7 @@ nav a {
 .login-form {
   justify-content: space-around;
 }
-.alert {
+.insufficient {
   background-color: red;
   display: inline-block;
 }

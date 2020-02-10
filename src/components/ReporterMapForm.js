@@ -258,7 +258,7 @@ class ReporterMapForm extends React.Component {
             >
               <button onClick={this.saveLocation}>SnapShot Location</button>
               <input
-                className="alert"
+                className="insufficient"
                 type="text"
                 name="bounty"
                 placeholder="bounty"
