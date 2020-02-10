@@ -140,8 +140,7 @@ class ReporterMapForm extends React.Component {
 
   handleTrashSubmit = event => {
     event.preventDefault();
-    console.log(this.state.userBalance);
-    console.log(this.state.bounty);
+
     if (this.state.userBalance > this.state.bounty) {
       this.saveLocation();
       fetch("https://trash-app-back.herokuapp.com/trashes", {
@@ -170,7 +169,7 @@ class ReporterMapForm extends React.Component {
             cleanUserTrashCoords: data.cleanUserTrashCoords
           });
         });
-    }
+    } // else show "insuficient funds"
   };
   handleSubmit = e => {
     e.preventDefault();
@@ -223,34 +222,64 @@ class ReporterMapForm extends React.Component {
             trash={this.state.trash}
           />
         </div>
+        {this.state.bounty <= this.state.userBalance ? (
+          <div className="text-center">
+            <form
+              className="text-center bottomForm"
+              onSubmit={this.handleTrashSubmit}
+            >
+              <button onClick={this.saveLocation}>SnapShot Location</button>
+              <input
+                type="text"
+                name="bounty"
+                placeholder="bounty"
+                value={this.state.bounty}
+                onChange={this.handleChange}
+                required
+              />
 
-        <div className="text-center">
-          <form
-            className="text-center bottomForm"
-            onSubmit={this.handleTrashSubmit}
-          >
-            <button onClick={this.saveLocation}>SnapShot Location</button>
-            <input
-              type="text"
-              name="bounty"
-              placeholder="bounty"
-              value={this.state.bounty}
-              onChange={this.handleChange}
-              required
-            />
+              <input
+                type="text"
+                name="description"
+                placeholder="description"
+                value={this.state.description}
+                onChange={this.handleChange}
+                required
+              />
 
-            <input
-              type="text"
-              name="description"
-              placeholder="description"
-              value={this.state.description}
-              onChange={this.handleChange}
-              required
-            />
+              <button type="submit"> Report Trash</button>
+            </form>
+          </div>
+        ) : (
+          <div className="text-center">
+            <form
+              className="text-center bottomForm"
+              onSubmit={this.handleTrashSubmit}
+            >
+              <button onClick={this.saveLocation}>SnapShot Location</button>
+              <input
+                className="alert"
+                type="text"
+                name="bounty"
+                placeholder="bounty"
+                value={this.state.bounty}
+                onChange={this.handleChange}
+                required
+              />
 
-            <button type="submit"> Report Trash</button>
-          </form>
-        </div>
+              <input
+                type="text"
+                name="description"
+                placeholder="description"
+                value={this.state.description}
+                onChange={this.handleChange}
+                required
+              />
+
+              <button type="submit"> Report Trash</button>
+            </form>
+          </div>
+        )}
       </div>
     );
   }
