@@ -114,6 +114,7 @@ class CleanerMapForm extends React.Component {
     return (
       <div>
         <CleanerMap
+          coords={this.props.coords}
           dirtyTrashLocations={this.state.dirtyTrashLocations}
           cleanTrashLocations={this.state.cleanTrashLocations}
           markerKeyHolder={this.markerKeyHolder}

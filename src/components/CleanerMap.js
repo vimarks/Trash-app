@@ -4,9 +4,10 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import "./auth/style.css";
 
 export default function Map(props) {
+  console.log(props.coords.latitude);
   const [viewport, setViewport] = useState({
-    latitude: 30.2772641,
-    longitude: -97.74286459999999,
+    latitude: props.coords.latitude,
+    longitude: props.coords.longitude,
     width: "100vw",
     height: "75vh",
     zoom: 10

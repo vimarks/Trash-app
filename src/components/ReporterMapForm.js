@@ -215,6 +215,7 @@ class ReporterMapForm extends React.Component {
         </div>
         <div id="map">
           <Map
+            coords={this.props.coords}
             setDirtyUserCoords={this.setDirtyUserCoords}
             dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
             cleanUserTrashCoords={this.state.cleanUserTrashCoords}
