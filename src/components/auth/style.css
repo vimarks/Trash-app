@@ -39,6 +39,10 @@ nav a {
 .login-form {
   justify-content: space-around;
 }
+.insufficient {
+  background-color: red;
+  display: inline-block;
+}
 
 .bg {
   background-image: url("https://images.unsplash.com/photo-1528190336454-13cd56b45b5a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80");
