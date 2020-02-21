@@ -4,7 +4,6 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import "./auth/style.css";
 
 export default function Map(props) {
-  console.log(props.coords.latitude);
   const [viewport, setViewport] = useState({
     latitude: props.coords.latitude,
     longitude: props.coords.longitude,
@@ -13,7 +12,7 @@ export default function Map(props) {
     zoom: 10
   });
   const [selectedLocation, setSelectedLocation] = useState(null);
-
+  console.log(props.reputations);
   return (
     <div>
       <ReactMapGL
@@ -77,6 +76,19 @@ export default function Map(props) {
                 <div>
                   <h2>{tr.bounty} kP$</h2>
                   <p>{tr.description}</p>
+                  <p>
+                    {
+                      props.users.filter(user => user.id === tr.reporter_id)[0]
+                        .username
+                    }
+                  </p>
+                  <p>
+                    {
+                      props.reputations.filter(
+                        rep => rep.user_id === tr.reporter_id
+                      )[0].rating
+                    }
+                  </p>
                 </div>
               </Popup>
             ))}
