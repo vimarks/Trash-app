@@ -12,7 +12,7 @@ export default function Map(props) {
     zoom: 10
   });
   const [selectedLocation, setSelectedLocation] = useState(null);
-  console.log(props.reputations);
+
   return (
     <div>
       <ReactMapGL

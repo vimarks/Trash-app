@@ -88,8 +88,19 @@ h2.verify {
   width: 30%;
   display: block;
 }
+.rating > span:hover:before {
+  content: "\2605";
+  position: absolute;
+}
 button.btn.btn-secondary:hover {
   color: white;
   background-color: black;
   transition-duration: 0.3s;
+}
+input[type="radio"] {
+  display: none;
+}
+.star {
+  cursor: pointer;
+  transition: color 0.3s;
 }

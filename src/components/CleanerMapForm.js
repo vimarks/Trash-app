@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "reactstrap";
 import CleanerMap from "./CleanerMap";
+import StarRating from "./StarRating";
 
 class CleanerMapForm extends React.Component {
   token = localStorage.getItem("token");
@@ -37,7 +38,6 @@ class CleanerMapForm extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log(data.reputations);
         this.setState({
           dirtyTrashLocations: data.dirtyTrashLocations,
           cleanTrashLocations: data.cleanTrashLocations,
@@ -153,7 +153,10 @@ class CleanerMapForm extends React.Component {
                 this.state.attempts % 2 !== 0 ? (
                 <h2 className="verify"> Incorrect Location </h2>
               ) : (
-                <h2 className="verify"> Awaiting Confirmation </h2>
+                <div>
+                  <h2 className="verify"> Awaiting Confirmation </h2>
+                  <StarRating />
+                </div>
               )
             )}
         </div>
