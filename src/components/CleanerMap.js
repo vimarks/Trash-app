@@ -13,6 +13,20 @@ export default function Map(props) {
   });
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+  const avgRating = reporter_id => {
+    let userRep = props.reputations.filter(rep => rep.user_id === reporter_id);
+    if (userRep.length > 0) {
+      let avgRating =
+        userRep
+          .map(rep => rep.rating)
+          .reduce(function(a, b) {
+            return a + b;
+          }) / userRep.length;
+
+      return avgRating;
+    } else return 0;
+  };
+
   return (
     <div>
       <ReactMapGL
@@ -82,13 +96,7 @@ export default function Map(props) {
                         .username
                     }
                   </p>
-                  <p>
-                    {
-                      props.reputations.filter(
-                        rep => rep.user_id === tr.reporter_id
-                      )[0].rating
-                    }
-                  </p>
+                  <p>{avgRating(tr.reporter_id)}</p>
                 </div>
               </Popup>
             ))}

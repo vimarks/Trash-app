@@ -155,7 +155,7 @@ class CleanerMapForm extends React.Component {
               ) : (
                 <div>
                   <h2 className="verify"> Awaiting Confirmation </h2>
-                  <StarRating />
+                  <StarRating reporter_id={tr.reporter_id} />
                 </div>
               )
             )}
