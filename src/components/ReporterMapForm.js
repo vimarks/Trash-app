@@ -182,6 +182,7 @@ class ReporterMapForm extends React.Component {
   };
 
   render() {
+    console.log(this.state.bounty, this.state.userBalnce, "bounty");
     return (
       <div>
         <div className="text-center bottomForm">

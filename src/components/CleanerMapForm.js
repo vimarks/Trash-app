@@ -26,13 +26,16 @@ class CleanerMapForm extends React.Component {
   }
 
   initialCFetch = () => {
-    fetch("http://localhost:3001/trashes", {
-      method: "GET",
+    fetch("http://localhost:3001/trashes/initialCFetch", {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
         "Content-Type": "application/json",
         Accept: "application/json"
-      }
+      },
+      body: JSON.stringify({
+        cleaner_id: localStorage.getItem("currentUser_id")
+      })
     })
       .then(response => {
         return response.json();
@@ -43,8 +46,7 @@ class CleanerMapForm extends React.Component {
           cleanTrashLocations: data.cleanTrashLocations,
           trash: data.trash,
           users: data.users,
-          reputations: data.reputations,
-          id: this.state.markerKey
+          reputations: data.reputations
         });
       });
   };
