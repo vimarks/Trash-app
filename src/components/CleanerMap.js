@@ -91,12 +91,13 @@ export default function Map(props) {
                   <h2>{tr.bounty} kP$</h2>
                   <p>{tr.description}</p>
                   <p>
+                    Reporter:{" "}
                     {
                       props.users.filter(user => user.id === tr.reporter_id)[0]
                         .username
                     }
                   </p>
-                  <p>{avgRating(tr.reporter_id)}</p>
+                  <p>Rating: {avgRating(tr.reporter_id)} / 5</p>
                 </div>
               </Popup>
             ))}
