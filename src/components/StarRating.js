@@ -5,6 +5,7 @@ const StarRating = props => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   let token = localStorage.getItem("token");
+  const isEnabled = rating;
 
   const submitRating = () => {
     fetch("http://localhost:3001/reputations", {
@@ -16,6 +17,8 @@ const StarRating = props => {
       },
       body: JSON.stringify({
         reporter_id: props.reporter_id,
+        trash_id: props.trash_id,
+        cleaner_id: localStorage.getItem("currentUser_id"),
         rating: rating
       })
     })
@@ -23,10 +26,9 @@ const StarRating = props => {
         return response.json();
       })
       .then(data => {
-        console.log(data.avgRating);
+        props.setReputations(data.reputations);
+        setRating(null);
       });
-
-    setRating(null);
   };
 
   return (

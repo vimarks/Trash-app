@@ -50,7 +50,6 @@ class CleanerMapForm extends React.Component {
   };
 
   cleanTrash = id => {
-    console.log(id);
     fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
@@ -115,6 +114,12 @@ class CleanerMapForm extends React.Component {
     }
   };
 
+  setReputations = reps => {
+    console.log(reps);
+    this.setState({
+      reputations: reps
+    });
+  };
   render() {
     return (
       <div>
@@ -152,10 +157,17 @@ class CleanerMapForm extends React.Component {
                 this.state.locVerify === false &&
                 this.state.attempts % 2 !== 0 ? (
                 <h2 className="verify"> Incorrect Location </h2>
+              ) : this.state.reputations.filter(rep => rep.trash_id === tr.id)
+                  .length > 0 ? (
+                <h2 className="verify"> Awaiting Confirmation </h2>
               ) : (
                 <div>
+                  <StarRating
+                    setReputations={this.setReputations}
+                    reporter_id={tr.reporter_id}
+                    trash_id={tr.id}
+                  />
                   <h2 className="verify"> Awaiting Confirmation </h2>
-                  <StarRating reporter_id={tr.reporter_id} />
                 </div>
               )
             )}
