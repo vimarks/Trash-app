@@ -60,7 +60,6 @@ export default class Map extends Component {
           return response.json();
         })
         .then(data => {
-          console.log(data.locations);
           this.props.setDirtyUserCoords(data.dirtyUserTrashCoords);
         });
     }
@@ -78,7 +77,7 @@ export default class Map extends Component {
         onViewportChange={this._updateViewport}
         mapboxApiAccessToken={TOKEN}
       >
-        {this.props.dirtyUserTrashCoords &&
+        {this.props.dirtyUserTrashCoords.length > 0 &&
           this.props.dirtyUserTrashCoords.map(loc => (
             <Marker
               key={loc.id}
@@ -101,7 +100,7 @@ export default class Map extends Component {
               </button>
             </Marker>
           ))}
-        {this.props.cleanUserTrashCoords &&
+        {this.props.cleanUserTrashCoords.length > 0 &&
           this.props.cleanUserTrashCoords.map(loc => (
             <Marker
               key={loc.id}
