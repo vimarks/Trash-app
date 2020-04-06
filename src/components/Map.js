@@ -40,7 +40,6 @@ export default class Map extends Component {
   };
 
   _onMarkerDragEnd = event => {
-    console.log(this.state.selectedLocation);
     if (this.state.selectedLocation) {
       let id = this.state.selectedLocation.id;
       fetch("http://localhost:3001/locations/" + id, {

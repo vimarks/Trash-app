@@ -104,3 +104,7 @@ input[type="radio"] {
   cursor: pointer;
   transition: color 0.3s;
 }
+
+.starGroup {
+  text-align: center;
+}

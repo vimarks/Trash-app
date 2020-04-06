@@ -32,7 +32,7 @@ const StarRating = props => {
   };
 
   return (
-    <div>
+    <div className="starGroup">
       {[...Array(5)].map((star, i) => {
         const ratingValue = i + 1;
         return (
