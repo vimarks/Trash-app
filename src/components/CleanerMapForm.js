@@ -163,7 +163,7 @@ class CleanerMapForm extends React.Component {
                   .length > 0 ? (
                 <h2 className="verify"> Awaiting Confirmation </h2>
               ) : (
-                <div>
+                <div className="starGroup">
                   <StarRating
                     setReputations={this.setReputations}
                     reporter_id={tr.reporter_id}
