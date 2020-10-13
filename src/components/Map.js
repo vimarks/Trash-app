@@ -49,7 +49,7 @@ export default class Map extends Component {
   _onMarkerDragEnd = event => {
     if (this.state.selectedLocation) {
       let id = this.state.selectedLocation.id;
-      fetch("https://localhost:3001/locations" + id, {
+      fetch("http://localhost:3001/locations/" + id, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${this.token}`,

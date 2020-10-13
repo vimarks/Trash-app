@@ -25,7 +25,7 @@ class ReporterMapForm extends React.Component {
   }
 
   initialRFetch = () => {
-    fetch("https://localhost:3001/trashes/getUserTrashCoords", {
+    fetch("http://localhost:3001/trashes/getUserTrashCoords", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -50,7 +50,7 @@ class ReporterMapForm extends React.Component {
   };
 
   confirmClean = id => {
-    fetch("https://localhost:3001/trashes/" + id, {
+    fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -78,7 +78,7 @@ class ReporterMapForm extends React.Component {
       trash => trash.location_id === this.state.markerKey
     )[0].id;
 
-    fetch("https://localhost:3001/trashes/patchBounty/" + id, {
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -110,7 +110,7 @@ class ReporterMapForm extends React.Component {
   };
 
   saveLocation = () => {
-    fetch("https://localhost:3001/locations", {
+    fetch("http://localhost:3001/locations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -143,7 +143,7 @@ class ReporterMapForm extends React.Component {
 
     if (this.state.userBalance > this.state.bounty) {
       this.saveLocation();
-      fetch("https://localhost:3001/trashes", {
+      fetch("http://localhost:3001/trashes", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.token}`,
