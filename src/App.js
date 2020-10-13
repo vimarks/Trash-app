@@ -5,8 +5,8 @@ import Wallet from "./components/Wallet";
 import LandingPage from "./containers/LandingPage";
 import { PrivateRoute } from "./PrivateRoute";
 import CleanContainer from "./containers/CleanContainer";
-import TrophyRoom from "./components/TrophyRoom";
 import ReportContainer from "./containers/ReportContainer";
+import TrophyRoom from "./components/TrophyRoom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 

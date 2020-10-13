@@ -53,6 +53,7 @@ class Login extends Component {
           localStorage.setItem("currentUser_id", user.id);
           localStorage.setItem("currentUser_username", user.username);
           this.props.auth();
+          // <Redirect to="/login" />;
           this.props.history.push("/report");
         }
       });

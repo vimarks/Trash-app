@@ -1,11 +1,12 @@
 import React from "react";
-import ReporterGeolocator from "../components/ReporterGeolocator";
+import "../App.css";
+import ReportGeolocator from "../components/ReportGeolocator";
 
 class ReportContainer extends React.Component {
   render() {
     return (
       <div>
-        <ReporterGeolocator />
+        <ReportGeolocator />
       </div>
     );
   }

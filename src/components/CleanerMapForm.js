@@ -117,7 +117,6 @@ class CleanerMapForm extends React.Component {
   };
 
   setReputations = reps => {
-    console.log(reps);
     this.setState({
       reputations: reps
     });

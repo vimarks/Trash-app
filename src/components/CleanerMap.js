@@ -68,10 +68,9 @@ export default function Map(props) {
                 onClick={e => {
                   e.preventDefault();
                   setSelectedLocation(loc);
-                  props.markerKeyHolder(loc.id);
                 }}
               >
-                <img alt="trashcan" height="26px" src="/2107157.png" />
+                <img alt="cleanIcon" height="26px" src="/2107157.png" />
               </button>
             </Marker>
           ))}

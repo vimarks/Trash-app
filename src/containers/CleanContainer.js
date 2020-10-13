@@ -1,12 +1,12 @@
 import React from "react";
 import "../App.css";
-import CleanerGeolocator from "../components/CleanerGeolocator";
+import CleanGeolocator from "../components/CleanGeolocator";
 
 class CleanContainer extends React.Component {
   render() {
     return (
       <div>
-        <CleanerGeolocator />
+        <CleanGeolocator />
       </div>
     );
   }

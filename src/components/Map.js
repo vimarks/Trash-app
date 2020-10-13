@@ -18,6 +18,7 @@ export default class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      message: "Mouse Event",
       viewport: {
         latitude: this.props.coords.latitude,
         longitude: this.props.coords.longitude,
@@ -25,10 +26,16 @@ export default class Map extends Component {
         bearing: 0,
         pitch: 0
       },
-
       selectedLocation: null
     };
   }
+
+  mouseEventHandler = (event, loc) => {
+    if (event.type === "mousedown") {
+      this.setSelectedLocation(loc);
+    }
+  };
+
   setSelectedLocation = loc => {
     this.setState({
       selectedLocation: loc
@@ -59,14 +66,13 @@ export default class Map extends Component {
           return response.json();
         })
         .then(data => {
-          this.props.setDirtyUserCoords(data.dirtyUserTrashCoords);
+          this.props.setDirtyUserTrashCoords(data.dirtyUserTrashCoords);
         });
     }
   };
-
   render() {
     const { viewport } = this.state;
-
+    // console.log(this.state.selectedLocation);
     return (
       <MapGL
         {...viewport}
@@ -76,7 +82,7 @@ export default class Map extends Component {
         onViewportChange={this._updateViewport}
         mapboxApiAccessToken={TOKEN}
       >
-        {this.props.dirtyUserTrashCoords.length > 0 &&
+        {this.props.dirtyUserTrashCoords &&
           this.props.dirtyUserTrashCoords.map(loc => (
             <Marker
               key={loc.id}
@@ -84,22 +90,23 @@ export default class Map extends Component {
               latitude={loc.latitude}
               offsetTop={-20}
               offsetLeft={-10}
-              draggable
+              draggable={true}
               onDragEnd={this._onMarkerDragEnd}
             >
               <button
                 className="trash-button"
-                onClick={e => {
-                  e.preventDefault();
-                  this.setSelectedLocation(loc);
-                  this.props.markerKeyHolder(loc.id);
+                onMouseDown={e => {
+                  this.mouseEventHandler(e, loc);
+                }}
+                onMouseUp={e => {
+                  this.mouseEventHandler(e, loc);
                 }}
               >
                 <img alt="trashcan" height="20px" src="/trash_can.png" />
               </button>
             </Marker>
           ))}
-        {this.props.cleanUserTrashCoords.length > 0 &&
+        {this.props.cleanUserTrashCoords &&
           this.props.cleanUserTrashCoords.map(loc => (
             <Marker
               key={loc.id}
@@ -107,8 +114,6 @@ export default class Map extends Component {
               latitude={loc.latitude}
               offsetTop={-20}
               offsetLeft={-10}
-              draggable
-              onDragEnd={this._onMarkerDragEnd}
               setMarker
             >
               <button

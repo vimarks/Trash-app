@@ -10,7 +10,7 @@ class ReporterMapForm extends React.Component {
     this.state = {
       location_id: null,
       description: "",
-      bounty: null,
+      bounty: undefined,
       trash: [],
       dirtyUserTrashCoords: [],
       cleanUserTrashCoords: [],
@@ -171,18 +171,19 @@ class ReporterMapForm extends React.Component {
         });
     } // else show "insuficient funds"
   };
+
   handleSubmit = e => {
     e.preventDefault();
     this.patchBounty(this.state.newBounty);
   };
-  setDirtyUserCoords = locations => {
+
+  setDirtyUserTrashCoords = locations => {
     this.setState({
       dirtyUserTrashCoords: locations
     });
   };
 
   render() {
-    console.log(this.state.bounty, this.state.userBalnce, "bounty");
     return (
       <div>
         <div className="text-center bottomForm">
@@ -217,7 +218,7 @@ class ReporterMapForm extends React.Component {
         <div id="map">
           <Map
             coords={this.props.coords}
-            setDirtyUserCoords={this.setDirtyUserCoords}
+            setDirtyUserTrashCoords={this.setDirtyUserTrashCoords}
             dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
             cleanUserTrashCoords={this.state.cleanUserTrashCoords}
             markerKeyHolder={this.markerKeyHolder}
