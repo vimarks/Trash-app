@@ -26,7 +26,7 @@ class CleanerMapForm extends React.Component {
   }
 
   initialCFetch = () => {
-    fetch("http://localhost:3001/trashes/initialCFetch", {
+    fetch("https://trash-app-back.herokuapp.com/trashes/initialCFetch", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -52,7 +52,7 @@ class CleanerMapForm extends React.Component {
   };
 
   cleanTrash = id => {
-    fetch("http://localhost:3001/trashes/" + id, {
+    fetch("https://trash-app-back.herokuapp.com/trashes" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,

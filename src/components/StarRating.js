@@ -8,7 +8,7 @@ const StarRating = props => {
   const isEnabled = rating;
 
   const submitRating = () => {
-    fetch("http://localhost:3001/reputations", {
+    fetch("https://trash-app-back.herokuapp.com/reputations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
