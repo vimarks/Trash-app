@@ -12,7 +12,7 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://trash-app-back.herokuapp.com/wallets/getUserWallet", {
+    fetch("https://localhost:3001/wallets/getUserWallet", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,

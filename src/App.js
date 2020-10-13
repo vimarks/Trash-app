@@ -29,6 +29,7 @@ class App extends React.Component {
   };
 
   auth = () => {
+    console.log("authenticated", this.state.isAuthenticated);
     console.log("auth hit");
     if (
       localStorage.getItem("token") &&
