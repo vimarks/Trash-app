@@ -8,13 +8,14 @@ class ReporterMapForm extends React.Component {
   constructor() {
     super();
     this.state = {
+      selectedLocation: null,
       location_id: null,
       description: "",
       bounty: undefined,
       trash: [],
       dirtyUserTrashCoords: [],
       cleanUserTrashCoords: [],
-      markerKey: null,
+      popupStatus: false,
       newBounty: 0,
       userBalance: null
     };
@@ -75,7 +76,7 @@ class ReporterMapForm extends React.Component {
 
   patchBounty = newBounty => {
     let id = this.state.trash.filter(
-      trash => trash.location_id === this.state.markerKey
+      trash => trash.location_id === this.state.selectedLocation.id
     )[0].id;
 
     fetch("http://localhost:3001/trashes/patchBounty/" + id, {
@@ -97,16 +98,6 @@ class ReporterMapForm extends React.Component {
           trash: data.allTrash
         });
       });
-  };
-
-  markerKeyHolder = id => {
-    this.state.markerKey !== id
-      ? this.setState({
-          markerKey: id
-        })
-      : this.setState({
-          markerKey: null
-        });
   };
 
   saveLocation = () => {
@@ -169,7 +160,7 @@ class ReporterMapForm extends React.Component {
             cleanUserTrashCoords: data.cleanUserTrashCoords
           });
         });
-    } // else show "insuficient funds"
+    }
   };
 
   handleSubmit = e => {
@@ -182,14 +173,48 @@ class ReporterMapForm extends React.Component {
       dirtyUserTrashCoords: locations
     });
   };
+  setPopupStatus = (bool, loc) => {
+    this.setState({
+      popupStatus: bool,
+      selectedLocation: loc
+    });
+  };
+  setSelectedLocation = loc => {
+    console.log("loc", loc);
+    if (loc && this.state.selectedLocation) {
+      if (this.state.selectedLocation.id !== loc.id) {
+        this.setState({
+          selectedLocation: loc.id,
+          popupStatus: false
+        });
+      }
+    } else {
+      this.setState({
+        selectedLocation: loc
+      });
+    }
+  };
 
   render() {
     return (
       <div>
+        <div id="map">
+          <Map
+            coords={this.props.coords}
+            popupStatus={this.state.popupStatus}
+            setPopupStatus={this.setPopupStatus}
+            setDirtyUserTrashCoords={this.setDirtyUserTrashCoords}
+            dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
+            cleanUserTrashCoords={this.state.cleanUserTrashCoords}
+            setSelectedLocation={this.setSelectedLocation}
+            selectedLocation={this.state.selectedLocation}
+            trash={this.state.trash}
+          />
+        </div>
         <div className="text-center bottomForm">
-          {this.state.markerKey &&
+          {this.state.selectedLocation &&
             this.state.trash
-              .filter(tr => tr.location_id === this.state.markerKey)
+              .filter(tr => tr.location_id === this.state.selectedLocation.id)
               .map(tr =>
                 tr.cleaned === "clean" ? (
                   <button
@@ -199,7 +224,7 @@ class ReporterMapForm extends React.Component {
                     confirm trash pickup
                   </button>
                 ) : (
-                  <form onSubmit={this.handleSubmit}>
+                  <form id="changeBountyForm" onSubmit={this.handleSubmit}>
                     <input
                       type="text"
                       placeholder="reset bounty"
@@ -214,16 +239,6 @@ class ReporterMapForm extends React.Component {
                   </form>
                 )
               )}
-        </div>
-        <div id="map">
-          <Map
-            coords={this.props.coords}
-            setDirtyUserTrashCoords={this.setDirtyUserTrashCoords}
-            dirtyUserTrashCoords={this.state.dirtyUserTrashCoords}
-            cleanUserTrashCoords={this.state.cleanUserTrashCoords}
-            markerKeyHolder={this.markerKeyHolder}
-            trash={this.state.trash}
-          />
         </div>
         {this.state.bounty <= this.state.userBalance ? (
           <div className="text-center">

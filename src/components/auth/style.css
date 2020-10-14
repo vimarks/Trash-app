@@ -58,7 +58,8 @@ nav a {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+#changeBountyForm {
+}
 #map {
   width: 100vw;
 }
