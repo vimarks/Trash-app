@@ -18,7 +18,6 @@ export default class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "Mouse Event",
       viewport: {
         latitude: this.props.coords.latitude,
         longitude: this.props.coords.longitude,
@@ -31,15 +30,13 @@ export default class Map extends Component {
   }
 
   mouseEventHandler = (event, loc) => {
+    console.log(event.type);
     if (event.type === "mousedown") {
-      this.setSelectedLocation(loc);
+      this.props.setSelectedLocation(loc);
     }
-  };
-
-  setSelectedLocation = loc => {
-    this.setState({
-      selectedLocation: loc
-    });
+    if (event.type === "dblclick") {
+      this.props.setPopupStatus(true, loc);
+    }
   };
 
   _updateViewport = viewport => {
@@ -47,8 +44,8 @@ export default class Map extends Component {
   };
 
   _onMarkerDragEnd = event => {
-    if (this.state.selectedLocation) {
-      let id = this.state.selectedLocation.id;
+    if (this.props.selectedLocation) {
+      let id = this.props.selectedLocation.id;
       fetch("http://localhost:3001/locations/" + id, {
         method: "PATCH",
         headers: {
@@ -67,12 +64,14 @@ export default class Map extends Component {
         })
         .then(data => {
           this.props.setDirtyUserTrashCoords(data.dirtyUserTrashCoords);
+          this.props.setSelectedLocation(null);
         });
     }
   };
   render() {
     const { viewport } = this.state;
-    // console.log(this.state.selectedLocation);
+    console.log("selected location", this.props.selectedLocation);
+    console.log("popup Status", this.props.popupStatus);
     return (
       <MapGL
         {...viewport}
@@ -96,9 +95,10 @@ export default class Map extends Component {
               <button
                 className="trash-button"
                 onMouseDown={e => {
+                  e.preventDefault();
                   this.mouseEventHandler(e, loc);
                 }}
-                onMouseUp={e => {
+                onDoubleClick={e => {
                   this.mouseEventHandler(e, loc);
                 }}
               >
@@ -120,25 +120,24 @@ export default class Map extends Component {
                 className="trash-button"
                 onClick={e => {
                   e.preventDefault();
-                  this.setSelectedLocation(loc);
-                  this.props.markerKeyHolder(loc.id);
+                  this.props.setSelectedLocation(loc);
                 }}
               >
-                <img alt="trashcan" height="26px" src="/2107157.png" />
+                <img alt="cleanIcon" height="26px" src="/2107157.png" />
               </button>
             </Marker>
           ))}
-        {this.state.selectedLocation &&
+        {this.props.selectedLocation &&
+          this.props.popupStatus &&
           this.props.trash
-            .filter(tr => tr.location_id === this.state.selectedLocation.id)
+            .filter(tr => tr.location_id === this.props.selectedLocation.id)
             .map(tr => (
               <Popup
-                latitude={this.state.selectedLocation.latitude}
-                longitude={this.state.selectedLocation.longitude}
+                latitude={this.props.selectedLocation.latitude}
+                longitude={this.props.selectedLocation.longitude}
                 onClose={() => {
-                  this.setState({
-                    selectedLocation: null
-                  });
+                  this.props.setPopupStatus(false);
+                  this.props.setSelectedLocation(null);
                 }}
               >
                 <div>
