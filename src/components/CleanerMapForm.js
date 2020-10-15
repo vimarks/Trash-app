@@ -27,7 +27,7 @@ class CleanerMapForm extends React.Component {
   }
 
   initialCFetch = () => {
-    fetch("http://localhost:3001/trashes/initialCFetch", {
+    fetch("https://trash-app-back.herokuapp.com/trashes/initialCFetch", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -54,7 +54,7 @@ class CleanerMapForm extends React.Component {
   };
 
   cleanTrash = id => {
-    fetch("http://localhost:3001/trashes/" + id, {
+    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -125,15 +125,6 @@ class CleanerMapForm extends React.Component {
   };
 
   render() {
-    console.log("REPUTATIONS", this.state.reputations);
-    console.log("locationID", this.state.markerKey);
-    console.log(
-      "MATCH",
-      this.state.trash
-        .filter(tr => tr.location_id === this.state.markerKey)
-        .map(tr => tr.cleaned)
-    );
-
     return (
       <div>
         <CleanerMap
