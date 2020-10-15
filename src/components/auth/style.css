@@ -60,6 +60,8 @@ nav a {
 }
 #changeBountyForm {
 }
-#map {
+.map {
   width: 100vw;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
 }

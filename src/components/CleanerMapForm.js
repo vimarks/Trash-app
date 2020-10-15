@@ -27,7 +27,7 @@ class CleanerMapForm extends React.Component {
   }
 
   initialCFetch = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/initialCFetch", {
+    fetch("http://localhost:3001/trashes/initialCFetch", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -54,7 +54,7 @@ class CleanerMapForm extends React.Component {
   };
 
   cleanTrash = id => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
+    fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -127,19 +127,21 @@ class CleanerMapForm extends React.Component {
   render() {
     return (
       <div>
-        <CleanerMap
-          coords={this.props.coords}
-          dirtyTrashLocations={this.state.dirtyTrashLocations}
-          cleanTrashLocations={this.state.cleanTrashLocations}
-          confirmedTrashLocations={this.state.confirmedTrashLocations}
-          markerKeyHolder={this.markerKeyHolder}
-          trash={this.state.trash}
-          cleanTrash={this.cleanTrash}
-          locVerify={this.state.locVerify}
-          compareLocation={this.compareLocation}
-          users={this.state.users}
-          reputations={this.state.reputations}
-        />
+        <div className="map">
+          <CleanerMap
+            coords={this.props.coords}
+            dirtyTrashLocations={this.state.dirtyTrashLocations}
+            cleanTrashLocations={this.state.cleanTrashLocations}
+            confirmedTrashLocations={this.state.confirmedTrashLocations}
+            markerKeyHolder={this.markerKeyHolder}
+            trash={this.state.trash}
+            cleanTrash={this.cleanTrash}
+            locVerify={this.state.locVerify}
+            compareLocation={this.compareLocation}
+            users={this.state.users}
+            reputations={this.state.reputations}
+          />
+        </div>
         <div>
           {this.state.trash
             .filter(tr => tr.location_id === this.state.markerKey)
@@ -147,7 +149,7 @@ class CleanerMapForm extends React.Component {
               this.state.reputations.filter(rep => rep.trash_id === tr.id)
                 .length === 0 && tr.cleaned == "clean" ? (
                 <div className="starGroup">
-                  <h2 className="verify"> Awaiting Confirmation </h2>
+                  <h2 className="verify"> Awaiting Confirmation... </h2>
                   <StarRating
                     setReputations={this.setReputations}
                     reporter_id={tr.reporter_id}
@@ -165,10 +167,10 @@ class CleanerMapForm extends React.Component {
                 </div>
               ) : this.state.reputations.filter(rep => rep.trash_id === tr.id)
                   .length > 0 && tr.cleaned == "confirmed" ? (
-                <h2> all done! </h2>
+                <h2 className="verify"> all done! </h2>
               ) : this.state.reputations.filter(rep => rep.trash_id === tr.id)
                   .length > 0 && tr.cleaned == "clean" ? (
-                <h2 className="verify"> Awaiting Confirmation </h2>
+                <h2 className="verify"> Awaiting Confirmation... </h2>
               ) : tr.cleaned === "dirty" &&
                 this.state.locVerify === false &&
                 this.state.attempts % 2 === 0 ? (

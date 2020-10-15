@@ -11,7 +11,7 @@ class ReporterMapForm extends React.Component {
       selectedLocation: null,
       location_id: null,
       description: "",
-      bounty: undefined,
+      bounty: null,
       trash: [],
       dirtyUserTrashCoords: [],
       cleanUserTrashCoords: [],
@@ -26,7 +26,7 @@ class ReporterMapForm extends React.Component {
   }
 
   initialRFetch = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/getUserTrashCoords", {
+    fetch("http://localhost:3001/trashes/getUserTrashCoords", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -51,7 +51,7 @@ class ReporterMapForm extends React.Component {
   };
 
   confirmClean = id => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
+    fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -66,6 +66,7 @@ class ReporterMapForm extends React.Component {
         return response.json();
       })
       .then(data => {
+        this.setSelectedLocation(null);
         this.setState({
           trash: data.allTrash,
           dirtyUserTrashCoords: data.dirtyUserTrashCoords,
@@ -79,7 +80,7 @@ class ReporterMapForm extends React.Component {
       trash => trash.location_id === this.state.selectedLocation.id
     )[0].id;
 
-    fetch("https://trash-app-back.herokuapp.com/trashes/patchBounty/" + id, {
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -101,7 +102,7 @@ class ReporterMapForm extends React.Component {
   };
 
   saveLocation = () => {
-    fetch("https://trash-app-back.herokuapp.com/locations", {
+    fetch("http://localhost:3001/locations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -134,7 +135,7 @@ class ReporterMapForm extends React.Component {
 
     if (this.state.userBalance > this.state.bounty) {
       this.saveLocation();
-      fetch("https://trash-app-back.herokuapp.com/trashes", {
+      fetch("http://localhost:3001/trashes", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.token}`,
@@ -195,9 +196,94 @@ class ReporterMapForm extends React.Component {
   };
 
   render() {
+    let bottomForm;
+
+    if (this.state.selectedLocation) {
+      console.log("selectedLocation", this.state.selectedLocation);
+      let filtered = this.state.trash.filter(
+        tr => tr.location_id === this.state.selectedLocation.id
+      );
+      console.log("filtered", filtered);
+
+      if (filtered[0].cleaned === "clean") {
+        this.state.trash
+          .filter(tr => tr.location_id === this.state.selectedLocation.id)
+          .map(tr => {
+            bottomForm = (
+              <button onClick={() => this.confirmClean(tr.id)} color="primary">
+                confirm trash pickup
+              </button>
+            );
+          });
+      } else {
+        bottomForm = (
+          <form id="changeBountyForm" onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              placeholder="reset bounty"
+              value={this.state.newBounty}
+              onChange={e =>
+                this.setState({
+                  newBounty: e.target.value
+                })
+              }
+            />
+            <input type="submit" value="Change Bounty" />
+          </form>
+        );
+      }
+    } else {
+      let bountyInput;
+      if (this.state.bounty > this.state.userBalance) {
+        bountyInput = (
+          <input
+            className="insufficient"
+            type="text"
+            name="bounty"
+            placeholder="bounty"
+            value={this.state.bounty}
+            onChange={this.handleChange}
+            required
+          />
+        );
+      } else {
+        bountyInput = (
+          <input
+            type="text"
+            name="bounty"
+            placeholder="bounty"
+            value={this.state.bounty}
+            onChange={this.handleChange}
+            required
+          />
+        );
+      }
+      bottomForm = (
+        <form
+          className="text-center bottomForm"
+          onSubmit={this.handleTrashSubmit}
+        >
+          <button onClick={this.saveLocation}>SnapShot Location</button>
+
+          {bountyInput}
+
+          <input
+            type="text"
+            name="description"
+            placeholder="description"
+            value={this.state.description}
+            onChange={this.handleChange}
+            required
+          />
+
+          <button type="submit"> Report Trash</button>
+        </form>
+      );
+    }
+
     return (
       <div>
-        <div id="map">
+        <div className="map">
           <Map
             coords={this.props.coords}
             popupStatus={this.state.popupStatus}
@@ -210,93 +296,7 @@ class ReporterMapForm extends React.Component {
             trash={this.state.trash}
           />
         </div>
-        <div className="text-center bottomForm">
-          {this.state.selectedLocation &&
-            this.state.trash
-              .filter(tr => tr.location_id === this.state.selectedLocation.id)
-              .map(tr =>
-                tr.cleaned === "clean" ? (
-                  <button
-                    onClick={() => this.confirmClean(tr.id)}
-                    color="primary"
-                  >
-                    confirm trash pickup
-                  </button>
-                ) : (
-                  <form id="changeBountyForm" onSubmit={this.handleSubmit}>
-                    <input
-                      type="text"
-                      placeholder="reset bounty"
-                      value={this.state.newBounty}
-                      onChange={e =>
-                        this.setState({
-                          newBounty: e.target.value
-                        })
-                      }
-                    />
-                    <input type="submit" value="Change Bounty" />
-                  </form>
-                )
-              )}
-        </div>
-        {this.state.bounty <= this.state.userBalance ? (
-          <div className="text-center">
-            <form
-              className="text-center bottomForm"
-              onSubmit={this.handleTrashSubmit}
-            >
-              <button onClick={this.saveLocation}>SnapShot Location</button>
-              <input
-                type="text"
-                name="bounty"
-                placeholder="bounty"
-                value={this.state.bounty}
-                onChange={this.handleChange}
-                required
-              />
-
-              <input
-                type="text"
-                name="description"
-                placeholder="description"
-                value={this.state.description}
-                onChange={this.handleChange}
-                required
-              />
-
-              <button type="submit"> Report Trash</button>
-            </form>
-          </div>
-        ) : (
-          <div className="text-center">
-            <form
-              className="text-center bottomForm"
-              onSubmit={this.handleTrashSubmit}
-            >
-              <button onClick={this.saveLocation}>SnapShot Location</button>
-              <input
-                className="insufficient"
-                type="text"
-                name="bounty"
-                placeholder="bounty"
-                value={this.state.bounty}
-                onChange={this.handleChange}
-                required
-              />
-
-              <input
-                type="text"
-                name="description"
-                placeholder="description"
-                value={this.state.description}
-                onChange={this.handleChange}
-                required
-              />
-
-              <button type="submit"> Report Trash</button>
-            </form>
-          </div>
-        )}
+        <div className="text-center bottomForm"> {bottomForm} </div>
       </div>
     );
   }
