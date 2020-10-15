@@ -30,7 +30,6 @@ export default class Map extends Component {
   }
 
   mouseEventHandler = (event, loc) => {
-    console.log(event.type);
     if (event.type === "mousedown") {
       this.props.setSelectedLocation(loc);
     }
@@ -70,8 +69,6 @@ export default class Map extends Component {
   };
   render() {
     const { viewport } = this.state;
-    console.log("selected location", this.props.selectedLocation);
-    console.log("popup Status", this.props.popupStatus);
     return (
       <MapGL
         {...viewport}
