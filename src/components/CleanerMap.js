@@ -68,9 +68,34 @@ export default function Map(props) {
                 onClick={e => {
                   e.preventDefault();
                   setSelectedLocation(loc);
+                  props.markerKeyHolder(loc.id);
                 }}
               >
                 <img alt="cleanIcon" height="26px" src="/2107157.png" />
+              </button>
+            </Marker>
+          ))}
+
+        {props.confirmedTrashLocations &&
+          props.confirmedTrashLocations.map(loc => (
+            <Marker
+              key={loc.id}
+              latitude={loc.latitude}
+              longitude={loc.longitude}
+            >
+              <button
+                className="trash-button"
+                onClick={e => {
+                  e.preventDefault();
+                  setSelectedLocation(loc);
+                  props.markerKeyHolder(loc.id);
+                }}
+              >
+                <img
+                  alt="confirmedIcon"
+                  height="28px"
+                  src="/confirmed_icon.png"
+                />
               </button>
             </Marker>
           ))}

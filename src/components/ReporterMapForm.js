@@ -180,7 +180,6 @@ class ReporterMapForm extends React.Component {
     });
   };
   setSelectedLocation = loc => {
-    console.log("loc", loc);
     if (loc && this.state.selectedLocation) {
       if (this.state.selectedLocation.id !== loc.id) {
         this.setState({

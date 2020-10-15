@@ -12,6 +12,7 @@ class CleanerMapForm extends React.Component {
       trashLocations: [],
       dirtyTrashLocations: [],
       cleanTrashLocations: [],
+      confirmedTrashLocations: [],
       trash: [],
       markerKey: null,
       locVerify: null,
@@ -42,6 +43,7 @@ class CleanerMapForm extends React.Component {
       })
       .then(data => {
         this.setState({
+          confirmedTrashLocations: data.confirmedTrashLocations,
           dirtyTrashLocations: data.dirtyTrashLocations,
           cleanTrashLocations: data.cleanTrashLocations,
           trash: data.trash,
@@ -123,12 +125,22 @@ class CleanerMapForm extends React.Component {
   };
 
   render() {
+    console.log("REPUTATIONS", this.state.reputations);
+    console.log("locationID", this.state.markerKey);
+    console.log(
+      "MATCH",
+      this.state.trash
+        .filter(tr => tr.location_id === this.state.markerKey)
+        .map(tr => tr.cleaned)
+    );
+
     return (
       <div>
         <CleanerMap
           coords={this.props.coords}
           dirtyTrashLocations={this.state.dirtyTrashLocations}
           cleanTrashLocations={this.state.cleanTrashLocations}
+          confirmedTrashLocations={this.state.confirmedTrashLocations}
           markerKeyHolder={this.markerKeyHolder}
           trash={this.state.trash}
           cleanTrash={this.cleanTrash}
@@ -141,9 +153,34 @@ class CleanerMapForm extends React.Component {
           {this.state.trash
             .filter(tr => tr.location_id === this.state.markerKey)
             .map(tr =>
-              tr.cleaned === "dirty" &&
-              this.state.locVerify === false &&
-              this.state.attempts % 2 === 0 ? (
+              this.state.reputations.filter(rep => rep.trash_id === tr.id)
+                .length === 0 && tr.cleaned == "clean" ? (
+                <div className="starGroup">
+                  <h2 className="verify"> Awaiting Confirmation </h2>
+                  <StarRating
+                    setReputations={this.setReputations}
+                    reporter_id={tr.reporter_id}
+                    trash_id={tr.id}
+                  />
+                </div>
+              ) : this.state.reputations.filter(rep => rep.trash_id === tr.id)
+                  .length === 0 && tr.cleaned == "confirmed" ? (
+                <div className="starGroup">
+                  <StarRating
+                    setReputations={this.setReputations}
+                    reporter_id={tr.reporter_id}
+                    trash_id={tr.id}
+                  />
+                </div>
+              ) : this.state.reputations.filter(rep => rep.trash_id === tr.id)
+                  .length > 0 && tr.cleaned == "confirmed" ? (
+                <h2> all done! </h2>
+              ) : this.state.reputations.filter(rep => rep.trash_id === tr.id)
+                  .length > 0 && tr.cleaned == "clean" ? (
+                <h2 className="verify"> Awaiting Confirmation </h2>
+              ) : tr.cleaned === "dirty" &&
+                this.state.locVerify === false &&
+                this.state.attempts % 2 === 0 ? (
                 <Button className="verify" onClick={this.compareLocation}>
                   Verify Location
                 </Button>
@@ -159,9 +196,6 @@ class CleanerMapForm extends React.Component {
                 this.state.locVerify === false &&
                 this.state.attempts % 2 !== 0 ? (
                 <h2 className="verify"> Incorrect Location </h2>
-              ) : this.state.reputations.filter(rep => rep.trash_id === tr.id)
-                  .length > 0 ? (
-                <h2 className="verify"> Awaiting Confirmation </h2>
               ) : (
                 <div className="starGroup">
                   <StarRating
@@ -169,7 +203,6 @@ class CleanerMapForm extends React.Component {
                     reporter_id={tr.reporter_id}
                     trash_id={tr.id}
                   />
-                  <h2 className="verify"> Awaiting Confirmation </h2>
                 </div>
               )
             )}
