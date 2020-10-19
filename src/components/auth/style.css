@@ -58,10 +58,42 @@ nav a {
   background-repeat: no-repeat;
   background-size: cover;
 }
-#changeBountyForm {
-}
+
 .map {
   width: 100vw;
   border-top: 2px solid black;
   border-bottom: 2px solid black;
+}
+
+#aboutBody {
+  background-color: #254540;
+  color: whitesmoke;
+  padding: 40px;
+}
+
+.aboutHeading {
+  font-weight: bold;
+}
+
+ol {
+  margin: 0 0 1.5em;
+  padding: 0;
+  counter-reset: item;
+}
+
+ol > li {
+  margin: 0;
+  padding: 0 0 0 2em;
+  text-indent: -2em;
+  list-style-type: none;
+  counter-increment: item;
+}
+
+ol > li:before {
+  display: inline-block;
+  width: 1.5em;
+  padding-right: 0.5em;
+  font-weight: bold;
+  text-align: right;
+  content: counter(item) ".";
 }

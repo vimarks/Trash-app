@@ -53,7 +53,12 @@ const StarRating = props => {
           </label>
         );
       })}
-      {rating ? <button onClick={submitRating}> submit </button> : null}
+      {rating ? (
+        <button id="ratingSubmit" onClick={submitRating}>
+          {" "}
+          submit{" "}
+        </button>
+      ) : null}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import Map from "./Map";
+import ImageUpload from "./ImageUpload";
 import "./auth/style.css";
 
 class ReporterMapForm extends React.Component {
@@ -12,6 +13,7 @@ class ReporterMapForm extends React.Component {
       location_id: null,
       description: "",
       bounty: null,
+      imageLink: null,
       trash: [],
       dirtyUserTrashCoords: [],
       cleanUserTrashCoords: [],
@@ -195,15 +197,20 @@ class ReporterMapForm extends React.Component {
     }
   };
 
+  setImageLink = link => {
+    console.log("LINK", link);
+    this.setState({
+      imageLink: link
+    });
+  };
+
   render() {
     let bottomForm;
 
     if (this.state.selectedLocation) {
-      console.log("selectedLocation", this.state.selectedLocation);
       let filtered = this.state.trash.filter(
         tr => tr.location_id === this.state.selectedLocation.id
       );
-      console.log("filtered", filtered);
 
       if (filtered[0].cleaned === "clean") {
         this.state.trash
@@ -217,19 +224,25 @@ class ReporterMapForm extends React.Component {
           });
       } else {
         bottomForm = (
-          <form id="changeBountyForm" onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              placeholder="reset bounty"
-              value={this.state.newBounty}
-              onChange={e =>
-                this.setState({
-                  newBounty: e.target.value
-                })
-              }
-            />
-            <input type="submit" value="Change Bounty" />
-          </form>
+          <div>
+            <form id="changeBountyForm" onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                placeholder="reset bounty"
+                value={this.state.newBounty}
+                onChange={e =>
+                  this.setState({
+                    newBounty: e.target.value
+                  })
+                }
+              />
+              <input type="submit" value="Change Bounty" />
+            </form>
+
+            <div>
+              <ImageUpload setImageLink={this.setImageLink} />
+            </div>
+          </div>
         );
       }
     } else {
@@ -275,6 +288,8 @@ class ReporterMapForm extends React.Component {
             onChange={this.handleChange}
             required
           />
+
+          <ImageUpload setImageLink={this.setImageLink} />
 
           <button type="submit"> Report Trash</button>
         </form>
