@@ -2,6 +2,7 @@ import React from "react";
 import Registration from "./components/auth/Registration";
 import Login from "./components/auth/Login";
 import Wallet from "./components/Wallet";
+import About from "./components/About";
 import LandingPage from "./containers/LandingPage";
 import { PrivateRoute } from "./PrivateRoute";
 import CleanContainer from "./containers/CleanContainer";
@@ -63,6 +64,13 @@ class App extends React.Component {
               exact
               path="/report"
               component={ReportContainer}
+            />
+            <PrivateRoute
+              setAuth={this.setAuth}
+              isAuthenticated={this.state.isAuthenticated}
+              exact
+              path="/about"
+              component={About}
             />
             <PrivateRoute
               setAuth={this.setAuth}

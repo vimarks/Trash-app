@@ -58,7 +58,10 @@ nav a {
   background-repeat: no-repeat;
   background-size: cover;
 }
-#changeBountyForm {
+#aboutBody {
+  padding: 20px;
+  background-color: #264541;
+  color: white;
 }
 .map {
   width: 100vw;
