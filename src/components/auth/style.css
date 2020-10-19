@@ -58,7 +58,11 @@ nav a {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+#aboutBody {
+  padding: 20px;
+  background-color: #264541;
+  color: white;
+}
 .map {
   width: 100vw;
   border-top: 2px solid black;

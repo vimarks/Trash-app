@@ -238,10 +238,11 @@ class ReporterMapForm extends React.Component {
               />
               <input type="submit" value="Change Bounty" />
             </form>
-
+            {/*
             <div>
               <ImageUpload setImageLink={this.setImageLink} />
             </div>
+            */}
           </div>
         );
       }
@@ -277,9 +278,7 @@ class ReporterMapForm extends React.Component {
           onSubmit={this.handleTrashSubmit}
         >
           <button onClick={this.saveLocation}>SnapShot Location</button>
-
           {bountyInput}
-
           <input
             type="text"
             name="description"
@@ -288,9 +287,9 @@ class ReporterMapForm extends React.Component {
             onChange={this.handleChange}
             required
           />
-
+          {/*
           <ImageUpload setImageLink={this.setImageLink} />
-
+          */}
           <button type="submit"> Report Trash</button>
         </form>
       );

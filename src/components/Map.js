@@ -3,9 +3,6 @@ import { render } from "react-dom";
 import MapGL, { Marker, Popup } from "react-map-gl";
 import "./auth/style.css";
 
-const TOKEN =
-  "pk.eyJ1IjoidmltYXJrcyIsImEiOiJjazN5d2F0bjMwMnBwM2xtenVpZnJwOWs5In0.XMP3lHS4L14pf2FKCiV_3g"; // Set your mapbox token here
-
 const navStyle = {
   position: "absolute",
   top: 0,
@@ -76,7 +73,7 @@ export default class Map extends Component {
         height="75vh"
         mapStyle="mapbox://styles/vimarks/ck5dbg0mo05rh1joioksl2b41"
         onViewportChange={this._updateViewport}
-        mapboxApiAccessToken={TOKEN}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       >
         {this.props.dirtyUserTrashCoords &&
           this.props.dirtyUserTrashCoords.map(loc => (

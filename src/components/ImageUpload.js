@@ -20,7 +20,7 @@ class ImageUpload extends Component {
     // Request made to the backend api
     var myHeaders = new Headers({
       Authorization: "Client-ID d0cb448cf7a7089",
-      Authorization: "Bearer 73230c12b938bb1830594f5584465428668f9c53"
+      Authorization: process.env.BEARER_TOKEN
     });
 
     let formdata = new FormData();
