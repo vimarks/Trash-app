@@ -107,6 +107,14 @@ class Login extends Component {
             </div>
           </div>
         </Container>
+        <div id="guestCredentialsLogin">
+          <h3>
+            <b>Guest Login</b>{" "}
+          </h3>
+          <b>
+            username: guest <br></br> password: trash123
+          </b>
+        </div>
       </div>
     );
   }

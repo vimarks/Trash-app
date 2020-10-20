@@ -78,9 +78,13 @@ class ReporterMapForm extends React.Component {
   };
 
   patchBounty = newBounty => {
-    let id = this.state.trash.filter(
+    let filtered = this.state.trash.filter(
       trash => trash.location_id === this.state.selectedLocation.id
-    )[0].id;
+    );
+    let id;
+    if (filtered[0]) {
+      id = filtered[0].id;
+    }
 
     fetch("http://localhost:3001/trashes/patchBounty/" + id, {
       method: "PATCH",
@@ -186,7 +190,7 @@ class ReporterMapForm extends React.Component {
     if (loc && this.state.selectedLocation) {
       if (this.state.selectedLocation.id !== loc.id) {
         this.setState({
-          selectedLocation: loc.id,
+          selectedLocation: loc,
           popupStatus: false
         });
       }
@@ -198,7 +202,6 @@ class ReporterMapForm extends React.Component {
   };
 
   setImageLink = link => {
-    console.log("LINK", link);
     this.setState({
       imageLink: link
     });
@@ -206,7 +209,6 @@ class ReporterMapForm extends React.Component {
 
   render() {
     let bottomForm;
-
     if (this.state.selectedLocation) {
       let filtered = this.state.trash.filter(
         tr => tr.location_id === this.state.selectedLocation.id

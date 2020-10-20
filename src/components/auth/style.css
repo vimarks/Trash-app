@@ -101,3 +101,8 @@ ol > li:before {
   text-align: right;
   content: counter(item) ".";
 }
+
+#guestCredentialsLogin {
+  text-align: left;
+  margin-left: 278px;
+}

@@ -6,9 +6,8 @@ export default function About() {
     <div id="aboutBody">
       <h3 className="aboutHeading">Purpose</h3>
       <p>
-        Trash-app is a web app that crowd-sources city cleanup by incentivizing
-        reporting and cleaning of trash through a user generated, free-market
-        economy.
+        Trash-app crowd-sources city cleanup by incentivizing reporting and
+        cleaning of trash through a user generated, free-market economy.
       </p>
       <hr />
       <h3 className="aboutHeading">How to Report Trash</h3>
@@ -33,9 +32,12 @@ export default function About() {
           <li>
             Click the "Report Trash" button and a trashcan icon will appear on
             the map representing your trash instance. If you feel that the
-            location is not accurate, drag the icon accordingly. Your reported
-            trash instance will now appear on both the map in your private
-            "report" tab as well as the map in the public "clean" tab.
+            location is not accurate, drag the icon accordingly.
+          </li>
+          <li>
+            Your reported trash instance will now appear on both the map in your
+            private "report" tab as well as the map in the public "clean" tab.{" "}
+            <b>Double clicking trash instances will display their stats.</b>
           </li>
         </ol>
       </p>
