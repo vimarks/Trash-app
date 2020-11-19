@@ -62,8 +62,8 @@ class Nav extends React.Component {
             <li>Clean</li>
           </Link>
 
-          <Link to="/about">
-            <li>About</li>
+          <Link to="/mytrash">
+            <li>MyTrash</li>
           </Link>
 
           <Link to="/wallet">

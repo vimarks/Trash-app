@@ -31,6 +31,10 @@ export default function Map(props) {
     <div>
       <ReactMapGL
         {...viewport}
+        onClick={e => {
+          e.preventDefault();
+          setSelectedLocation(null);
+        }}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle="mapbox://styles/vimarks/ck5edmyhu0vv81jo6qxc2bjh3"
         onViewportChange={viewport => {
@@ -56,52 +60,9 @@ export default function Map(props) {
               </button>
             </Marker>
           ))}
-        {props.cleanTrashLocations &&
-          props.cleanTrashLocations.map(loc => (
-            <Marker
-              key={loc.id}
-              latitude={loc.latitude}
-              longitude={loc.longitude}
-            >
-              <button
-                className="trash-button"
-                onClick={e => {
-                  e.preventDefault();
-                  setSelectedLocation(loc);
-                  props.markerKeyHolder(loc.id);
-                }}
-              >
-                <img alt="cleanIcon" height="26px" src="/2107157.png" />
-              </button>
-            </Marker>
-          ))}
-
-        {props.confirmedTrashLocations &&
-          props.confirmedTrashLocations.map(loc => (
-            <Marker
-              key={loc.id}
-              latitude={loc.latitude}
-              longitude={loc.longitude}
-            >
-              <button
-                className="trash-button"
-                onClick={e => {
-                  e.preventDefault();
-                  setSelectedLocation(loc);
-                  props.markerKeyHolder(loc.id);
-                }}
-              >
-                <img
-                  alt="confirmedIcon"
-                  height="28px"
-                  src="/confirmed_icon.png"
-                />
-              </button>
-            </Marker>
-          ))}
 
         {selectedLocation &&
-          props.trash
+          props.allTrash
             .filter(tr => tr.location_id === selectedLocation.id)
             .map(tr => (
               <Popup
