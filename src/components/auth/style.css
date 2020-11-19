@@ -106,3 +106,42 @@ ol > li:before {
   text-align: left;
   margin-left: 278px;
 }
+.clean_success {
+  border: solid black 1px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 1;
+  background-color: blue;
+}
+.pending_their_confirm {
+  border: solid black 1px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 1;
+  background-color: yellow;
+}
+.report_success {
+  border: solid black 1px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 1;
+  background-color: green;
+}
+.pending_clean {
+  border: solid black 1px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 1;
+  background-color: brown;
+}
+.pending_your_confirm {
+  border: solid black 1px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 1;
+  background-color: red;
+}
+#titleImgPreview {
+  max-width: 30%;
+  max-height: 250px;
+}

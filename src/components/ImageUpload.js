@@ -8,19 +8,14 @@ class ImageUpload extends Component {
     };
   }
 
-  // On file select (from the pop up)
   onFileChange = event => {
-    // Update the state
     this.setState({ selectedFile: event.target.files[0] });
   };
 
-  // On file upload (click the upload button)
   onFileUpload = () => {
-    // Create an object of formData
-    // Request made to the backend api
     var myHeaders = new Headers({
       Authorization: "Client-ID d0cb448cf7a7089",
-      Authorization: process.env.BEARER_TOKEN
+      Authorization: process.env.REACT_APP_BEARER_TOKEN
     });
 
     let formdata = new FormData();
@@ -36,12 +31,11 @@ class ImageUpload extends Component {
 
     fetch("https://api.imgur.com/3/image", requestOptions)
       .then(response => response.json())
-      .then(result => this.props.setImageLink(result.data.link))
+      .then(result =>
+        this.props.setImgLink(result.data.link, this.props.imageType)
+      )
       .catch(error => console.log("error", error));
   };
-
-  // File content to be displayed after
-  // file upload is complete
 
   render() {
     let button;
@@ -55,7 +49,7 @@ class ImageUpload extends Component {
         <form>
           <input id="imageUpload" type="file" onChange={this.onFileChange} />
         </form>
-        <br />
+        {button}
       </div>
     );
   }

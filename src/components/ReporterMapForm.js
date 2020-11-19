@@ -1,6 +1,7 @@
 import React from "react";
 import Map from "./Map";
 import ImageUpload from "./ImageUpload";
+import ReporterForm from "./ReporterForm";
 import "./auth/style.css";
 
 class ReporterMapForm extends React.Component {
@@ -76,59 +77,59 @@ class ReporterMapForm extends React.Component {
         });
       });
   };
+  //
+  // patchBounty = newBounty => {
+  //   let filtered = this.state.trash.filter(
+  //     trash => trash.location_id === this.state.selectedLocation.id
+  //   );
+  //   let id;
+  //   if (filtered[0]) {
+  //     id = filtered[0].id;
+  //   }
+  //
+  //   fetch("http://localhost:3001/trashes/patchBounty/" + id, {
+  //     method: "PATCH",
+  //     headers: {
+  //       Authorization: `Bearer ${this.token}`,
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       bounty: newBounty
+  //     })
+  //   })
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       this.setState({
+  //         trash: data.allTrash
+  //       });
+  //     });
+  // };
 
-  patchBounty = newBounty => {
-    let filtered = this.state.trash.filter(
-      trash => trash.location_id === this.state.selectedLocation.id
-    );
-    let id;
-    if (filtered[0]) {
-      id = filtered[0].id;
-    }
-
-    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        bounty: newBounty
-      })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({
-          trash: data.allTrash
-        });
-      });
-  };
-
-  saveLocation = () => {
-    fetch("http://localhost:3001/locations", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        latitude: this.props.coords.latitude,
-        longitude: this.props.coords.longitude
-      })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(locId => {
-        this.setState({
-          location_id: locId.id
-        });
-      });
-  };
+  // saveLocation = () => {
+  //   fetch("http://localhost:3001/locations", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${this.token}`,
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       latitude: this.props.coords.latitude,
+  //       longitude: this.props.coords.longitude
+  //     })
+  //   })
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(locId => {
+  //       this.setState({
+  //         location_id: locId.id
+  //       });
+  //     });
+  // };
 
   handleChange = event => {
     this.setState({
@@ -240,11 +241,6 @@ class ReporterMapForm extends React.Component {
               />
               <input type="submit" value="Change Bounty" />
             </form>
-            {/*
-            <div>
-              <ImageUpload setImageLink={this.setImageLink} />
-            </div>
-            */}
           </div>
         );
       }
@@ -289,9 +285,6 @@ class ReporterMapForm extends React.Component {
             onChange={this.handleChange}
             required
           />
-          {/*
-          <ImageUpload setImageLink={this.setImageLink} />
-          */}
           <button type="submit"> Report Trash</button>
         </form>
       );
@@ -299,7 +292,13 @@ class ReporterMapForm extends React.Component {
 
     return (
       <div>
-        <div className="map">
+        <div
+          className="map"
+          onClick={e => {
+            e.preventDefault();
+            this.setPopupStatus(false, null);
+          }}
+        >
           <Map
             coords={this.props.coords}
             popupStatus={this.state.popupStatus}
