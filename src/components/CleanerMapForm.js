@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "reactstrap";
-import CleanerMap from "./CleanerMap";
+import Map from "./Map";
 import StarRating from "./StarRating";
-import CleanTool from "./CleanTool";
+import ClickedCard from "./ClickedCard";
 
 class CleanerMapForm extends React.Component {
   token = localStorage.getItem("token");
@@ -10,6 +10,7 @@ class CleanerMapForm extends React.Component {
   constructor() {
     super();
     this.state = {
+      displayMode: "map",
       trashLocations: [],
       dirtyTrashLocations: [],
       cleanMode: false,
@@ -21,19 +22,16 @@ class CleanerMapForm extends React.Component {
   }
 
   markerKeyHolder = id => {
-    if (id) {
-      this.state.markerKey !== id
-        ? this.setState({
-            markerKey: id,
-            locVerify: false,
-            attempts: 0
-          })
-        : this.setState({
-            markerKey: null,
-            locVerify: false,
-            attempts: 0
-          });
-    }
+    this.state.markerKey !== id
+      ? this.setState({
+          markerKey: id
+        })
+      : this.setState({
+          markerKey: null
+        });
+  };
+  setDisplayMode = mode => {
+    this.setState({ displayMode: mode });
   };
 
   setReputations = reps => {
@@ -43,49 +41,52 @@ class CleanerMapForm extends React.Component {
   };
 
   render() {
-    let button, visibleComp;
-    if (this.state.markerKey && !this.state.cleanMode) {
-      button = (
-        <button onClick={() => this.setState({ cleanMode: true })}>
-          clean
-        </button>
+    let visibleComp;
+    if (this.state.displayMode === "clickedCard") {
+      let clickedTrash = this.props.allTrash.filter(
+        trash => trash.location_id === this.state.markerKey
+      )[0];
+      let images = this.props.allImages.filter(
+        img => img.trash_id === clickedTrash.id
       );
-    }
-
-    if (this.state.cleanMode) {
-      visibleComp = this.props.allTrash
-        .filter(tr => tr.location_id === this.state.markerKey)
-        .map(tr => (
-          <CleanTool
-            currentLocation={this.props.currentLocation}
-            cleanTrash={this.props.cleanTrash}
-            status={tr.status}
-            trash_id={tr.id}
-            location_id={tr.location_id}
-            dirtyTrashLocations={this.props.dirtyTrashLocations}
-            currentLocation={this.props.currentLocation}
-          />
-        ));
+      visibleComp = (
+        <ClickedCard
+          editFetch={this.props.editFetch}
+          markerKeyHolder={this.markerKeyHolder}
+          setDisplayMode={this.setDisplayMode}
+          from={"map"}
+          key={clickedTrash.id}
+          cleanTrash={this.props.cleanTrash}
+          cardStatus={"pending_clean"}
+          images={images}
+          title={clickedTrash.title}
+          bounty={clickedTrash.bounty}
+          description={clickedTrash.description}
+          reporter_id={clickedTrash.reporter_id}
+          trash_id={clickedTrash.id}
+          location_id={clickedTrash.location_id}
+          status={clickedTrash.cleaned}
+          dirtyTrashLocations={this.props.dirtyTrashLocations}
+          currentLocation={this.props.currentLocation}
+        />
+      );
     } else {
       visibleComp = (
         <div className="map">
-          <CleanerMap
+          <Map
             coords={this.props.currentLocation}
+            fromCleanerSide={true}
             dirtyTrashLocations={this.props.dirtyTrashLocations}
             markerKeyHolder={this.markerKeyHolder}
             allTrash={this.props.allTrash}
             users={this.props.users}
             reputations={this.props.reputations}
+            setDisplayMode={this.setDisplayMode}
           />
         </div>
       );
     }
-    return (
-      <div>
-        {visibleComp}
-        {button}
-      </div>
-    );
+    return <div>{visibleComp}</div>;
   }
 }
 

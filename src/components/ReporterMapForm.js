@@ -77,59 +77,59 @@ class ReporterMapForm extends React.Component {
         });
       });
   };
-  //
-  // patchBounty = newBounty => {
-  //   let filtered = this.state.trash.filter(
-  //     trash => trash.location_id === this.state.selectedLocation.id
-  //   );
-  //   let id;
-  //   if (filtered[0]) {
-  //     id = filtered[0].id;
-  //   }
-  //
-  //   fetch("http://localhost:3001/trashes/patchBounty/" + id, {
-  //     method: "PATCH",
-  //     headers: {
-  //       Authorization: `Bearer ${this.token}`,
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       bounty: newBounty
-  //     })
-  //   })
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       this.setState({
-  //         trash: data.allTrash
-  //       });
-  //     });
-  // };
 
-  // saveLocation = () => {
-  //   fetch("http://localhost:3001/locations", {
-  //     method: "POST",
-  //     headers: {
-  //       Authorization: `Bearer ${this.token}`,
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       latitude: this.props.coords.latitude,
-  //       longitude: this.props.coords.longitude
-  //     })
-  //   })
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(locId => {
-  //       this.setState({
-  //         location_id: locId.id
-  //       });
-  //     });
-  // };
+  patchBounty = newBounty => {
+    let filtered = this.state.trash.filter(
+      trash => trash.location_id === this.state.selectedLocation.id
+    );
+    let id;
+    if (filtered[0]) {
+      id = filtered[0].id;
+    }
+
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        bounty: newBounty
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({
+          trash: data.allTrash
+        });
+      });
+  };
+
+  saveLocation = () => {
+    fetch("http://localhost:3001/locations", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        latitude: this.props.coords.latitude,
+        longitude: this.props.coords.longitude
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(locId => {
+        this.setState({
+          location_id: locId.id
+        });
+      });
+  };
 
   handleChange = event => {
     this.setState({

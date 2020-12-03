@@ -2,7 +2,12 @@
 
 // Login Page //
 
+body {
+  background-color: grey;
+}
+
 nav {
+  background-color: #47632c;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -106,42 +111,125 @@ ol > li:before {
   text-align: left;
   margin-left: 278px;
 }
+#button_group {
+  text-align: center;
+}
 .clean_success {
-  border: solid black 1px;
+  border: solid black 3px;
+  border-radius: 8px;
+  width: 250px;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 1;
   background-color: blue;
 }
 .pending_their_confirm {
-  border: solid black 1px;
+  border: solid black 3px;
+  border-radius: 8px;
+  width: 250px;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 1;
   background-color: yellow;
 }
 .report_success {
-  border: solid black 1px;
+  border: solid black 3px;
+  border-radius: 8px;
+  width: 250px;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 1;
   background-color: green;
 }
 .pending_clean {
-  border: solid black 1px;
+  border: solid black 3px;
+  border-radius: 8px;
+  width: 250px;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 1;
-  background-color: brown;
+  background-color: #713d07;
 }
 .pending_your_confirm {
-  border: solid black 1px;
+  border: solid black 3px;
+  border-radius: 8px;
+  width: 250px;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 1;
   background-color: red;
 }
 #titleImgPreview {
-  max-width: 30%;
-  max-height: 250px;
+  max-width: 83%;
+  max-height: 215px;
+}
+.flex_container {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+/*---------------------clicked card-------------------------*/
+
+#clickedCardImg {
+  width: 100%;
+}
+
+#clicked_card {
+  display: grid;
+  grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "lt ct ct ct rt rt"
+    ". lm lm rm rm ."
+    ". lm lm rm rm ."
+    ". . cb cb . .";
+}
+
+#left_top {
+  grid-area: lt;
+  font-size: 17pt;
+  text-align: center;
+  background-color: red;
+}
+
+#center_top {
+  grid-area: ct;
+  font-size: 30pt;
+  text-align: center;
+  background-color: red;
+}
+
+#right_top {
+  grid-area: rt;
+  font-size: 30pt;
+  text-align: center;
+  background-color: red;
+}
+
+#left_mid {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  grid-area: lm;
+}
+
+#right_mid_description {
+  width: 100%;
+  padding: 10px;
+  grid-area: rm;
+}
+
+#right_mid_after {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  grid-area: rm;
+}
+
+#center_bottom {
+  grid-area: cb;
+  text-align: center;
 }

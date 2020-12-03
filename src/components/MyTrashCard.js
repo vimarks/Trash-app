@@ -9,20 +9,20 @@ const MyTrashCard = ({
   cardSelection
 }) => {
   let visibleComp = [],
-    image;
+    images;
   let keys = Object.keys(myTrashObj);
   if (cardSelection !== "all") {
     keys = keys.filter(key => key === cardSelection);
   }
   for (let key of keys) {
     let part = myTrashObj[key].map(tr => {
-      image = allImages.filter(img => img.trash_id === tr.id);
+      images = allImages.filter(img => img.trash_id === tr.id);
       return (
         <Card
           key={tr.id}
           className={key}
           setCard={setCard}
-          image={image}
+          images={images}
           title={tr.title}
           bounty={tr.bounty}
           status={tr.cleaned}
