@@ -1,5 +1,7 @@
 import React from "react";
 import ImageUpload from "./ImageUpload.js";
+import { withRouter } from "react-router-dom";
+
 class CleanTool extends React.Component {
   token = localStorage.getItem("token");
   constructor(props) {
@@ -8,7 +10,8 @@ class CleanTool extends React.Component {
       locVerify: false,
       attempted: false,
       beforeImgLink: "",
-      afterImgLink: ""
+      afterImgLink: "",
+      complete: false
     };
   }
 
@@ -47,6 +50,9 @@ class CleanTool extends React.Component {
     this.saveImage(this.props.trash_id, "before");
     this.saveImage(this.props.trash_id, "after");
     this.props.cleanTrash(this.props.trash_id);
+    this.setState({ complete: true });
+    alert("Trash has been cleaned!\nReporter will be notified.");
+    // this.props.history.push("/mytrash");
     // redirect to myTrash/awaitingConfirmation
   };
 
@@ -68,7 +74,13 @@ class CleanTool extends React.Component {
   };
 
   render() {
-    let { locVerify, attempted, beforeImgLink, afterImgLink } = this.state;
+    let {
+      locVerify,
+      attempted,
+      beforeImgLink,
+      afterImgLink,
+      complete
+    } = this.state;
     let button, visibleComp, beforeImage, afterImage;
 
     if (beforeImgLink) {
@@ -105,7 +117,7 @@ class CleanTool extends React.Component {
           <ImageUpload imageType={"after"} setImgLink={this.setImgLink} />
         </div>
       );
-    } else {
+    } else if (!complete) {
       button = <button onClick={() => this.saveAndClean()}>clean it </button>;
     }
     return (
@@ -119,4 +131,4 @@ class CleanTool extends React.Component {
   }
 }
 
-export default CleanTool;
+export default withRouter(CleanTool);

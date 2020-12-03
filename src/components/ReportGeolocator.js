@@ -6,6 +6,7 @@ import TrashPostPreview from "./TrashPostPreview";
 
 class ReportGeolocator extends React.Component {
   token = localStorage.getItem("token");
+
   constructor() {
     super();
     this.state = {
@@ -20,6 +21,7 @@ class ReportGeolocator extends React.Component {
       userBalance: null
     };
   }
+
   setUserProgress = () => {
     this.setState({
       userProgress: this.state.userProgress + 1
@@ -90,6 +92,10 @@ class ReportGeolocator extends React.Component {
     });
   };
   render() {
+    if (this.props.coords) {
+      localStorage.setItem("lat", this.props.coords.latitude);
+      localStorage.setItem("long", this.props.coords.longitude);
+    }
     let progressButton, visibleComp;
     if (this.state.userProgress === 0) {
       visibleComp = (

@@ -51,10 +51,31 @@ class CleanGeolocator extends React.Component {
       });
   };
 
-  setDisplayMode = () => {
-    if (this.state.displayMode === "gallery") {
-      this.setState({ displayMode: "map" });
-    } else this.setState({ displayMode: "gallery" });
+  editFetch = (patchBody, trash_id) => {
+    let id = trash_id;
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        patchBody
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({
+          trash: data.allTrash
+        });
+      });
+  };
+
+  setDisplayMode = mode => {
+    this.setState({ displayMode: mode });
   };
 
   cleanTrash = id => {
@@ -84,9 +105,13 @@ class CleanGeolocator extends React.Component {
   render() {
     let button, visibleComp;
     if (this.state.displayMode === "gallery") {
-      button = <button onClick={this.setDisplayMode}> map </button>;
+      button = (
+        <button onClick={() => this.setDisplayMode("map")}> map </button>
+      );
       visibleComp = (
         <Gallery
+          editFetch={this.editFetch}
+          setDisplayMode={this.setDisplayMode}
           type={"cleanGeo"}
           cleanTrash={this.cleanTrash}
           currentLocation={this.props.coords}
@@ -96,13 +121,20 @@ class CleanGeolocator extends React.Component {
         />
       );
     } else {
-      button = <button onClick={this.setDisplayMode}> gallery </button>;
+      button = (
+        <button onClick={() => this.setDisplayMode("gallery")}>
+          {" "}
+          gallery{" "}
+        </button>
+      );
       visibleComp = (
         <CleanerMapForm
+          editFetch={this.editFetch}
           cleanTrash={this.cleanTrash}
           currentLocation={this.props.coords}
           dirtyTrashLocations={this.state.dirtyTrashLocations}
           allTrash={this.state.trash}
+          allImages={this.state.allImages}
           users={this.state.users}
           reputations={this.state.reputations}
         />

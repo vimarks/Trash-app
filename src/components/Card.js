@@ -1,16 +1,22 @@
 import React from "react";
-// props.status will determine the color of the card
+
 const Card = props => {
+  let [imgObj] = props.images,
+    titleImg,
+    title,
+    bounty;
+  titleImg = <img id="titleImgPreview" src={imgObj.url} />;
+  title = <div>{props.title}</div>;
+  bounty = <div>{props.bounty}</div>;
+
   return (
     <div className={props.className}>
-      <p>
-        reporter_id{props.reporter}
-        {props.title}
-        {props.id}
-        {props.status}
-      </p>
-      <img id="titleImgPreview" src={props.image[0] && props.image[0].url} />
-      <button onClick={() => props.setCard(props.id)}> select </button>
+      {titleImg}
+      {title}${bounty}
+      <button onClick={() => props.setCard(props.id, props.className)}>
+        {" "}
+        select{" "}
+      </button>
     </div>
   );
 };

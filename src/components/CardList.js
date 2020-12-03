@@ -9,17 +9,18 @@ const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
   const [cardSelection, setCardSelection] = useState("all");
 
   let currentUser_id = Number(localStorage.getItem("currentUser_id"));
-  let visibleComp, image, buttonGroup;
+  let visibleComp, images, buttonGroup;
   if (type === "cleanGeo") {
     visibleComp = allTrash
       .filter(tr => tr.cleaned === "dirty")
       .map(tr => {
-        image = allImages.filter(img => img.trash_id === tr.id);
+        images = allImages.filter(img => img.trash_id === tr.id);
         return (
           <Card
+            className={"pending_clean"}
             key={tr.id}
             setCard={setCard}
-            image={image}
+            images={images}
             title={tr.title}
             bounty={tr.bounty}
             status={tr.cleaned}
@@ -28,7 +29,6 @@ const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
           />
         );
       });
-    console.log("visibleComp1", visibleComp);
   } else {
     visibleComp = (
       <MyTrashCard
@@ -40,7 +40,7 @@ const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
       />
     );
     buttonGroup = (
-      <div>
+      <div id="button_group">
         <button onClick={() => setCardSelection("all")}> all </button>
         <button onClick={() => setCardSelection("clean_success")}>
           {" "}
@@ -67,8 +67,8 @@ const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
   }
   return (
     <div>
-      {visibleComp}
-      {buttonGroup}
+      <div>{buttonGroup}</div>
+      <div className="flex_container">{visibleComp}</div>
     </div>
   );
 };

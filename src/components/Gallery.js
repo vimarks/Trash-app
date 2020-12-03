@@ -4,10 +4,15 @@ import ClickedCard from "./ClickedCard";
 
 const Gallery = props => {
   const [selectedCardId, setSelectedCardId] = useState(null);
-
-  const setCard = id => {
-    if (!selectedCardId) setSelectedCardId(id);
-    else setSelectedCardId(null);
+  const [selectedCardStatus, setSelectedCardStatus] = useState(null);
+  const setCard = (id, cardStatus) => {
+    if (!selectedCardId) {
+      setSelectedCardId(id);
+      setSelectedCardStatus(cardStatus);
+    } else {
+      setSelectedCardId(null);
+      setSelectedCardStatus(null);
+    }
   };
 
   let visibleComp;
@@ -15,15 +20,20 @@ const Gallery = props => {
     let specificTrash =
       props.allTrash &&
       props.allTrash.filter(trash => trash.id === selectedCardId)[0];
-    let image = props.allImages.filter(
+    let images = props.allImages.filter(
       img => img.trash_id === specificTrash.id
     );
     visibleComp = (
       <ClickedCard
+        confirmClean={props.confirmClean}
+        editFetch={props.editFetch}
+        setDisplayMode={props.setDisplayMode}
+        from={"gallery"}
         key={specificTrash.id}
         cleanTrash={props.cleanTrash}
+        cardStatus={selectedCardStatus}
         setCard={setCard}
-        image={image}
+        images={images}
         title={specificTrash.title}
         bounty={specificTrash.bounty}
         description={specificTrash.description}
@@ -33,11 +43,6 @@ const Gallery = props => {
         trash_id={specificTrash.id}
         location_id={specificTrash.location_id}
         dirtyTrashLocations={props.dirtyTrashLocations}
-        clean_success={props.clean_success}
-        pending_their_confirm={props.pending_their_confirm}
-        report_success={props.report_success}
-        pending_clean={props.pending_clean}
-        pending_your_confirm={props.pending_your_confirm}
         currentLocation={props.currentLocation}
       />
     );
