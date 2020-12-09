@@ -142,7 +142,7 @@ class MyTrash extends React.Component {
     let visibleComp, button;
     if (this.state.displayMode === "gallery") {
       button = (
-        <button onClick={() => this.setDisplayMode("map")}> map </button>
+        <button onClick={() => this.setDisplayMode("map")}>see map</button>
       );
       visibleComp = (
         <Gallery
@@ -165,7 +165,7 @@ class MyTrash extends React.Component {
       button = (
         <button onClick={() => this.setDisplayMode("gallery")}>
           {" "}
-          gallery{" "}
+          see gallery{" "}
         </button>
       );
       visibleComp = (
@@ -208,7 +208,7 @@ class MyTrash extends React.Component {
           }}
         >
           {" "}
-          gallery{" "}
+          see gallery{" "}
         </button>
       );
       let clickedTrash = this.state.allTrash.filter(
@@ -231,13 +231,14 @@ class MyTrash extends React.Component {
           reporter_id={clickedTrash.reporter_id}
           trash_id={clickedTrash.id}
           status={clickedTrash.cleaned}
+          created_at={clickedTrash.created_at}
         />
       );
     }
 
     return (
       <div>
-        {button}
+        <div id="map_gallery_button">{button}</div>
         {visibleComp}
       </div>
     );

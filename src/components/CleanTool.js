@@ -91,37 +91,57 @@ class CleanTool extends React.Component {
     }
     if (!locVerify && !attempted) {
       button = (
-        <button onClick={() => this.compareLocation(this.props.trash_id)}>
-          {" "}
-          compare location{" "}
-        </button>
+        <div id="clean_directions">
+          <p>
+            The first step is to prove that you are in the vicinity of the
+            trash, click the button below when you are within 10 feet.
+          </p>
+          <button onClick={() => this.compareLocation(this.props.trash_id)}>
+            {" "}
+            compare location{" "}
+          </button>
+        </div>
       );
     } else if (!locVerify && attempted) {
       button = (
-        <button onClick={() => this.setState({ attempted: false })}>
-          {" "}
-          try again{" "}
-        </button>
+        <div id="clean_directions">
+          <p>
+            Your coordinates do not match those of the trash you are attempting
+            to clean, please try again.
+          </p>
+          <button onClick={() => this.setState({ attempted: false })}>
+            {" "}
+            try again{" "}
+          </button>
+        </div>
       );
     } else if (locVerify && !beforeImgLink && !afterImgLink) {
       visibleComp = (
         <div>
-          <h1>upload before image</h1>
-          <ImageUpload imageType={"before"} setImgLink={this.setImgLink} />
+          <h1>Please select a "BEFORE" image</h1>
+          <ImageUpload
+            fomClean={true}
+            imageType={"before"}
+            setImgLink={this.setImgLink}
+          />
         </div>
       );
     } else if (locVerify && beforeImgLink && !afterImgLink) {
       visibleComp = (
         <div>
-          <h1>upload after image</h1>
-          <ImageUpload imageType={"after"} setImgLink={this.setImgLink} />
+          <h1>Please select an "AFTER" image</h1>
+          <ImageUpload
+            fromClean={true}
+            imageType={"after"}
+            setImgLink={this.setImgLink}
+          />
         </div>
       );
     } else if (!complete) {
       button = <button onClick={() => this.saveAndClean()}>clean it </button>;
     }
     return (
-      <div>
+      <div id="clean_form">
         {visibleComp}
         {beforeImage}
         {afterImage}

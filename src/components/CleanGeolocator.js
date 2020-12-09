@@ -106,7 +106,7 @@ class CleanGeolocator extends React.Component {
     let button, visibleComp;
     if (this.state.displayMode === "gallery") {
       button = (
-        <button onClick={() => this.setDisplayMode("map")}> map </button>
+        <button onClick={() => this.setDisplayMode("map")}> see map </button>
       );
       visibleComp = (
         <Gallery
@@ -124,7 +124,7 @@ class CleanGeolocator extends React.Component {
       button = (
         <button onClick={() => this.setDisplayMode("gallery")}>
           {" "}
-          gallery{" "}
+          see gallery{" "}
         </button>
       );
       visibleComp = (
@@ -147,7 +147,7 @@ class CleanGeolocator extends React.Component {
       <div>Geolocation is not enabled</div>
     ) : this.props.coords ? (
       <div>
-        {button}
+        <div id="map_gallery_button">{button}</div>
         {visibleComp}
       </div>
     ) : (

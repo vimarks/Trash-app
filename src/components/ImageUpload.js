@@ -4,7 +4,8 @@ class ImageUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null
+      selectedFile: null,
+      numUploaded: 0
     };
   }
 
@@ -13,13 +14,16 @@ class ImageUpload extends Component {
   };
 
   onFileUpload = () => {
+    this.state.numUploaded += 1;
+    let selectedFile = this.state.selectedFile;
+    this.setState({ selectedFile: null });
     var myHeaders = new Headers({
       Authorization: "Client-ID d0cb448cf7a7089",
       Authorization: process.env.REACT_APP_BEARER_TOKEN
     });
 
     let formdata = new FormData();
-    formdata.append("image", this.state.selectedFile);
+    formdata.append("image", selectedFile);
     formdata.append("album", "k30VDCy");
 
     let requestOptions = {
@@ -38,20 +42,66 @@ class ImageUpload extends Component {
   };
 
   render() {
+    console.log("uploaded", this.state.numUploaded);
     let button;
-    if (this.state.selectedFile) {
-      button = <button onClick={this.onFileUpload}>Upload!</button>;
+    if (!this.props.fromClean) {
+      if (this.state.selectedFile && this.state.numUploaded < 1) {
+        button = (
+          <div>
+            {" "}
+            Image selected! please{" "}
+            <button onClick={this.onFileUpload}>Upload</button>
+          </div>
+        );
+      } else if (this.state.numUploaded === 1) button = <div> done! </div>;
+      else {
+        button = (
+          <div>
+            {" "}
+            <form>
+              <label id="image_upload" for="image_input">
+                Select file
+              </label>
+              <input
+                id="image_input"
+                type="file"
+                onChange={this.onFileChange}
+                style={{ display: "none" }}
+              />
+            </form>{" "}
+          </div>
+        );
+      }
     } else {
-      button = <div> please select image </div>;
+      if (this.state.selectedFile && this.state.numUploaded < 2) {
+        button = (
+          <div>
+            {" "}
+            Image selected! please{" "}
+            <button onClick={this.onFileUpload}>Upload</button>
+          </div>
+        );
+      } else if (this.state.numUploaded === 2) button = <div> done! </div>;
+      else {
+        button = (
+          <div>
+            {" "}
+            <form>
+              <label id="image_upload" for="image_input">
+                Select file
+              </label>
+              <input
+                id="image_input"
+                type="file"
+                onChange={this.onFileChange}
+                style={{ display: "none" }}
+              />
+            </form>{" "}
+          </div>
+        );
+      }
     }
-    return (
-      <div>
-        <form>
-          <input id="imageUpload" type="file" onChange={this.onFileChange} />
-        </form>
-        {button}
-      </div>
-    );
+    return <div>{button}</div>;
   }
 }
 

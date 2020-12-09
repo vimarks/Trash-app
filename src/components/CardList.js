@@ -42,23 +42,38 @@ const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
     buttonGroup = (
       <div id="button_group">
         <button onClick={() => setCardSelection("all")}> all </button>
-        <button onClick={() => setCardSelection("clean_success")}>
+        <button
+          style={{ "background-color": "#2c6ee6" }}
+          onClick={() => setCardSelection("clean_success")}
+        >
           {" "}
           clean success{" "}
         </button>
-        <button onClick={() => setCardSelection("report_success")}>
+        <button
+          style={{ "background-color": "#3fad11" }}
+          onClick={() => setCardSelection("report_success")}
+        >
           {" "}
           report success{" "}
         </button>
-        <button onClick={() => setCardSelection("pending_clean")}>
+        <button
+          style={{ "background-color": "#b95e00" }}
+          onClick={() => setCardSelection("pending_clean")}
+        >
           {" "}
           pending clean{" "}
         </button>
-        <button onClick={() => setCardSelection("pending_your_confirm")}>
+        <button
+          style={{ "background-color": "#f73030" }}
+          onClick={() => setCardSelection("pending_your_confirm")}
+        >
           {" "}
           pending your confirm{" "}
         </button>
-        <button onClick={() => setCardSelection("pending_their_confirm")}>
+        <button
+          style={{ "background-color": "#ffd400" }}
+          onClick={() => setCardSelection("pending_their_confirm")}
+        >
           {" "}
           pending their confirm{" "}
         </button>
