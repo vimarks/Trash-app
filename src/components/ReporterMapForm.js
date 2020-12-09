@@ -29,7 +29,7 @@ class ReporterMapForm extends React.Component {
   }
 
   initialRFetch = () => {
-    fetch("http://localhost:3001/trashes/getUserTrashCoords", {
+    fetch("https://trash-app-back.herokuapp.com/trashes/getUserTrashCoords", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -54,7 +54,7 @@ class ReporterMapForm extends React.Component {
   };
 
   confirmClean = id => {
-    fetch("http://localhost:3001/trashes/" + id, {
+    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -109,7 +109,7 @@ class ReporterMapForm extends React.Component {
   };
 
   saveLocation = () => {
-    fetch("http://localhost:3001/locations", {
+    fetch("https://trash-app-back.herokuapp.com/locations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -142,7 +142,7 @@ class ReporterMapForm extends React.Component {
 
     if (this.state.userBalance > this.state.bounty) {
       this.saveLocation();
-      fetch("http://localhost:3001/trashes", {
+      fetch("https://trash-app-back.herokuapp.com/trashes", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.token}`,
