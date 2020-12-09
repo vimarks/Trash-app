@@ -29,22 +29,28 @@ export default function Map(props) {
     markers = [];
   for (let key of keys) {
     icon = trObj[key].icon;
-    marker = trObj[key].locations.map(loc => {
-      return (
-        <Marker key={loc.id} latitude={loc.latitude} longitude={loc.longitude}>
-          <button
-            className="trash-button"
-            onClick={e => {
-              e.preventDefault();
-              setSelectedLocation(loc);
-              props.markerKeyHolder(loc.id, key);
-            }}
+    marker =
+      trObj[key].locations &&
+      trObj[key].locations.map(loc => {
+        return (
+          <Marker
+            key={loc.id}
+            latitude={loc.latitude}
+            longitude={loc.longitude}
           >
-            <img alt={key} height="20px" src={icon} />
-          </button>
-        </Marker>
-      );
-    });
+            <button
+              className="trash-button"
+              onClick={e => {
+                e.preventDefault();
+                setSelectedLocation(loc);
+                props.markerKeyHolder(loc.id, key);
+              }}
+            >
+              <img alt={key} height="20px" src={icon} />
+            </button>
+          </Marker>
+        );
+      });
     markers = markers.concat(marker);
   }
   console.log("MARKERS", markers);
