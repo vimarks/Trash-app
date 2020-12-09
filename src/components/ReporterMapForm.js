@@ -87,7 +87,7 @@ class ReporterMapForm extends React.Component {
       id = filtered[0].id;
     }
 
-    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
+    fetch("https://trash-app-back.herokuapp.com/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,

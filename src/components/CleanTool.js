@@ -58,7 +58,7 @@ class CleanTool extends React.Component {
 
   saveImage = (trash_id, image_type) => {
     let imgLink = `${image_type}ImgLink`;
-    fetch("http://localhost:3001/images", {
+    fetch("https://trash-app-back.herokuapp.com/images", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
