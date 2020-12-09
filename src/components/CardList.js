@@ -11,24 +11,26 @@ const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
   let currentUser_id = Number(localStorage.getItem("currentUser_id"));
   let visibleComp, images, buttonGroup;
   if (type === "cleanGeo") {
-    visibleComp = allTrash
-      .filter(tr => tr.cleaned === "dirty")
-      .map(tr => {
-        images = allImages.filter(img => img.trash_id === tr.id);
-        return (
-          <Card
-            className={"pending_clean"}
-            key={tr.id}
-            setCard={setCard}
-            images={images}
-            title={tr.title}
-            bounty={tr.bounty}
-            status={tr.cleaned}
-            reporter={tr.reporter_id}
-            id={tr.id}
-          />
-        );
-      });
+    visibleComp =
+      allTrash &&
+      allTrash
+        .filter(tr => tr.cleaned === "dirty")
+        .map(tr => {
+          images = allImages.filter(img => img.trash_id === tr.id);
+          return (
+            <Card
+              className={"pending_clean"}
+              key={tr.id}
+              setCard={setCard}
+              images={images}
+              title={tr.title}
+              bounty={tr.bounty}
+              status={tr.cleaned}
+              reporter={tr.reporter_id}
+              id={tr.id}
+            />
+          );
+        });
   } else {
     visibleComp = (
       <MyTrashCard
