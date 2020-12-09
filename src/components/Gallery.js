@@ -42,6 +42,7 @@ const Gallery = props => {
         cleaner_id={specificTrash.cleaner_id}
         trash_id={specificTrash.id}
         location_id={specificTrash.location_id}
+        created_at={specificTrash.created_at}
         dirtyTrashLocations={props.dirtyTrashLocations}
         currentLocation={props.currentLocation}
       />

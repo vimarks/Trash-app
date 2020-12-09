@@ -10,6 +10,25 @@ const ConfirmTool = props => {
     if (x) props.confirmClean(props.trash_id);
   };
 
-  return <button onClick={() => areYouSure()}>Confirm</button>;
+  return (
+    <div id="confirm_diplay">
+      <figure>
+        <img id="confirm_img" src={props.title_url} />
+        <figcaption>POSTING</figcaption>
+      </figure>
+      <figure>
+        <img id="confirm_img" src={props.before_url} />
+        <figcaption>BEFORE</figcaption>
+      </figure>
+      <figure>
+        <img id="confirm_img" src={props.after_url} />
+        <figcaption>AFTER</figcaption>
+      </figure>
+      <button id="confirm_button" onClick={() => areYouSure()}>
+        Confirm
+      </button>
+      ;
+    </div>
+  );
 };
 export default ConfirmTool;

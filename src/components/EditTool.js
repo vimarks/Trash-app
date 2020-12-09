@@ -90,9 +90,10 @@ class EditTool extends React.Component {
     } else {
     }
     checkboxes = (
-      <div id="EditDiv">
+      <div id="edit_div">
+        <h1> Edit Your Post </h1>
         <div id="title">
-          <label id="reportLabel">Title</label>
+          <label id="reportLabel">Title </label>
           <input
             id="titleInput"
             type="checkbox"
@@ -103,7 +104,7 @@ class EditTool extends React.Component {
         </div>
 
         <div id="bounty">
-          <label id="bountyLabel">Bounty</label>
+          <label id="bountyLabel">Bounty </label>
           <input
             id="bountyInput"
             type="checkbox"
@@ -114,7 +115,7 @@ class EditTool extends React.Component {
         </div>
 
         <div id="description">
-          <label id="descriptionLabel">Description</label>
+          <label id="descriptionLabel">Description </label>
           <input
             id="descriptionInput"
             type="checkbox"

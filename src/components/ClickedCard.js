@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CleanTool from "./CleanTool.js";
 import ConfirmTool from "./ConfirmTool.js";
 import EditTool from "./EditTool.js";
+import timeSince from "./timeSince.js";
 
 // will use props.status to determine which tool button to display
 // button will then setCleanMode, or setEditMode, or setConfirmMode
@@ -12,11 +13,20 @@ const ClickedCard = props => {
   const [confirmMode, setConfirmMode] = useState(false);
 
   const currentUser_id = Number(localStorage.getItem("currentUser_id"));
-  let visibleComp, center_bottom, left_top, right_top, left_mid, right_mid;
+  let visibleComp,
+    center_bottom,
+    left_top,
+    right_top,
+    left_mid,
+    right_mid,
+    date;
   let [title, before, after] = props.images;
+  let dateObj = new Date(props.created_at);
+  let timeSinceCreation = timeSince(dateObj);
+
   if (props.from === "gallery") {
     left_top = (
-      <button onClick={() => props.setCard(props.id)}> back to gallery </button>
+      <button onClick={() => props.setCard(props.id)}> see gallery </button>
     );
   } else {
     left_top = (
@@ -27,13 +37,17 @@ const ClickedCard = props => {
         }}
       >
         {" "}
-        back to map{" "}
+        see map{" "}
       </button>
     );
   }
   if (cleanMode) {
     visibleComp = (
       <div>
+        <button id="back_to_card" onClick={() => setCleanMode(false)}>
+          {" "}
+          back to card{" "}
+        </button>
         <CleanTool
           cleanTrash={props.cleanTrash}
           status={props.status}
@@ -42,34 +56,36 @@ const ClickedCard = props => {
           dirtyTrashLocations={props.dirtyTrashLocations}
           currentLocation={props.currentLocation}
         />
-        <button onClick={() => props.setCard(props.id)}>
-          {" "}
-          back to gallery{" "}
-        </button>
       </div>
     );
   } else if (confirmMode) {
     visibleComp = (
       <div>
+        <button id="back_to_card" onClick={() => props.setCard(props.id)}>
+          {" "}
+          see gallery{" "}
+        </button>
         <ConfirmTool
+          title_url={title.url}
+          before_url={before.url}
+          after_url={after.url}
           trash_id={props.trash_id}
           confirmClean={props.confirmClean}
         />
-        <button onClick={() => props.setCard(props.id)}>
-          {" "}
-          back to gallery{" "}
-        </button>
       </div>
     );
   } else if (editMode) {
     visibleComp = (
       <div>
+        <button id="back_to_card" onClick={() => setEditMode(false)}>
+          {" "}
+          back to card{" "}
+        </button>
         <EditTool
           trash_id={props.trash_id}
           editFetch={props.editFetch}
           setDisplayMode={props.setDisplayMode}
         />
-        <button onClick={() => setEditMode(false)}> back to card </button>
       </div>
     );
   } else {
@@ -83,10 +99,35 @@ const ClickedCard = props => {
           <button onClick={() => setEditMode(true)}> edit mode </button>
         );
       }
-      left_mid = <img id="left_mid" src={title.url} />;
+      left_mid = (
+        <figure id="left_mid">
+          <img id="left_mid" src={title.url} />
+          <figcaption>BEFORE</figcaption>
+        </figure>
+      );
       right_mid = (
         <div id="right_mid_description">
-          <p> {props.description} </p>
+          <ul>
+            <li>
+              <span style={{ "font-size": "19pt" }}>STATUS:</span>{" "}
+              {props.cardStatus}
+            </li>
+            <li>
+              <span style={{ "font-size": "19pt" }}>BOUNTY:</span> $
+              {props.bounty}
+            </li>
+          </ul>
+          <div style={{ "line-height": "1", "margin-left": "40px" }}>
+            <p>
+              <span style={{ "font-size": "19pt" }}>DESCRIPTION:</span>{" "}
+              {props.description}
+            </p>
+            <br></br>
+            <span style={{ "font-size": "15pt" }}>
+              <span style={{ "font-size": "19pt" }}>Posted:</span>{" "}
+              {timeSinceCreation}
+            </span>
+          </div>
         </div>
       );
     } else {
@@ -99,7 +140,7 @@ const ClickedCard = props => {
       right_mid = (
         <figure id="right_mid_after">
           <img id="left_mid" src={after.url} />
-          <figurecaption>AFTER</figurecaption>
+          <figcaption>AFTER</figcaption>
         </figure>
       );
     }
@@ -113,7 +154,7 @@ const ClickedCard = props => {
       <div
         id="clicked_card"
         className={props.cardStatus}
-        style={{ width: "100%" }}
+        style={{ width: "95%" }}
       >
         <div id="left_top">{left_top}</div>
         <div id="center_top">{props.title}</div>

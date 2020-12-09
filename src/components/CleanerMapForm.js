@@ -66,6 +66,7 @@ class CleanerMapForm extends React.Component {
           trash_id={clickedTrash.id}
           location_id={clickedTrash.location_id}
           status={clickedTrash.cleaned}
+          created_at={clickedTrash.created_at}
           dirtyTrashLocations={this.props.dirtyTrashLocations}
           currentLocation={this.props.currentLocation}
         />

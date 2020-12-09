@@ -8,11 +8,12 @@ const ReporterForm = props => {
     image = <img id="titleImgPreview" src={props.titleImgLink} />;
   }
   return (
-    <div id="reportDiv">
+    <div id="report_form">
+      <h1> Post Some Trash </h1>
       <div id="postingTitle">
-        <label id="reportLabel">Posting Title</label>
         <input
           id="postingTitleInput"
+          placeholder="Title"
           type="text"
           name="postingTitle"
           value={props.postingTitle}
@@ -22,9 +23,9 @@ const ReporterForm = props => {
       </div>
 
       <div id="bounty">
-        <label id="bountyLabel">Bounty</label>
         <input
           id="bountyInput"
+          placeholder="Bounty"
           type="text"
           name="bounty"
           value={props.bounty}
@@ -34,9 +35,9 @@ const ReporterForm = props => {
       </div>
 
       <div id="description">
-        <label id="descriptionLabel">Description</label>
         <input
           id="descriptionInput"
+          placeholder="Description"
           type="text"
           name="description"
           value={props.description}
@@ -45,10 +46,9 @@ const ReporterForm = props => {
         />
       </div>
 
-      <div>
-        <ImageUpload setImgLink={props.setImgLink} imageType={"title"} />
-        {image}
-      </div>
+      <ImageUpload setImgLink={props.setImgLink} imageType={"title"} />
+      {image}
+      <div></div>
     </div>
   );
 };

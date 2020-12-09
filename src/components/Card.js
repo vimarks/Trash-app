@@ -5,18 +5,34 @@ const Card = props => {
     titleImg,
     title,
     bounty;
-  titleImg = <img id="titleImgPreview" src={imgObj.url} />;
-  title = <div>{props.title}</div>;
-  bounty = <div>{props.bounty}</div>;
+  titleImg = (
+    <h3>
+      <img id="titleImgPreview" src={imgObj.url} />
+    </h3>
+  );
+  title = (
+    <div>
+      <h4>{props.title}</h4>
+    </div>
+  );
+  bounty = (
+    <div>
+      <h4>${props.bounty}</h4>
+    </div>
+  );
 
   return (
     <div className={props.className}>
       {titleImg}
-      {title}${bounty}
-      <button onClick={() => props.setCard(props.id, props.className)}>
-        {" "}
-        select{" "}
-      </button>
+      {title}
+      {bounty}
+
+      <div>
+        <button onClick={() => props.setCard(props.id, props.className)}>
+          {" "}
+          select{" "}
+        </button>
+      </div>
     </div>
   );
 };

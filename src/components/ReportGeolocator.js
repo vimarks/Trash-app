@@ -1,5 +1,6 @@
 import React from "react";
 import { geolocated } from "react-geolocated";
+import { withRouter } from "react-router-dom";
 import SaveLocation from "./SaveLocation";
 import ReporterForm from "./ReporterForm";
 import TrashPostPreview from "./TrashPostPreview";
@@ -23,9 +24,15 @@ class ReportGeolocator extends React.Component {
   }
 
   setUserProgress = () => {
-    this.setState({
-      userProgress: this.state.userProgress + 1
-    });
+    if (
+      this.state.postingTitle &&
+      this.state.bounty &&
+      this.state.titleImgLink
+    ) {
+      this.setState({
+        userProgress: this.state.userProgress + 1
+      });
+    } else alert("Please fill out all the fields and upload a photo");
   };
 
   handleChange = event => {
@@ -69,9 +76,12 @@ class ReportGeolocator extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log("DATA", data.id);
         this.saveImage(data.id, "title");
         this.setUserProgress();
+        let x = window.confirm(
+          "Your post has been saved, view it in 'my trash'"
+        );
+        if (x) this.props.history.push("/mytrash");
       });
   };
 
@@ -129,10 +139,15 @@ class ReportGeolocator extends React.Component {
           locationId={this.state.locationId}
         />
       );
-      progressButton = <button onClick={this.saveTrash}>Publish</button>;
-    } else {
-      visibleComp = <h1> your post is published, see listing at ... </h1>;
+      progressButton = (
+        <button style={{ "margin-left": "-8px" }} onClick={this.saveTrash}>
+          Publish
+        </button>
+      );
     }
+    // else {
+    //   visibleComp = <h1> your post is published, see listing at ... </h1>;
+    // }
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
     ) : !this.props.isGeolocationEnabled ? (
@@ -140,7 +155,7 @@ class ReportGeolocator extends React.Component {
     ) : this.props.coords ? (
       <div>
         {visibleComp}
-        {progressButton}
+        <div style={{ "text-align": "center" }}>{progressButton}</div>
       </div>
     ) : (
       <div>Getting the location data&hellip; </div>
@@ -148,9 +163,11 @@ class ReportGeolocator extends React.Component {
   }
 }
 
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: true
-  },
-  userDecisionTimeout: 5000
-})(ReportGeolocator);
+export default withRouter(
+  geolocated({
+    positionOptions: {
+      enableHighAccuracy: true
+    },
+    userDecisionTimeout: 5000
+  })(ReportGeolocator)
+);
