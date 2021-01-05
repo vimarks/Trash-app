@@ -20,7 +20,13 @@ const ClickedCard = props => {
     left_mid,
     right_mid,
     date;
-  let [title, before, after] = props.images;
+  let before_url, after_url, title_url;
+  for (let image of props.images) {
+    if (image.image_type === "before") before_url = image.url;
+    else if (image.image_type === "after") after_url = image.url;
+    else title_url = image.url;
+  }
+
   let dateObj = new Date(props.created_at);
   let timeSinceCreation = timeSince(dateObj);
 
@@ -66,9 +72,9 @@ const ClickedCard = props => {
           see gallery{" "}
         </button>
         <ConfirmTool
-          title_url={title.url}
-          before_url={before.url}
-          after_url={after.url}
+          title_url={title_url}
+          before_url={before_url}
+          after_url={after_url}
           trash_id={props.trash_id}
           confirmClean={props.confirmClean}
           bounty={props.bounty}
@@ -102,7 +108,7 @@ const ClickedCard = props => {
       }
       left_mid = (
         <figure id="left_mid">
-          <img id="left_mid" src={title.url} />
+          <img id="left_mid" src={title_url} />
           <figcaption>BEFORE</figcaption>
         </figure>
       );
@@ -134,13 +140,13 @@ const ClickedCard = props => {
     } else {
       left_mid = (
         <figure id="left_mid">
-          <img id="left_mid" src={before.url} />
+          <img id="left_mid" src={before_url} />
           <figcaption>BEFORE</figcaption>
         </figure>
       );
       right_mid = (
         <figure id="right_mid_after">
-          <img id="right_mid_after" src={after.url} />
+          <img id="right_mid_after" src={after_url} />
           <figcaption>AFTER</figcaption>
         </figure>
       );
