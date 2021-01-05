@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
 const ConfirmTool = props => {
   const token = localStorage.getItem("token");
+  const [disabled, setDisabled] = useState(false);
 
   const areYouSure = () => {
     let x = window.confirm(
@@ -10,7 +11,7 @@ const ConfirmTool = props => {
     );
     if (x) {
       props.confirmClean(props.trash_id);
-      props.history.push("/wallet");
+      setDisabled(true);
     }
   };
 
@@ -28,7 +29,11 @@ const ConfirmTool = props => {
         <img id="confirm_img" src={props.after_url} />
         <figcaption>AFTER</figcaption>
       </figure>
-      <button id="confirm_button" onClick={() => areYouSure()}>
+      <button
+        disabled={disabled}
+        id="confirm_button"
+        onClick={() => areYouSure()}
+      >
         Confirm
       </button>
       ;

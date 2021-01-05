@@ -55,7 +55,7 @@ class ReportGeolocator extends React.Component {
   };
 
   saveTrash = () => {
-    fetch("http://localhost:3001/trashes", {
+    fetch("https://trash-app-back.herokuapp.com/trashes", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -87,7 +87,7 @@ class ReportGeolocator extends React.Component {
 
   saveImage = (trash_id, image_type) => {
     let imgLink = `${image_type}ImgLink`;
-    fetch("http://localhost:3001/images", {
+    fetch("https://trash-app-back.herokuapp.com/images", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
