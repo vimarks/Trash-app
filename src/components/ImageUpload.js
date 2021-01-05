@@ -42,25 +42,41 @@ class ImageUpload extends Component {
   };
 
   render() {
-    console.log("uploaded", this.state.numUploaded);
+    console.log("FROM CLEAN", this.props.fromClean);
     let button;
     if (!this.props.fromClean) {
       if (this.state.selectedFile && this.state.numUploaded < 1) {
         button = (
-          <div>
+          <div style={{ color: "#f0f2ee", fontWeight: "bold" }}>
             {" "}
             Image selected! please{" "}
             <button onClick={this.onFileUpload}>Upload</button>
           </div>
         );
-      } else if (this.state.numUploaded === 1) button = <div> done! </div>;
+      } else if (this.state.numUploaded === 1)
+        button = (
+          <div style={{ color: "#f0f2ee", fontWeight: "bold" }}>
+            {" "}
+            wait until image appears below, then continue{" "}
+          </div>
+        );
       else {
         button = (
           <div>
             {" "}
             <form>
-              <label id="image_upload" for="image_input">
-                Select file
+              <label
+                data-help="Here, upload a photo of the trash site you are reporting"
+                onMouseEnter={e =>
+                  this.props.inputFocusSetter(
+                    e.target.getAttribute("data-help")
+                  )
+                }
+                onMouseLeave={e => this.props.inputFocusSetter("")}
+                id="image_upload"
+                for="image_input"
+              >
+                Select image
               </label>
               <input
                 id="image_input"
@@ -81,14 +97,15 @@ class ImageUpload extends Component {
             <button onClick={this.onFileUpload}>Upload</button>
           </div>
         );
-      } else if (this.state.numUploaded === 2) button = <div> done! </div>;
+      } else if (this.state.numUploaded === 2)
+        button = <div> wait until image appears below, then continue </div>;
       else {
         button = (
           <div>
             {" "}
             <form>
               <label id="image_upload" for="image_input">
-                Select file
+                Select image
               </label>
               <input
                 id="image_input"

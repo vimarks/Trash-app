@@ -64,6 +64,11 @@ export default class SaveLocation extends Component {
 
     return (
       <div>
+        <div id="save_location_instructions">
+          Double click or touch the icon and drag it to the desired location,
+          then
+          <button onClick={this.saveLocation}> Continue </button>
+        </div>
         <MapGL
           {...viewport}
           width="100vw"
@@ -88,7 +93,6 @@ export default class SaveLocation extends Component {
             />
           </Marker>
         </MapGL>
-        <button onClick={this.saveLocation}> Continue </button>
       </div>
     );
   }

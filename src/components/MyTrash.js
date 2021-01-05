@@ -2,13 +2,14 @@ import React from "react";
 import Gallery from "./Gallery";
 import Map from "./Map";
 import ClickedCard from "./ClickedCard";
+import Nav from "../containers/Nav";
 import { withRouter } from "react-router-dom";
 
 class MyTrash extends React.Component {
   token = localStorage.getItem("token");
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       displayMode: "gallery",
       allTrash: [],
@@ -87,12 +88,12 @@ class MyTrash extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log("data", data);
         this.setState({
           pending_your_confirm: data.pending_your_confirm,
           report_success: data.report_success,
           allTrash: data.trash
         });
+        this.props.updateWallet();
       });
   };
 

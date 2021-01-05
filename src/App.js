@@ -2,11 +2,13 @@ import React from "react";
 import Registration from "./components/auth/Registration";
 import Login from "./components/auth/Login";
 import Wallet from "./components/Wallet";
+import About from "./components/About";
 import MyTrash from "./components/MyTrash";
 import LandingPage from "./containers/LandingPage";
 import { PrivateRoute } from "./PrivateRoute";
 import CleanContainer from "./containers/CleanContainer";
 import ReportContainer from "./containers/ReportContainer";
+import Nav from "./containers/Nav";
 import TrophyRoom from "./components/TrophyRoom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,13 +17,14 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      isAuthenticated: false
+      isAuthenticated: false,
+      userWallet: null
     };
   }
-  componentDidMount() {
-    this.auth();
-    console.log("cdm hit");
-  }
+  token = localStorage.getItem("token");
+  // componentDidMount() {
+  //   this.auth();
+  // }
 
   setAuth = () => {
     this.setState({
@@ -30,8 +33,6 @@ class App extends React.Component {
   };
 
   auth = () => {
-    console.log("authenticated", this.state.isAuthenticated);
-    console.log("auth hit");
     if (
       localStorage.getItem("token") &&
       localStorage.getItem("currentUser_id")
@@ -39,54 +40,96 @@ class App extends React.Component {
       this.setState({
         isAuthenticated: true
       });
+      this.updateWallet();
     }
+  };
+
+  updateWallet = () => {
+    fetch("http://localhost:3001/wallets/getUserWallet", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        user_id: localStorage.getItem("currentUser_id")
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log("from backend", data.wallet[0]);
+        this.setState({
+          userWallet: data.wallet[0]
+        });
+      });
   };
   render() {
     return (
       <div>
         <Router>
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route exact path="/register" component={Registration} />
-            <Route exact path="/login">
-              <Login setAuth={this.setAuth} auth={this.auth} />
-            </Route>
+          <div>
+            <div>
+              <Switch>
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/register" component={Registration} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/login">
+                  <Login setAuth={this.setAuth} auth={this.auth} />
+                </Route>
+              </Switch>
+            </div>
+            <Route
+              path="/"
+              render={props =>
+                props.location.pathname !== "/" &&
+                props.location.pathname !== "/about" &&
+                props.location.pathname !== "/login" &&
+                props.location.pathname !== "/register" && (
+                  <Nav
+                    setAuth={this.setAuth}
+                    userWallet={this.state.userWallet}
+                  />
+                )
+              }
+            />
+
             <PrivateRoute
-              setAuth={this.setAuth}
               isAuthenticated={this.state.isAuthenticated}
               exact
               path="/clean"
               component={CleanContainer}
             />
             <PrivateRoute
-              setAuth={this.setAuth}
               isAuthenticated={this.state.isAuthenticated}
               exact
               path="/report"
               component={ReportContainer}
             />
+
             <PrivateRoute
-              setAuth={this.setAuth}
               isAuthenticated={this.state.isAuthenticated}
               exact
               path="/mytrash"
-              component={MyTrash}
-            />
+            >
+              <MyTrash updateWallet={this.updateWallet} />
+            </PrivateRoute>
+
             <PrivateRoute
-              setAuth={this.setAuth}
               isAuthenticated={this.state.isAuthenticated}
               exact
               path="/wallet"
               component={Wallet}
             />
             <PrivateRoute
-              setAuth={this.setAuth}
               isAuthenticated={this.state.isAuthenticated}
               exact
               path="/trophy"
               component={TrophyRoom}
             />
-          </Switch>
+          </div>
         </Router>
       </div>
     );

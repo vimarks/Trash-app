@@ -3,12 +3,25 @@ import React, { Component } from "react";
 const TrashPostPreview = props => {
   return (
     <div id="preview_div">
+      <div id="preview_heading">
+        {" "}
+        <h1>Posting Preview</h1>{" "}
+      </div>
+      <br></br>
       <ul>
-        <li>TITLE: {props.postingTitle}</li>
-        <li>DESCRIPTION: {props.description}</li>
-        <li>BOUNTY: ${props.bounty}</li>
+        <li>
+          <b>TITLE:</b> {props.postingTitle}
+        </li>
+        <li>
+          <b>DESCRIPTION:</b> {props.description}
+        </li>
+        <li>
+          <b>BOUNTY:</b> ${props.bounty}
+        </li>
       </ul>
-      <img id="preview_image" src={props.titleImgLink} />
+      <div>
+        <img id="preview_image" src={props.titleImgLink} />
+      </div>
     </div>
   );
 };

@@ -10,7 +10,6 @@ export const PrivateRoute = ({
 }) => {
   return (
     <div>
-      <Nav setAuth={setAuth} />
       <Route
         {...rest}
         render={props =>

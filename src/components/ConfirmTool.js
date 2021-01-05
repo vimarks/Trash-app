@@ -1,13 +1,17 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
 const ConfirmTool = props => {
   const token = localStorage.getItem("token");
 
   const areYouSure = () => {
     let x = window.confirm(
-      "are you sure? upon confirmation funds will transfer from your account in the amount of the cleaned trash instance"
+      `are you sure? upon confirmation funds will transfer FROM your account in the amount of $${props.bounty}`
     );
-    if (x) props.confirmClean(props.trash_id);
+    if (x) {
+      props.confirmClean(props.trash_id);
+      props.history.push("/wallet");
+    }
   };
 
   return (
@@ -31,4 +35,4 @@ const ConfirmTool = props => {
     </div>
   );
 };
-export default ConfirmTool;
+export default withRouter(ConfirmTool);

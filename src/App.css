@@ -1,6 +1,6 @@
 body {
   font-family: "Source Sans Pro", sans-serif !important;
-  background-color: grey !important;
+  background-color: #4d4e4f !important;
 }
 .trophyRoom ul {
   list-style: none;
@@ -35,8 +35,11 @@ body {
   width: 100%;
 }
 .nav-links .logo h1 {
-  font-size: 2.5em;
+  font-size: 5em;
+  font-weight: 800;
   padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 3%;
 }
 ul.nav-links {
   padding-left: 0;
@@ -53,27 +56,42 @@ ul.nav-links {
   font-size: 1em;
   padding-top: 0;
 }
-.logo {
+#logo_in_app {
+  color: black;
   font-family: "Source Sans Pro", sans-serif;
   width: 100%;
   text-align: center;
 }
-.logo h1 {
+#logo_landing_page {
+  color: black;
   font-size: 5em;
-  margin-bottom: 0.25em;
+  margin-bottom: 0%;
+  margin-left: 2%;
   font-weight: 800;
-  padding-top: 60px;
+  margin-top: -4%;
 }
-.form input {
-  border: 2px solid black;
-}
-.logo span {
+
+#logo_landing_page span {
   font-size: 50%;
+}
+#logo_in_app span {
+  font-size: 50%;
+}
+
+#logo_subtitle {
+  position: absolute;
+  font-size: 11pt;
+  color: black;
+  margin-top: -1.1%;
+  margin-left: 1%;
 }
 .login button.btn.btn-secondary {
   float: left;
   width: 30%;
   margin: 10%;
+}
+.form input {
+  border: 2px solid black;
 }
 button.btn.btn-secondary {
   border: 2px solid black;

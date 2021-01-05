@@ -3,10 +3,12 @@
 // Login Page //
 
 body {
-  background-color: grey;
+  background-color: #4d4e4f;
 }
 
 nav {
+  border-top: solid black 1px;
+  border-bottom: solid black 1px;
   background-color: #47632c;
   display: flex;
   justify-content: space-around;
@@ -23,6 +25,7 @@ nav a {
   justify-content: space-around;
   align-items: center;
   list-style: none;
+  color: white;
 }
 
 .trash-button {
@@ -63,11 +66,7 @@ nav a {
   background-repeat: no-repeat;
   background-size: cover;
 }
-#aboutBody {
-  padding: 20px;
-  background-color: #264541;
-  color: white;
-}
+
 .map {
   width: 100vw;
   border-top: 2px solid black;
@@ -75,8 +74,8 @@ nav a {
 }
 
 #aboutBody {
-  background-color: #254540;
-  color: whitesmoke;
+  background-color: #4d4e4f;
+  color: white;
   padding: 40px;
 }
 
@@ -116,10 +115,7 @@ ol > li:before {
   margin-bottom: 10px;
   font-size: 17pt;
 }
-#button_group {
-  text-align: center;
-  margin-bottom: 45px;
-}
+
 .clean_success {
   border: solid black 3px;
   border-radius: 8px;
@@ -190,6 +186,8 @@ ol > li:before {
   background-color: #dc1212;
 }
 #titleImgPreview {
+  border: black solid 2px;
+  border-radius: 7px;
   max-width: 83%;
   max-height: 215px;
 }
@@ -200,19 +198,152 @@ ol > li:before {
   width: 95%;
   margin: auto;
 }
+/*------------------------------------my trash-------------------------------------*/
 
-#card_bounty {
+#buttonGroup {
+  text-align: center;
+  margin-bottom: 45px;
 }
-/*----------------------report form-------------------------*/
+#all_button:hover {
+  background-color: #dbdada;
+}
+#clean_success_button {
+  background-color: #2c6ee6;
+}
+#clean_success_button:hover {
+  background-color: #2158bd;
+}
+#report_success_button {
+  background-color: #3fad11;
+}
+#report_success_button:hover {
+  background-color: green;
+}
+#pending_clean_button {
+  background-color: #b95e00;
+}
+#pending_clean_button:hover {
+  background-color: #a45503;
+}
+
+#pending_your_confirm_button {
+  background-color: #f73030;
+}
+#pending_your_confirm_button:hover {
+  background-color: #dc1212;
+}
+#pending_their_confirm_button {
+  background-color: #ffd400;
+}
+#pending_their_confirm_button:hover {
+  background-color: #ffbc00;
+}
+
+/*----------------------landing page-----------------------------------*/
+#slider_container {
+  margin-top: 4%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#slider_container .styles_container__2pRR5 {
+  border-bottom: solid black 6px;
+}
+#slider_container figure {
+  width: 100%;
+  height: 100%;
+  background-color: #47632c;
+}
+
+#slider_container figcaption {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: -2%;
+  margin-bottom: -6%;
+  color: black;
+  padding: 19px;
+}
+
+.landing_background {
+  background-color: #4d4e4f;
+}
+.App {
+  margin-top: 10%;
+}
+#landingPageTitle {
+  margin-top: 4%;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  font-size: 48pt;
+}
+.sliders {
+  border: solid black 6px;
+  border-radius: 3px;
+}
+#slider_mid {
+  border: solid black 6px;
+  border-radius: 3px;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+
+#landing_nav {
+  border-bottom: solid black 2px;
+  border-top: solid black 2px;
+  background-color: #47632c;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+}
+
+#landing_nav a {
+  font-size: 16pt;
+}
+#blurb {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20pt;
+  color: black;
+  margin-top: 0%;
+}
+
+/*----------------------report form/ edit tool-------------------------*/
 #report_form {
   text-align: center;
-  margin-top: 35px;
+  margin-top: 2%;
 }
 #image_upload {
   cursor: pointer;
   border: 1px solid black;
   margin-top: 10px;
-  padding: 3px;
+  background-color: #669638;
+  padding: 4px;
+}
+#image_upload:hover {
+  background-color: #47632c;
+}
+#descriptionInput {
+  width: 157px;
+}
+
+#outer_help {
+  position: relative;
+  text-align: left;
+  width: 35%;
+  left: 60%;
+  top: 25%;
+  color: #f0f2ee;
+  font-weight: bold;
+}
+
+#inner_help {
+  position: absolute;
+  width: 54%;
 }
 /*---------------------clicked card-------------------------*/
 
@@ -228,7 +359,7 @@ ol > li:before {
   grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6%;
   grid-template-rows: auto;
   grid-template-areas:
-    "lt ct ct ct rt rt"
+    "lt lt ct ct rt rt"
     ". lm lm rm rm ."
     ". lm lm rm rm ."
     ". . cb cb . .";
@@ -236,7 +367,7 @@ ol > li:before {
 
 #left_top {
   grid-area: lt;
-  font-size: 17pt;
+  font-size: 15pt;
   background-color: black;
   color: #dbe1d6;
   padding: 10px;
@@ -261,10 +392,16 @@ ol > li:before {
 
 #left_mid {
   width: 100%;
+  margin-top: 3%;
+  margin-left: -1%;
   text-align: center;
   font-weight: bold;
-  padding: 10px;
+  padding: 0px;
   grid-area: lm;
+}
+
+#left_mid img {
+  border: solid black 2px;
 }
 
 #right_mid_description {
@@ -282,10 +419,15 @@ ol > li:before {
 
 #right_mid_after {
   width: 100%;
+  margin-top: 3%;
   text-align: center;
   font-weight: bold;
-  padding: 10px;
+  padding: 0px;
+  margin-left: 1%;
   grid-area: rm;
+}
+#right_mid_after img {
+  border: solid black 2px;
 }
 
 #center_bottom {
@@ -350,11 +492,15 @@ figure {
 }
 
 /*--------------------------trash preview-----------------------------------*/
+#preview_heading {
+  color: black;
+}
 
 #preview_div {
   width: 30%;
   margin-bottom: 10px;
   margin-left: 42%;
+  margin-top: 2%;
 }
 
 #preview_image {
@@ -362,4 +508,17 @@ figure {
   max-width: 83%;
   max-height: 215px;
   margin-top: -10px;
+}
+/*------------------------save location------------------------------------*/
+#save_location_instructions {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  text-align: center;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.overlays {
+  border-top: solid black 2px;
+  border-bottom: solid black 3px;
 }

@@ -71,6 +71,7 @@ const ClickedCard = props => {
           after_url={after.url}
           trash_id={props.trash_id}
           confirmClean={props.confirmClean}
+          bounty={props.bounty}
         />
       </div>
     );
@@ -107,7 +108,7 @@ const ClickedCard = props => {
       );
       right_mid = (
         <div id="right_mid_description">
-          <ul>
+          <ul style={{ marginLeft: "-10px" }}>
             <li>
               <span style={{ "font-size": "19pt" }}>STATUS:</span>{" "}
               {props.cardStatus}
@@ -117,7 +118,7 @@ const ClickedCard = props => {
               {props.bounty}
             </li>
           </ul>
-          <div style={{ "line-height": "1", "margin-left": "40px" }}>
+          <div style={{ "line-height": "1", "margin-left": "30px" }}>
             <p>
               <span style={{ "font-size": "19pt" }}>DESCRIPTION:</span>{" "}
               {props.description}
@@ -139,7 +140,7 @@ const ClickedCard = props => {
       );
       right_mid = (
         <figure id="right_mid_after">
-          <img id="left_mid" src={after.url} />
+          <img id="right_mid_after" src={after.url} />
           <figcaption>AFTER</figcaption>
         </figure>
       );
