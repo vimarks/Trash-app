@@ -2,13 +2,14 @@ import React from "react";
 import Gallery from "./Gallery";
 import Map from "./Map";
 import ClickedCard from "./ClickedCard";
+import Nav from "../containers/Nav";
 import { withRouter } from "react-router-dom";
 
 class MyTrash extends React.Component {
   token = localStorage.getItem("token");
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       displayMode: "gallery",
       allTrash: [],
@@ -36,7 +37,7 @@ class MyTrash extends React.Component {
   }
 
   myTrash = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/myTrash", {
+    fetch("http://localhost:3001/trashes/myTrash", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -72,7 +73,7 @@ class MyTrash extends React.Component {
   };
 
   confirmClean = id => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
+    fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -87,18 +88,18 @@ class MyTrash extends React.Component {
         return response.json();
       })
       .then(data => {
-        console.log("data", data);
         this.setState({
           pending_your_confirm: data.pending_your_confirm,
           report_success: data.report_success,
           allTrash: data.trash
         });
+        this.props.updateWallet();
       });
   };
 
   editFetch = (patchBody, trash_id) => {
     let id = trash_id;
-    fetch("https://trash-app-back.herokuapp.com/trashes/patchBounty/" + id, {
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,

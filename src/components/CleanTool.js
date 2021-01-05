@@ -52,13 +52,12 @@ class CleanTool extends React.Component {
     this.props.cleanTrash(this.props.trash_id);
     this.setState({ complete: true });
     alert("Trash has been cleaned!\nReporter will be notified.");
-    // this.props.history.push("/mytrash");
-    // redirect to myTrash/awaitingConfirmation
+    this.props.history.push("/mytrash");
   };
 
   saveImage = (trash_id, image_type) => {
     let imgLink = `${image_type}ImgLink`;
-    fetch("https://trash-app-back.herokuapp.com/images", {
+    fetch("http://localhost:3001/images", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -120,7 +119,7 @@ class CleanTool extends React.Component {
         <div>
           <h1>Please select a "BEFORE" image</h1>
           <ImageUpload
-            fomClean={true}
+            fromClean={true}
             imageType={"before"}
             setImgLink={this.setImgLink}
           />

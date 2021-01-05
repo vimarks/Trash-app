@@ -29,9 +29,10 @@ class Login extends Component {
   };
 
   handleSubmit = event => {
+    console.log("from login");
     event.preventDefault();
 
-    fetch("https://trash-app-back.herokuapp.com/login", {
+    fetch("http://localhost:3001/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,12 +63,26 @@ class Login extends Component {
   render() {
     return (
       <div className="bg">
+        <nav id="landing_nav">
+          <ul className="nav-links">
+            <li>
+              <h1 id="logo_landing_page">
+                trash<span>app</span>
+              </h1>
+              <div id="logo_subtitle">be part of a cleaner world</div>
+            </li>
+            <Link to="/about">
+              <li>About</li>
+            </Link>
+            <Link to="/register">
+              <li>Sign up</li>
+            </Link>
+            <Link to="/">
+              <li>Home</li>
+            </Link>
+          </ul>
+        </nav>
         <Container className="App">
-          <div className="logo">
-            <h1>
-              trash<span>app</span>
-            </h1>
-          </div>
           <div className="row justify-content-center login">
             <div className="col-sm-10 col-md-6 col-xl-4">
               <Form onSubmit={this.handleSubmit} className="form">
@@ -78,7 +93,7 @@ class Login extends Component {
                       type="username"
                       name="username"
                       id="username"
-                      placeholder="username"
+                      placeholder="guest"
                       value={this.state.username}
                       onChange={this.handleChange}
                       required
@@ -92,7 +107,7 @@ class Login extends Component {
                       type="password"
                       name="password"
                       id="examplePassword"
-                      placeholder="********"
+                      placeholder="trash123"
                       value={this.state.password}
                       onChange={this.handleChange}
                       required

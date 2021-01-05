@@ -53,7 +53,6 @@ export default function Map(props) {
       });
     markers = markers.concat(marker);
   }
-  console.log("MARKERS", markers);
 
   const avgRating = reporter_id => {
     let userRep = props.reputations.filter(rep => rep.user_id === reporter_id);

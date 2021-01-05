@@ -7,9 +7,9 @@ import MyTrashCard from "./MyTrashCard.js";
 // myTrash version should display all trash whose reporter_id or cleaner_id === user_id
 const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
   const [cardSelection, setCardSelection] = useState("all");
-
+  console.log("CARD SELECTION", cardSelection);
   let currentUser_id = Number(localStorage.getItem("currentUser_id"));
-  let visibleComp, images, buttonGroup;
+  let visibleComp, images, statButtons;
   if (type === "cleanGeo") {
     visibleComp =
       allTrash &&
@@ -41,50 +41,29 @@ const CardList = ({ allTrash, allImages, setCard, type, myTrashObj }) => {
         setCard={setCard}
       />
     );
-    buttonGroup = (
-      <div id="button_group">
-        <button onClick={() => setCardSelection("all")}> all </button>
+    let statuses = [
+      "all",
+      "clean_success",
+      "report_success",
+      "pending_clean",
+      "pending_your_confirm",
+      "pending_their_confirm"
+    ];
+    statButtons = statuses.map(status => {
+      return (
         <button
-          style={{ "background-color": "#2c6ee6" }}
-          onClick={() => setCardSelection("clean_success")}
+          id={status + "_button"}
+          onClick={() => setCardSelection(status)}
         >
           {" "}
-          clean success{" "}
+          {status}{" "}
         </button>
-        <button
-          style={{ "background-color": "#3fad11" }}
-          onClick={() => setCardSelection("report_success")}
-        >
-          {" "}
-          report success{" "}
-        </button>
-        <button
-          style={{ "background-color": "#b95e00" }}
-          onClick={() => setCardSelection("pending_clean")}
-        >
-          {" "}
-          pending clean{" "}
-        </button>
-        <button
-          style={{ "background-color": "#f73030" }}
-          onClick={() => setCardSelection("pending_your_confirm")}
-        >
-          {" "}
-          pending your confirm{" "}
-        </button>
-        <button
-          style={{ "background-color": "#ffd400" }}
-          onClick={() => setCardSelection("pending_their_confirm")}
-        >
-          {" "}
-          pending their confirm{" "}
-        </button>
-      </div>
-    );
+      );
+    });
   }
   return (
     <div>
-      <div>{buttonGroup}</div>
+      <div id="buttonGroup">{statButtons}</div>
       <div className="flex_container">{visibleComp}</div>
     </div>
   );

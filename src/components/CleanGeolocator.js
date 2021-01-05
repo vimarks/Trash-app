@@ -24,7 +24,7 @@ class CleanGeolocator extends React.Component {
   }
 
   initialCFetch = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/initialCFetch", {
+    fetch("http://localhost:3001/trashes/initialCFetch", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -53,7 +53,7 @@ class CleanGeolocator extends React.Component {
 
   editFetch = (patchBody, trash_id) => {
     let id = trash_id;
-    fetch("https://trash-app-back.herokuapp.com/trashes/patchBounty/" + id, {
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -79,7 +79,7 @@ class CleanGeolocator extends React.Component {
   };
 
   cleanTrash = id => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
+    fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,

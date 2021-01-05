@@ -29,7 +29,7 @@ export default class Registration extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    fetch("https://trash-app-back.herokuapp.com/users", {
+    fetch("http://localhost:3001/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,12 +53,27 @@ export default class Registration extends Component {
   render() {
     return (
       <div className="bg">
+        <nav id="landing_nav">
+          <ul className="nav-links">
+            <li>
+              <h1 id="logo_landing_page">
+                trash<span>app</span>
+              </h1>
+              <div id="logo_subtitle">be part of a cleaner world</div>
+            </li>
+            <Link to="/about">
+              <li>About</li>
+            </Link>
+            <Link to="/">
+              <li>Home</li>
+            </Link>
+
+            <Link to="/login">
+              <li>Login</li>
+            </Link>
+          </ul>
+        </nav>
         <Container className="App">
-          <div className="logo">
-            <h1>
-              trash<span>app</span>
-            </h1>
-          </div>
           <div className="row justify-content-center login">
             <div className="col-sm-10 col-md-6 col-xl-4">
               <Form onSubmit={this.handleSubmit} className="form">

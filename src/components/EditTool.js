@@ -117,7 +117,6 @@ class EditTool extends React.Component {
         <div id="description">
           <label id="descriptionLabel">Description </label>
           <input
-            id="descriptionInput"
             type="checkbox"
             name="descriptionBox"
             onChange={e => this.checkboxManager(e.target.name)}

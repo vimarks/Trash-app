@@ -55,7 +55,7 @@ class ReportGeolocator extends React.Component {
   };
 
   saveTrash = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes", {
+    fetch("http://localhost:3001/trashes", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -87,7 +87,7 @@ class ReportGeolocator extends React.Component {
 
   saveImage = (trash_id, image_type) => {
     let imgLink = `${image_type}ImgLink`;
-    fetch("https://trash-app-back.herokuapp.com/images", {
+    fetch("http://localhost:3001/images", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -145,9 +145,7 @@ class ReportGeolocator extends React.Component {
         </button>
       );
     }
-    // else {
-    //   visibleComp = <h1> your post is published, see listing at ... </h1>;
-    // }
+
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
     ) : !this.props.isGeolocationEnabled ? (
@@ -155,7 +153,9 @@ class ReportGeolocator extends React.Component {
     ) : this.props.coords ? (
       <div>
         {visibleComp}
-        <div style={{ "text-align": "center" }}>{progressButton}</div>
+        <div style={{ textAlign: "center", marginTop: "10px" }}>
+          {progressButton}
+        </div>
       </div>
     ) : (
       <div>Getting the location data&hellip; </div>
