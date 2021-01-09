@@ -33,7 +33,7 @@ class LandingPage extends React.Component {
   }
 
   landingPageFetch = () => {
-    fetch("https://trash-app-back.herokuapp.com/images", {
+    fetch("http://localhost:3001/images", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

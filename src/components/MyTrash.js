@@ -37,7 +37,7 @@ class MyTrash extends React.Component {
   }
 
   myTrash = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/myTrash", {
+    fetch("http://localhost:3001/trashes/myTrash", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -73,7 +73,7 @@ class MyTrash extends React.Component {
   };
 
   confirmClean = id => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
+    fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -99,7 +99,7 @@ class MyTrash extends React.Component {
 
   editFetch = (patchBody, trash_id) => {
     let id = trash_id;
-    fetch("https://trash-app-back.herokuapp.com/trashes/patchBounty/" + id, {
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,

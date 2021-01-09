@@ -60,7 +60,6 @@ const ClickedCard = props => {
           trash_id={props.trash_id}
           location_id={props.location_id}
           dirtyTrashLocations={props.dirtyTrashLocations}
-          currentLocation={props.currentLocation}
         />
       </div>
     );
@@ -116,22 +115,21 @@ const ClickedCard = props => {
         <div id="right_mid_description">
           <ul style={{ marginLeft: "-10px" }}>
             <li>
-              <span style={{ "font-size": "19pt" }}>STATUS:</span>{" "}
+              <span style={{ fontSize: "19pt" }}>STATUS:</span>{" "}
               {props.cardStatus}
             </li>
             <li>
-              <span style={{ "font-size": "19pt" }}>BOUNTY:</span> $
-              {props.bounty}
+              <span style={{ fontSize: "19pt" }}>BOUNTY:</span> ${props.bounty}
             </li>
           </ul>
-          <div style={{ "line-height": "1", "margin-left": "30px" }}>
+          <div style={{ lineHeight: "1", marginLeft: "30px" }}>
             <p>
-              <span style={{ "font-size": "19pt" }}>DESCRIPTION:</span>{" "}
+              <span style={{ fontSize: "19pt" }}>DESCRIPTION:</span>{" "}
               {props.description}
             </p>
             <br></br>
-            <span style={{ "font-size": "15pt" }}>
-              <span style={{ "font-size": "19pt" }}>Posted:</span>{" "}
+            <span style={{ fontSize: "15pt" }}>
+              <span style={{ fontSize: "19pt" }}>Posted:</span>{" "}
               {timeSinceCreation}
             </span>
           </div>

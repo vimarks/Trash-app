@@ -44,7 +44,6 @@ const Gallery = props => {
         location_id={specificTrash.location_id}
         created_at={specificTrash.created_at}
         dirtyTrashLocations={props.dirtyTrashLocations}
-        currentLocation={props.currentLocation}
       />
     );
   } else {
