@@ -23,15 +23,31 @@ class ReportGeolocator extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.coords) {
+      localStorage.setItem("lat", this.props.coords.latitude);
+      localStorage.setItem("long", this.props.coords.longitude);
+    }
+  }
   setUserProgress = () => {
+    console.log(
+      "Ubal",
+      localStorage.getItem("userWallet"),
+      "bounty",
+      this.state.bounty
+    );
     if (
       this.state.postingTitle &&
       this.state.bounty &&
       this.state.titleImgLink
     ) {
-      this.setState({
-        userProgress: this.state.userProgress + 1
-      });
+      if (Number(this.state.bounty) > localStorage.getItem("userBalance")) {
+        alert("You have insufficient funds!");
+      } else {
+        this.setState({
+          userProgress: this.state.userProgress + 1
+        });
+      }
     } else alert("Please fill out all the fields and upload a photo");
   };
 
@@ -55,7 +71,7 @@ class ReportGeolocator extends React.Component {
   };
 
   saveTrash = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes", {
+    fetch("http://localhost:3001/trashes", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -87,7 +103,7 @@ class ReportGeolocator extends React.Component {
 
   saveImage = (trash_id, image_type) => {
     let imgLink = `${image_type}ImgLink`;
-    fetch("https://trash-app-back.herokuapp.com/images", {
+    fetch("http://localhost:3001/images", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -102,10 +118,6 @@ class ReportGeolocator extends React.Component {
     });
   };
   render() {
-    if (this.props.coords) {
-      localStorage.setItem("lat", this.props.coords.latitude);
-      localStorage.setItem("long", this.props.coords.longitude);
-    }
     let progressButton, visibleComp;
     if (this.state.userProgress === 0) {
       visibleComp = (
@@ -140,7 +152,7 @@ class ReportGeolocator extends React.Component {
         />
       );
       progressButton = (
-        <button style={{ "margin-left": "-8px" }} onClick={this.saveTrash}>
+        <button style={{ marginLeft: "-8px" }} onClick={this.saveTrash}>
           Publish
         </button>
       );

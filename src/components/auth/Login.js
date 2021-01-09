@@ -32,7 +32,7 @@ class Login extends Component {
     console.log("from login");
     event.preventDefault();
 
-    fetch("https://trash-app-back.herokuapp.com/login", {
+    fetch("http://localhost:3001/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

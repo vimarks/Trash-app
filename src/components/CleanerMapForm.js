@@ -68,14 +68,12 @@ class CleanerMapForm extends React.Component {
           status={clickedTrash.cleaned}
           created_at={clickedTrash.created_at}
           dirtyTrashLocations={this.props.dirtyTrashLocations}
-          currentLocation={this.props.currentLocation}
         />
       );
     } else {
       visibleComp = (
         <div className="map">
           <Map
-            coords={this.props.currentLocation}
             fromCleanerSide={true}
             dirtyTrashLocations={this.props.dirtyTrashLocations}
             markerKeyHolder={this.markerKeyHolder}

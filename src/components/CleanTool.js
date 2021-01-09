@@ -1,4 +1,5 @@
 import React from "react";
+import { geolocated } from "react-geolocated";
 import ImageUpload from "./ImageUpload.js";
 import { withRouter } from "react-router-dom";
 
@@ -16,16 +17,16 @@ class CleanTool extends React.Component {
   }
 
   compareLocation = id => {
-    let cleanerLocation = this.props.dirtyTrashLocations.filter(
+    let trashLocation = this.props.dirtyTrashLocations.filter(
       loc => loc.id === this.props.location_id
-    );
+    )[0];
 
-    let a = cleanerLocation[0].latitude;
-    let b = this.props.currentLocation.latitude;
+    let a = trashLocation.latitude;
+    let b = this.props.coords.latitude;
     let latDiff = Math.abs(a - b);
 
-    let x = cleanerLocation[0].longitude;
-    let y = this.props.currentLocation.longitude;
+    let x = trashLocation.longitude;
+    let y = this.props.coords.longitude;
     let lonDiff = Math.abs(x - y);
 
     if (latDiff < 0.00019 && lonDiff < 0.00019) {
@@ -57,7 +58,7 @@ class CleanTool extends React.Component {
 
   saveImage = (trash_id, image_type) => {
     let imgLink = `${image_type}ImgLink`;
-    fetch("https://trash-app-back.herokuapp.com/images", {
+    fetch("http://localhost:3001/images", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -139,15 +140,26 @@ class CleanTool extends React.Component {
     } else if (!complete) {
       button = <button onClick={() => this.saveAndClean()}>clean it </button>;
     }
-    return (
+    return !this.props.isGeolocationAvailable ? (
+      <div>Your browser does not support Geolocation</div>
+    ) : !this.props.isGeolocationEnabled ? (
+      <div>Geolocation is not enabled</div>
+    ) : this.props.coords ? (
       <div id="clean_form">
         {visibleComp}
         {beforeImage}
         {afterImage}
         {button}
       </div>
+    ) : (
+      <div>Getting the location data&hellip; </div>
     );
   }
 }
 
-export default withRouter(CleanTool);
+export default geolocated({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  userDecisionTimeout: 5000
+})(withRouter(CleanTool));

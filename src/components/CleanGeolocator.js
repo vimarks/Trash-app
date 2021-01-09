@@ -24,7 +24,7 @@ class CleanGeolocator extends React.Component {
   }
 
   initialCFetch = () => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/initialCFetch", {
+    fetch("http://localhost:3001/trashes/initialCFetch", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -53,7 +53,7 @@ class CleanGeolocator extends React.Component {
 
   editFetch = (patchBody, trash_id) => {
     let id = trash_id;
-    fetch("https://trash-app-back.herokuapp.com/trashes/patchBounty/" + id, {
+    fetch("http://localhost:3001/trashes/patchBounty/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -79,7 +79,7 @@ class CleanGeolocator extends React.Component {
   };
 
   cleanTrash = id => {
-    fetch("https://trash-app-back.herokuapp.com/trashes/" + id, {
+    fetch("http://localhost:3001/trashes/" + id, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -114,7 +114,6 @@ class CleanGeolocator extends React.Component {
           setDisplayMode={this.setDisplayMode}
           type={"cleanGeo"}
           cleanTrash={this.cleanTrash}
-          currentLocation={this.props.coords}
           dirtyTrashLocations={this.state.dirtyTrashLocations}
           allTrash={this.state.trash}
           allImages={this.state.allImages}
@@ -131,7 +130,6 @@ class CleanGeolocator extends React.Component {
         <CleanerMapForm
           editFetch={this.editFetch}
           cleanTrash={this.cleanTrash}
-          currentLocation={this.props.coords}
           dirtyTrashLocations={this.state.dirtyTrashLocations}
           allTrash={this.state.trash}
           allImages={this.state.allImages}
@@ -141,24 +139,13 @@ class CleanGeolocator extends React.Component {
       );
     }
 
-    return !this.props.isGeolocationAvailable ? (
-      <div>Your browser does not support Geolocation</div>
-    ) : !this.props.isGeolocationEnabled ? (
-      <div>Geolocation is not enabled</div>
-    ) : this.props.coords ? (
+    return (
       <div>
         <div id="map_gallery_button">{button}</div>
         {visibleComp}
       </div>
-    ) : (
-      <div>Getting the location data&hellip; </div>
     );
   }
 }
 
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: true
-  },
-  userDecisionTimeout: 5000
-})(CleanGeolocator);
+export default CleanGeolocator;

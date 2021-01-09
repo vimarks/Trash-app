@@ -39,7 +39,7 @@ export default class SaveLocation extends Component {
   };
 
   saveLocation = () => {
-    fetch("https://trash-app-back.herokuapp.com/locations", {
+    fetch("http://localhost:3001/locations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${this.token}`,

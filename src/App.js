@@ -45,7 +45,7 @@ class App extends React.Component {
   };
 
   updateWallet = () => {
-    fetch("https://trash-app-back.herokuapp.com/wallets/getUserWallet", {
+    fetch("http://localhost:3001/wallets/getUserWallet", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -64,6 +64,7 @@ class App extends React.Component {
         this.setState({
           userWallet: data.wallet[0]
         });
+        localStorage.setItem("userBalance", data.wallet[0].balance);
       });
   };
   render() {
